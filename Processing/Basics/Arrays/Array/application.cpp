@@ -31,7 +31,7 @@ void setup() {
 }
 
 void draw() {
-println("draw() called");
+    println("draw() called");
     int y1 = 0;
     int y2 = height / 3;
     for (int i = 0; i < width; i++) {
