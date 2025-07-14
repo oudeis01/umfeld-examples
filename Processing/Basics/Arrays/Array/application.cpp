@@ -10,11 +10,11 @@
  * separate ways on the screen.  
  */
 
-#include "Umfeld.h" // @umfeld(include)
+#include "Umfeld.h" // @diff(include)
 
 using namespace umfeld;
 
-float* coswave; // @umfeld(arrays are declared slightly differntly in Processing `float[] coswave`)
+float* coswave; // @diff("arrays are declared slightly differntly in Processing `float[] coswave`")
 
 void settings() {
     size(640, 360);
@@ -26,7 +26,7 @@ void setup() {
         float amount = map(i, 0, width, 0, PI);
         coswave[i]   = abs(cos(amount));
     }
-    background(1.0); // @umfeld(color_range)
+    background(1.0); // @diff(color_range)
     noLoop();
 }
 
@@ -35,21 +35,21 @@ println("draw() called");
     int y1 = 0;
     int y2 = height / 3;
     for (int i = 0; i < width; i++) {
-        stroke(coswave[i]); // @umfeld(color_range)
+        stroke(coswave[i]); // @diff(color_range)
         line(i, y1, i, y2);
     }
 
     y1 = y2;
     y2 = y1 + y1;
     for (int i = 0; i < width; i++) {
-        stroke(coswave[i] / 4); // @umfeld(color_range)
+        stroke(coswave[i] / 4); // @diff(color_range)
         line(i, y1, i, y2);
     }
 
     y1 = y2;
     y2 = height;
     for (int i = 0; i < width; i++) {
-        stroke(1.0 - coswave[i]); // @umfeld(color_range)
+        stroke(1.0 - coswave[i]); // @diff(color_range)
         line(i, y1, i, y2);
     }
 }
