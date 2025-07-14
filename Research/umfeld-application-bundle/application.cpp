@@ -14,7 +14,7 @@ void settings() {
 }
 
 void setup() {
-    if (!exists(sketchPath() + "../assets/RobotoMono-Regular.ttf")) {
+    if (!file_exists(sketchPath() + "../assets/RobotoMono-Regular.ttf")) {
         println("cannot find required files at:", sketchPath());
         println("... exiting");
         exit();

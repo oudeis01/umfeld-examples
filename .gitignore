@@ -7,3 +7,5 @@ cmake-build-debug-event-trace
 .DS_Store
 build-test-examples/
 logs/
+Research/umfeld-application-bundle/libs
+Research/umfeld-application-bundle/Umfeld.app
