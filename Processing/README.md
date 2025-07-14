@@ -6,7 +6,7 @@
 
 although *Umfeld* is heavily inspired by *Processing*, there are some differences that you should be aware of when porting your code from *Processing* to *Umfeld*. this document lists the most important differences.
 
-### `@umfeld(include)`
+### `@diff(include)`
 
 to use *Umfeld* the header file `Umfeld.h` must be included. this is done with the `#include "Umfeld.h"` directive at the top. in *Processing* a similar effect is achieved with `import`. additionally, *Umfeld* uses the namespace `umfeld` to avoid name clashes with other libraries. this means that all *Umfeld* functions and classes must be prefixed with `umfeld::` or the `using namespace umfeld;` directive must be used.
 
@@ -17,11 +17,11 @@ this is a simple example of how to include *Umfeld* in your code:
 using namespace umfeld;
 ```
 
-### `@umfeld(color_range)`
+### `@diff(color_range)`
 
 the color model is RGBA and the color range in *Umfeld* is set to `[0.0...1.0]` where `0.0` is black and `1.0` is white. whereas in *Processing* the color range is set to `[0...255]` by default. in *Processing* range and color model can be changed with `colorMode()`. there are currently no plans to support `colorMode()` in *Umfeld*.
 
-### `@umfeld(arrays)`
+### `@diff(arrays)`
 
 arrays in *Umfeld* ( i.e in C/C++ ) are declared slightly differently than in *Processing* ( i.e in Java ). in *Processing*, arrays are declared with the `float[]` syntax, while in *Umfeld* they are declared with the `float*` syntax.
 
