@@ -6,7 +6,6 @@ PImage* myImage;
 
 void settings() {
     size(1024, 768);
-    render_to_buffer = true;
 }
 
 void setup() {

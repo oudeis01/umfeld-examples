@@ -14,15 +14,12 @@ PGraphics* pg = nullptr;
 
 void settings() {
     size(200, 200);
-    // TODO for debugging, remove these ASAP
-    render_to_buffer = true;
-    antialiasing     = 0;
 }
 
 void setup() {
     noFill();
     stroke(1.0f, 0.25f, 0.35f);
-    pg = createGraphics(100, 100, RENDERER_OPEN_GL); // TODO add option to deduce renderer from `g` or settings
+    pg = createGraphics(100, 100);
 }
 
 void draw() {
