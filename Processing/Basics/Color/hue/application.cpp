@@ -1,3 +1,12 @@
+/**
+ * Hue. 
+ * 
+ * Hue is the color reflected from or transmitted through an object 
+ * and is typically referred to as the name of the color such as 
+ * red, blue, or yellow. In this example, move the cursor vertically 
+ * over each bar to alter its hue. 
+ */
+ 
 #include "Umfeld.h"
 
 using namespace umfeld;
@@ -35,20 +44,20 @@ void settings(){
 
 void setup() {
   noStroke();
-  background(0.f);
+  background(0.f); //@diff(color_range)
 }
 
 void draw() {
   int whichBar = mouseX / float(barWidth);
   if (whichBar != lastBar) {
     int barX = whichBar * barWidth;
-    glm::vec3 hsb;
+    glm::vec3 hsb; //@diff(see README.md)
     hsb.x = mouseY/height;
     hsb.y = 1.f;
     hsb.z = 1.f;
-    uint32_t packed = hsb_to_rgb_packed(hsb.x, hsb.y, hsb.z);
-
-    fill_color(packed);
+    uint32_t packed = hsb_to_rgb_packed(hsb.x, hsb.y, hsb.z); //@diff(color_type)
+    
+    fill_color(packed); //@diff(fill_color)
     rect(barX, 0, barWidth, height);
     lastBar = whichBar;
   }
