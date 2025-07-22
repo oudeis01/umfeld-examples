@@ -10,11 +10,6 @@ bool  close_shape      = false;
 
 void settings() {
     size(1024, 768);
-    display          = 0;
-    antialiasing     = 8;
-    render_to_buffer = true;
-    retina_support   = true;
-    enable_audio     = false;
 }
 
 void setup() {

@@ -6,7 +6,6 @@ PImage* umfeld_image;
 
 void settings() {
     size(1024, 768);
-    antialiasing = 8;
 }
 
 void setup() {

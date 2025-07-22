@@ -9,9 +9,6 @@ using namespace umfeld;
 
 void settings() {
     size(1024, 768);
-    antialiasing     = 8;
-    render_to_buffer = false;
-    retina_support   = true;
 }
 
 void setup() {

@@ -17,7 +17,6 @@ bool                 pad_pressed[PAD_COUNT]{false};
 
 void settings() {
     size(1024, 768);
-    antialiasing = 8;
 }
 
 void setup() {
