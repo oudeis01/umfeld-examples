@@ -24,7 +24,7 @@ void setup() {
     fill(1.f); // when exeeding 1.f, shadow disappears in lighting, seems to need internal clamping? Do test with a big value like 10.f -- but unrelated to this example tho..
 
     noStroke();
-    hint(ENABLE_DEPTH_TEST); // @diff(available_hints)
+    hint(ENABLE_DEPTH_TEST); // @diff(hints)
 }
 
 void draw() {
