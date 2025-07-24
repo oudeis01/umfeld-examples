@@ -21,7 +21,7 @@ void settings() {
     audio(info);
     /* select audio subsystem */
     // subsystem_audio = umfeld_create_subsystem_audio_sdl(); // default
-    subsystem_audio = umfeld_create_subsystem_audio_portaudio();
+    // subsystem_audio = umfeld_create_subsystem_audio_portaudio();
 }
 
 void setup() {
