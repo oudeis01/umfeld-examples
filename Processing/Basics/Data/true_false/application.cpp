@@ -12,7 +12,7 @@
 
 using namespace umfeld;
 
-bool b = false;
+bool b = false; //@diff(generic_type)
 
 
 void settings() {

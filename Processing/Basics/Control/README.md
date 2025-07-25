@@ -1,6 +1,6 @@
 # note
 
-Since this category of the processing examples seem to demonstrate the use of the language(java), I write this note to remark the difference between the languages. Decision is required in long term, on how interpret the level of the examples(how much depth of the language you want to show) as well as the key-take of the difference between processing and umfeld.
+Since this category of the processing examples seems to demonstrate the use of the language(java), I write this note to remark the difference between the languages. Decision is required in long term, on how to interpret the level of the examples(how much depth of the language it wants to show) as well as the key-take of the difference between processing and umfeld.
 
 
 

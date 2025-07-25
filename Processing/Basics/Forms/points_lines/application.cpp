@@ -23,25 +23,25 @@ void settings() {
 void setup() {
 
     size(640, 360);
-    hint(DISABLE_SMOOTH_LINES); //@diff(hints)
+    hint(DISABLE_SMOOTH_LINES); //@diff(available_hints)
     background(0.f); //@diff(color_range)
     translate(140, 0);
 }
 
 void draw() {
     // Draw gray box
-    stroke(153);
+    stroke(0.5f);
     line(p3, p3, p2, p3);
     line(p2, p3, p2, p2);
     line(p2, p2, p3, p2);
     line(p3, p2, p3, p3);
 
     // Draw white points
-    stroke(255);
-    point(p1, p1);
-    point(p1, p3);
-    point(p2, p4);
-    point(p3, p1);
-    point(p4, p2);
-    point(p4, p4);
+    stroke(1.f);
+    point(p1, p1); //FIXME: DOES NOT DRAW ANYTHING
+    point(p1, p3); //FIXME: DOES NOT DRAW ANYTHING
+    point(p2, p4); //FIXME: DOES NOT DRAW ANYTHING
+    point(p3, p1); //FIXME: DOES NOT DRAW ANYTHING
+    point(p4, p2); //FIXME: DOES NOT DRAW ANYTHING
+    point(p4, p4); //FIXME: DOES NOT DRAW ANYTHING
 }

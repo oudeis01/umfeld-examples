@@ -15,7 +15,7 @@ void settings() {
 }
 
 void setup() {
-    fill(204.f / 255.f);
+    fill(0.8f);
     hint(ENABLE_DEPTH_TEST); // @note(available_hints)
 }
 

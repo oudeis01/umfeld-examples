@@ -12,7 +12,7 @@
 using namespace umfeld;
 // a is audio in umfeld
 int i = 0;      // Create a variable "i" of the datatype "int"
-float f = 0.0;  // Create a variable "f" of the datatype "float"
+float f = 0.f;  // Create a variable "f" of the datatype "float"
 
 void settings() {
     size(640, 360);

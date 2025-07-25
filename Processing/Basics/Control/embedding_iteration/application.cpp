@@ -18,7 +18,7 @@ void draw() {
             noStroke();
             fill(1.f); // @diff(color_range)
             rect(x - 1, y - 1, 3, 3);
-            // alpha doesn't work somehow
+            // alpha doesn't work somehow(umfeld)
             stroke(1.f, 0.4f); // @diff(color_range)
             line(x, y, width / 2, height / 2);
         }
