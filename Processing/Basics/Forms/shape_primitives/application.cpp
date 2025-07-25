@@ -43,5 +43,5 @@ void draw() {
 /*
 note:
 - triangle() and quad() can be 2D shapes,
-  so to have a override for 2D coordinates arguments might be meaningful.
+  so to have a override for 2D coordinates arguments(without z), or even with glm::vecN might be meaningful.
 */

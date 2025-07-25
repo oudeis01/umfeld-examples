@@ -21,13 +21,13 @@ void settings() {
 }
 
 void setup() {
-    background(0.8f);
+    background(0.8f); //@diff(color_range)
     x = width / 2;
     y = height / 2;
 }
 
 void draw() {
-    background(0.8f);
+    background(0.8f); //@diff(color_range)
 
     int   numPoints = int(map(mouseX, 0, width, 6, 60));
     float angle     = 0;

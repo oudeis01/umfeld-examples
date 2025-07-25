@@ -32,9 +32,9 @@ void draw() {
     lights();
     float far = map(mouseX, 0, width, 120, 400);
     if (showPerspective == true) {
-        perspective(PI / 3.0, float(width) / float(height), 10, far); // disables the light completely
+        perspective(PI / 3.0, float(width) / float(height), 10, far); // FIXME: disables the light completely
     } else {
-        ortho(-width / 2.0, width / 2.0, -height / 2.0, height / 2.0, 10, far); // disables the light completely
+        ortho(-width / 2.0, width / 2.0, -height / 2.0, height / 2.0, 10, far); // FIXME: disables the light completely
     }
     translate(width / 2, height / 2, 0);
     rotateX(-PI / 6);
@@ -47,3 +47,9 @@ void draw() {
 void mousePressed() {
     showPerspective = !showPerspective;
 }
+
+/*
+note:
+- `pespective()` and `ortho()` disables the `lights()`.
+*/
+

@@ -19,21 +19,14 @@ void settings() {
 void setup() {
     img     = loadImage("moonwalk.jpg");
     imgMask = loadImage("mask.jpg");
-    // img->mask(imgMask);
-    imageMode(CENTER);
+    img->mask(imgMask); //unimplemented
+    imageMode(CENTER); //unimplemented
     
 }
 
 void draw() {
-  background(0, 0.4f, 0.6f); //@diff(color_range)
+    background(0, 0.4f, 0.6f); //@diff(color_range)
 
-  image(img, width/2, height/2);
-//   image(img, mouseX, mouseY);
+    image(img, width/2, height/2);
+    image(img, mouseX, mouseY);
 }
-
-
-/*
-note:
-- mask() is not implemented yet
-- imageMode() is not implemented yet
-*/

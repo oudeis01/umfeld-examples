@@ -51,11 +51,10 @@ void draw() {
   int whichBar = mouseX / float(barWidth);
   if (whichBar != lastBar) {
     int barX = whichBar * barWidth;
-    glm::vec3 hsb; //@diff(see README.md)
-    hsb.x = mouseY/height;
-    hsb.y = 1.f;
-    hsb.z = 1.f;
-    uint32_t packed = hsb_to_rgb_packed(hsb.x, hsb.y, hsb.z); //@diff(color_type)
+	float hue = mouseY/height;
+    float saturation = 1.f;
+    float brightness = 1.f;
+    uint32_t packed = hsb_to_rgb_packed(hue, saturation, brightness); //@diff(color_type)
     
     fill_color(packed); //@diff(fill_color)
     rect(barX, 0, barWidth, height);

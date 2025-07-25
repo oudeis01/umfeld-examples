@@ -20,7 +20,7 @@ void settings() {
 
 void setup() {
     maxDistance = dist(width / 2.f, height / 2.f, width, height);
-    distances   = std::vector<std::vector<float>>(width, std::vector<float>(height));
+    distances   = std::vector<std::vector<float>>(width, std::vector<float>(height)); //@diff(std::vector)
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             float distance  = dist(width / 2.f, height / 2.f, (float) x, (float) y);
@@ -42,7 +42,7 @@ void draw() {
         for (int x = 0; x < width; x += spacer) {
             stroke(distances[x][y]);
             pointSize(10);
-            point(x + spacer / 2, y + spacer / 2); // DOES NOT WORK
+            point(x + spacer / 2, y + spacer / 2); // FIXME: DOES NOT DRAW ANYTHING
         }
     }
 }

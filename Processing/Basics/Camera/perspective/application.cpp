@@ -39,7 +39,7 @@ void draw() {
     float cameraZ = cameraY / tanf(fov / 2.f);
 
 
-    perspective(fov, aspect, cameraZ / 10.f, cameraZ * 10.f); // this disables the light
+    perspective(fov, aspect, cameraZ / 10.f, cameraZ * 10.f); // FIXME: this disables the light
 
     translate(width / 2.f + 30.f, height / 2.f, 0.f);
     rotateX(-PI / 6.f);
@@ -57,3 +57,8 @@ void mousePressed() {
 void mouseReleased() {
     aspect = width / height;
 }
+
+/*
+note:
+- `pespective()` and `ortho()` disables the `lights()`.
+*/
