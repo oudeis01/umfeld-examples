@@ -48,7 +48,7 @@ void draw() {
     text(words, 50, 120); //@diff(text)
 }
 
-// FIXME: key event has no response(arch linux x64)
+// FIXME: keyTyped() has no response(6.15.8-arch1-1)
 void keyTyped() {
     // The variable "key" always contains the value
     // of the most recent key pressed.

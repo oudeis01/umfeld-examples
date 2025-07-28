@@ -51,13 +51,19 @@ void setup() {
 }
 
 void draw() {
-    int whichBar = mouseX / barWidth;
+    float whichBar = mouseX / barWidth;
     if (whichBar != lastBar) {
         float barX = whichBar * barWidth;
+        
         uint32_t c = hsb_to_rgb_packed(barX/width, mouseY / height, .25f);
         fill_color(c);
         glm::vec4 C;
         color_unpack(c, C.r, C.g, C.b, C.a);
+        std::cout << C.r << " " 
+                  << C.g << " " 
+                  << C.b << " " 
+                  << C.a << std::endl;
+        rect(barX, 0, barWidth, height);
         lastBar = whichBar;
     }
 }

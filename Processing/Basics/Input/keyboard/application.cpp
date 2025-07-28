@@ -50,4 +50,6 @@ void keyPressed() {
 note:
 - drawing doesn't work inside the keyPressed() 
 - i guess it is threaded and isn't taken into the gl context
+- which is good, cuz the gl context shall live only in the main thread.
+- I might rewrite it to work with the main thread.
 */
