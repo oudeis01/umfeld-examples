@@ -10,5 +10,17 @@
 	"perspective": ["mouse", "random"],
 	"saturation": ["mouse", "random"],
 	"bezier": ["mouse", "random"],
-	"brightness": ["mouse", "random"]
+	"brightness": ["mouse", "random"],
+	"mouse_1d": ["mouse", "horizontal"],
+	"mouse_2d": ["mouse", "random"],
+	"mouse_press":["mouse","random","press"],
+	"mouse_signals":["mouse","random","press"],
+	"storing_input":["mouse","random"],
+	"directional":["mouse","random"],
+	"mixture": ["mouse","random"],
+	"mixture_grid":["mouse","random"],
+	"on_off":["mouse", "horizontal","press"],
+	"reflection":["mouse","random"],
+	"spot":["mouse","random"]
+
 }
