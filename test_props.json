@@ -1,0 +1,14 @@
+{
+	"characters_strings": ["keyboard", "uMfElD_tEsT!@#$"],
+	"constrain": ["mouse", "horizontal"],
+	"easing": ["mouse", "diagonal"],
+	"hue": ["mouse", "random"],
+	"keyboard_functions": ["keyboard", "kEyBoArD_fUnC123!@#"],
+	"keyboard": ["keyboard", "kEyBoArD_iNpUt456$%^"],
+	"move_eye": ["mouse", "random"],
+	"orthographic": ["mouse", "random"],
+	"perspective": ["mouse", "random"],
+	"saturation": ["mouse", "random"],
+	"bezier": ["mouse", "random"],
+	"brightness": ["mouse", "random"]
+}

@@ -11,7 +11,7 @@
 using namespace umfeld;
 
 void settings() {
-    size(1024, 768, RENDERER_OPENGL_3_3_CORE); // @diff(renderer)
+    size(640, 360, RENDERER_OPENGL_3_3_CORE); // @diff(renderer)
 }
 
 void setup() {
