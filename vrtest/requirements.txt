@@ -1,0 +1,6 @@
+colorama
+Pillow
+pyautogui
+pynput
+python_osc
+rapidfuzz

@@ -1,7 +1,7 @@
 {
 	"characters_strings": ["keyboard", "uMfElD_tEsT!@#$"],
-	"constrain": ["mouse", "horizontal"],
-	"easing": ["mouse", "diagonal"],
+	"constrain": ["mouse", "random"],
+	"easing": ["mouse", "random"],
 	"hue": ["mouse", "random"],
 	"keyboard_functions": ["keyboard", "kEyBoArD_fUnC123!@#"],
 	"keyboard": ["keyboard", "kEyBoArD_iNpUt456$%^"],
@@ -11,7 +11,7 @@
 	"saturation": ["mouse", "random"],
 	"bezier": ["mouse", "random"],
 	"brightness": ["mouse", "random"],
-	"mouse_1d": ["mouse", "horizontal"],
+	"mouse_1d": ["mouse", "random"],
 	"mouse_2d": ["mouse", "random"],
 	"mouse_press":["mouse","random","press"],
 	"mouse_signals":["mouse","random","press"],
@@ -19,8 +19,8 @@
 	"directional":["mouse","random"],
 	"mixture": ["mouse","random"],
 	"mixture_grid":["mouse","random"],
-	"on_off":["mouse", "horizontal","press"],
+	"on_off":["mouse", "random","press"],
 	"reflection":["mouse","random"],
-	"spot":["mouse","random"]
-
+	"spot":["mouse","random"],
+	"arctangent":["mouse", "random"]
 }

@@ -20,23 +20,23 @@ void settings() {
 
 void setup() {
     maxDistance = dist(width / 2.f, height / 2.f, width, height);
-<<<<<<< HEAD
     distances   = std::vector<std::vector<float>>(width, std::vector<float>(height)); //@diff(std::vector)
-=======
-    distances   = std::vector<std::vector<float>>(width, std::vector<float>(height));
->>>>>>> 89ad73b (add: processing examples)
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             float distance  = dist(width / 2.f, height / 2.f, (float) x, (float) y);
-            distances[x][y] = distance / maxDistance * 255;
+            distances[x][y] = distance / maxDistance; //@diff(color_range)
+            std::cout << (( distances[x][y])) << " ";
         }
     }
+    std::cout << std::endl;
     spacer = 10;
     strokeWeight(6);
     noLoop(); // Run once and stop
 }
 
 void draw() {
+    background(0.f);
+
     background(0.f);
     // This embedded loop skips over values in the arrays based on
     // the spacer variable, so there are more values in the array
@@ -45,12 +45,7 @@ void draw() {
     for (int y = 0; y < height; y += spacer) {
         for (int x = 0; x < width; x += spacer) {
             stroke(distances[x][y]);
-            pointSize(10);
-<<<<<<< HEAD
-            point(x + spacer / 2, y + spacer / 2); // FIXME: DOES NOT DRAW ANYTHING
-=======
-            point(x + spacer / 2, y + spacer / 2); // DOES NOT WORK
->>>>>>> 89ad73b (add: processing examples)
+            point(x + spacer / 2, y + spacer / 2);
         }
     }
 }
