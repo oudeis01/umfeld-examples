@@ -100,29 +100,69 @@ def build_and_run_umfeld_processing_example(example_path: str, nohup: bool, verb
 def build_and_run_original_processing_example(example_path: str, nohup: bool) -> Optional[int]:
     """
     Builds and runs the Processing example with processing-java.
-    Returns the PID of the started process, or -1 if failed.
+    Finds and returns the PID of the actual Java process, not the launcher script.
+    Returns the PID of the started process, or None if failed.
     """
     import os
     import subprocess
     example_path = os.path.abspath(example_path)
     example_name = os.path.basename(example_path)
     cmd = ["processing-java", f"--sketch={example_path}", "--run"]
+    
+    script_proc = None
+    cwd = os.getcwd()
     try:
-        cwd = os.getcwd()
         os.chdir(example_path)
-        try:
-            if nohup:
-                with open(os.devnull, 'wb') as devnull:
-                    proc = subprocess.Popen(cmd, stdout=devnull, stderr=devnull, preexec_fn=os.setsid)
-            else:
-                proc = subprocess.Popen(cmd)
-            pid = proc.pid
-        finally:
-            os.chdir(cwd)
+        
+        # Launch the script
+        if nohup:
+            with open(os.devnull, 'wb') as devnull:
+                script_proc = subprocess.Popen(cmd, stdout=devnull, stderr=devnull, preexec_fn=os.setsid)
+        else:
+            script_proc = subprocess.Popen(cmd)
+        
+        script_pid = script_proc.pid
+
+        # Find the actual Java process PID which is a child of the script
+        java_pid = None
+        for _ in range(15): # Retry for 3 seconds
+            try:
+                # Find child process of script_pid
+                pgrep_cmd = ["pgrep", "-P", str(script_pid)]
+                child_pids_str = subprocess.check_output(pgrep_cmd, stderr=subprocess.DEVNULL).decode().strip()
+                
+                for child_pid in child_pids_str.splitlines():
+                    try:
+                        comm_cmd = ["ps", "-p", child_pid, "-o", "comm="]
+                        comm = subprocess.check_output(comm_cmd, stderr=subprocess.DEVNULL).decode().strip()
+                        if "java" in comm:
+                            java_pid = int(child_pid)
+                            break
+                    except (subprocess.CalledProcessError, ValueError):
+                        continue
+                if java_pid:
+                    break
+            except (subprocess.CalledProcessError, ValueError):
+                time.sleep(0.2)
+        
+        if java_pid is None:
+            print(f"{Fore.RED}Could not find child Java process for script PID {script_pid}{Style.RESET_ALL}")
+            if script_proc:
+                kill_process(script_pid) # kill the script process
+            return None
+            
+        print(f"{Fore.GREEN}Original example for {example_name} started with Java PID {java_pid}.{Style.RESET_ALL}")
+        return java_pid # Return the java PID
+        
     except Exception as e:
         print(f"{Fore.RED}Failed to run original processing example: {e}{Style.RESET_ALL}")
-        pid = None
-    return pid
+        if script_proc:
+            kill_process(script_proc.pid)
+        return None
+    finally:
+        # Ensure we always change back to the original directory
+        if os.getcwd() != cwd:
+            os.chdir(cwd)
 
 def load_test_props() -> Dict[str, Any]:
     """
@@ -151,19 +191,51 @@ def is_interactive(props: Dict[str, Any], project_name: str) -> List[Any]:
         return []
     return props[project_name]
 
-def fuzzy_match_pairs(umfeld_lst: List[str], original_lst: List[str]) -> dict:
+def _get_category_from_path(path: str, root_path: str) -> str:
     """
-    Fuzzy match the project names in the two lists and return a list of pairs with their scores.
+    Extracts the category name from a given example path.
+    Assumes path structure like: root_path/category_name/project_name/...
+    """
+    try:
+        relative_path = os.path.relpath(path, root_path)
+        parts = relative_path.split(os.sep)
+        if len(parts) > 1:
+            return parts[0]
+    except ValueError:
+        # path is not under root_path, or other path issues
+        pass
+    return "" # Return empty string if category cannot be determined
+
+def fuzzy_match_pairs(umfeld_lst: List[str], original_lst: List[str], umfeld_root: str, original_root: str) -> dict:
+    """
+    Fuzzy match the project names in the two lists, filtering by category first.
     """
     pairs = {}
-    choices = [os.path.basename(example) for example in original_lst]
-    for example in umfeld_lst:
-        result = process.extractOne(os.path.basename(example), choices)
-        if result is not None:
-            best_match, score, idx = result
-            pairs[os.path.basename(example)] = os.path.basename(original_lst[idx])
+    original_categorized = {}
+    for example_path in original_lst:
+        category = _get_category_from_path(example_path, original_root)
+        if category: # Only add if category is successfully extracted
+            if category not in original_categorized:
+                original_categorized[category] = []
+            original_categorized[category].append(example_path)
+
+    for umfeld_example_path in umfeld_lst:
+        umfeld_project_name = os.path.basename(umfeld_example_path)
+        umfeld_category = _get_category_from_path(umfeld_example_path, umfeld_root)
+
+        if umfeld_category and umfeld_category in original_categorized:
+            # Filter original projects by category
+            category_choices_paths = original_categorized[umfeld_category]
+            category_choices_names = [os.path.basename(p) for p in category_choices_paths]
+
+            result = process.extractOne(umfeld_project_name, category_choices_names)
+            if result is not None:
+                best_match_name, score, idx = result
+                pairs[umfeld_project_name] = best_match_name
+            else:
+                print(f"{Fore.YELLOW}No category-matched fuzzy match found for {umfeld_project_name} in category {umfeld_category}{Style.RESET_ALL}")
         else:
-            print(f"{Fore.RED}No match found for {os.path.basename(example)}{Style.RESET_ALL}")
+            print(f"{Fore.YELLOW}No original projects found for category {umfeld_category} for {umfeld_project_name} or category could not be determined.{Style.RESET_ALL}")
     return pairs
 
 def get_app_window_dimensions(app_name: str) -> Tuple[int, int, int, int]:
@@ -360,16 +432,16 @@ def record_window_video_async(window_rect: Tuple[int, int, int, int], duration: 
 
 def get_client_area(pid: int, window_title: str, is_java_process: bool = False) -> Tuple[int, int, int, int]:
     """
-    Finds the window geometry (x, y, w, h) by first looking for a window with a matching title,
-    and then verifying it's the correct process.
+    Finds the window geometry (x, y, w, h).
+    For Java processes, it relies on window title matching due to unreliable PID reporting.
+    For native processes, it verifies PID as well.
     Retries for a few seconds to allow the window to appear.
     Requires xdotool and xwininfo.
 
     Args:
         pid: The PID of the process that was launched.
         window_title: The expected title of the window.
-        is_java_process: If True, verifies the window belongs to a 'java' process.
-                         If False, verifies the window's PID matches the provided 'pid'.
+        is_java_process: If True, indicates a Java process (PID verification is skipped).
     """
     if not sys.platform.startswith("linux"):
         print(f"{Fore.RED}get_client_area is only supported on Linux.{Style.RESET_ALL}")
@@ -387,36 +459,57 @@ def get_client_area(pid: int, window_title: str, is_java_process: bool = False) 
                 time.sleep(0.2)
                 continue
 
-            # 2. Verify the PID of the found windows.
-            for potential_id in potential_win_ids:
-                try:
-                    win_pid_str = subprocess.check_output(
-                        ["xdotool", "getwindowpid", potential_id]
-                    ).decode().strip()
-                    
-                    win_pid = int(win_pid_str)
-
-                    if is_java_process:
-                        # For Java, the window is owned by a 'java' process, not the launcher.
-                        # We check if the process name is 'java'.
-                        p_name = subprocess.check_output(
-                            ["ps", "-p", str(win_pid), "-o", "comm="]
+            # 2. Verify the PID of the found windows (only for non-Java processes).
+            #    For Java processes, we trust the title match due to unreliable PID reporting.
+            if is_java_process:
+                exact_match_win_id = None
+                non_terminal_partial_match_win_id = None
+                
+                for potential_id in potential_win_ids:
+                    try:
+                        full_window_name = subprocess.check_output(
+                            ["xdotool", "getwindowname", potential_id]
                         ).decode().strip()
-                        if p_name == "java":
-                            win_id = potential_id
-                            break # Found the correct java window
-                    else:
+
+                        if full_window_name == window_title: # Exact match is highest priority
+                            exact_match_win_id = potential_id
+                            break # Found the best possible match, no need to check further
+                        elif window_title.lower() in full_window_name.lower() and "terminal" not in full_window_name.lower():
+                            # This is a partial match and not a terminal, keep it as a fallback
+                            non_terminal_partial_match_win_id = potential_id
+                    except (subprocess.CalledProcessError, ValueError):
+                        continue
+                
+                if exact_match_win_id:
+                    win_id = exact_match_win_id
+                elif non_terminal_partial_match_win_id:
+                    win_id = non_terminal_partial_match_win_id
+                else:
+                    # Fallback to the first potential ID if no better candidate is found
+                    win_id = potential_win_ids[0] if potential_win_ids else None
+                
+                if win_id:
+                    break # Found a candidate, exit retry loop
+            else:
+                for potential_id in potential_win_ids:
+                    try:
+                        win_pid_str = subprocess.check_output(
+                            ["xdotool", "getwindowpid", potential_id]
+                        ).decode().strip()
+                        
+                        win_pid = int(win_pid_str)
+
                         # For native apps, the window PID should match the launched PID.
                         if win_pid == pid:
                             win_id = potential_id
                             break # Found the correct native window
+                    
+                    except (subprocess.CalledProcessError, ValueError):
+                        # Window might have closed, or PID is not a number.
+                        continue
                 
-                except (subprocess.CalledProcessError, ValueError):
-                    # Window might have closed, or PID is not a number.
-                    continue
-            
-            if win_id:
-                break # Exit retry loop if we found our window
+                if win_id:
+                    break # Exit retry loop if we found our window
 
         except (subprocess.CalledProcessError, FileNotFoundError):
             # xdotool might fail if not installed or if no windows are found yet.

@@ -5,6 +5,8 @@ import sys
 import argparse
 from utils import *
 from rapidfuzz import process
+from datetime import datetime
+
 
 
 def process_umfeld_project(_project_name:str, _umfeld_lst: List, _original_lst: List, _pairs: dict, _props: dict, original: bool = False, verbose: bool = True) -> Optional[str]:
@@ -163,10 +165,23 @@ if __name__ == "__main__":
             else:
                 print("Invalid input. Please enter 'y' or 'n'.")
 
+    # Setup logging
+    log_file_name = datetime.now().strftime("run_log_%Y%m%d_%H%M%S.txt")
+    log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), log_file_name)
+    
+    def log_message(message):
+        with open(log_file_path, "a") as f:
+            f.write(message + "\n")
+        print(message) # Also print to console
+
+    log_message(f"--- Test Run Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---")
+    log_message(f"Umfeld Example Directory: {umfeld_processing_example_root}")
+    log_message(f"Processing Example Directory: {original_processing_example_root}")
+
     # global variables
     umfeld_lst = get_all_umfeld_processing_examples(umfeld_processing_example_root)
     original_lst = get_all_original_processing_examples(original_processing_example_root)
-    pairs = fuzzy_match_pairs(umfeld_lst, original_lst)
+    pairs = fuzzy_match_pairs(umfeld_lst, original_lst, umfeld_processing_example_root, original_processing_example_root)
     props = load_test_props()
 
     VERBOSE = False
@@ -179,10 +194,10 @@ if __name__ == "__main__":
         result = process.extractOne(project_name, choices)
         if result:
             best_match, score, idx = result
-            print(f"Found project: {best_match} (score: {score})")
+            log_message(f"Found project: {best_match} (score: {score})")
             projects_to_run.append(umfeld_lst[idx])
         else:
-            print(f"{Fore.RED}No matching project found for '{project_name}'.{Style.RESET_ALL}")
+            log_message(f"{Fore.RED}No matching project found for '{project_name}'.{Style.RESET_ALL}")
             sys.exit(1)
     else:
         projects_to_run = umfeld_lst
@@ -191,43 +206,58 @@ if __name__ == "__main__":
         
         _umfeld_project_name = os.path.basename(u).split('.')[0]  # Extract project name from path
 
-        print(f"{Fore.GREEN}Processing project: {_umfeld_project_name}{Style.RESET_ALL}")
+        log_message(f"\n{Fore.GREEN}Processing project: {_umfeld_project_name}{Style.RESET_ALL}")
+        project_status = f"Project: {_umfeld_project_name} - "
+        
+        umfeld_success = False
+        processing_success = False
+        concat_success = False
 
         umfeld_video = process_umfeld_project(_umfeld_project_name, umfeld_lst, original_lst, pairs, props, verbose=VERBOSE)
         if not umfeld_video:
-            print(f"{Fore.YELLOW}Skipping project {_umfeld_project_name} due to Umfeld run failure.{Style.RESET_ALL}\n\n")
-            continue
+            log_message(f"{Fore.YELLOW}Skipping project {_umfeld_project_name} due to Umfeld run failure.{Style.RESET_ALL}")
+            project_status += "Umfeld: FAILED, "
+        else:
+            umfeld_success = True
+            project_status += "Umfeld: SUCCESS, "
 
         processing_video = process_umfeld_project(_umfeld_project_name, umfeld_lst, original_lst, pairs, props, original=True, verbose=VERBOSE)
         if not processing_video:
-            print(f"{Fore.YELLOW}Skipping concatenation for {_umfeld_project_name} due to Processing run failure.{Style.RESET_ALL}\n\n")
-            continue
+            log_message(f"{Fore.YELLOW}Skipping concatenation for {_umfeld_project_name} due to Processing run failure.{Style.RESET_ALL}")
+            project_status += "Processing: FAILED, "
+        else:
+            processing_success = True
+            project_status += "Processing: SUCCESS, "
 
         # 8. Concatenate the two videos/images if both exist
-        if os.path.exists(umfeld_video) and os.path.exists(processing_video):
+        if umfeld_success and processing_success and os.path.exists(umfeld_video) and os.path.exists(processing_video):
             is_image = any(umfeld_video.lower().endswith(ext) for ext in ['.png', '.jpg', '.jpeg', '.bmp'])
             
             if is_image:
-                final_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "test_video_final.png")
+                final_path = os.path.join(os.path.dirname(umfeld_video), f"comparison-{_umfeld_project_name}.png")
                 concat_images(
                     processing_video,
                     umfeld_video,
                     output_path=final_path
                 )
             else:
-                final_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "test_video_final.mp4")
+                final_path = os.path.join(os.path.dirname(umfeld_video), f"comparison-{_umfeld_project_name}.mp4")
                 concat_videos_ffmpeg_filter(
                     processing_video,
                     umfeld_video,
                     output_path=final_path,
                     verbose=VERBOSE
                 )
+            concat_success = True
+            project_status += "Concatenation: SUCCESS"
         else:
-            print(
+            log_message(
                 f"{Fore.RED}One or both video/image files are missing, skipping concatenation.{Style.RESET_ALL}"
             )
-        print("\n\n")
+            project_status += "Concatenation: FAILED"
+        
+        log_message(project_status)
+        log_message("\n")
     
-    
-    
-    print(f"{Fore.GREEN}Main program exiting.{Style.RESET_ALL}")
+    log_message(f"--- Test Run Finished: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---")
+    log_message(f"{Fore.GREEN}Main program exiting.{Style.RESET_ALL}")
