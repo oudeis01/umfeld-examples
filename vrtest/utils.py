@@ -60,7 +60,7 @@ def get_all_original_processing_examples(original_processing_example_root: str) 
                 result.append(root)
     return result
 
-def build_and_run_umfeld_processing_example(example_path: str, nohup: bool, verbose: bool = True) -> int:
+def build_and_run_umfeld_processing_example(example_path: str, nohup: bool, verbose: bool = True) -> Optional[int]:
     """
     Builds and runs the Processing example with cmake and make.
     Returns the PID of the started process, or -1 if failed.
@@ -75,10 +75,10 @@ def build_and_run_umfeld_processing_example(example_path: str, nohup: bool, verb
     try:
         if not os.path.exists(build_dir):
             os.makedirs(build_dir)
-        os.chdir(build_dir)
+        # os.chdir(build_dir) # chdir is not needed because of -C flag in make
         stdout = None if verbose else subprocess.DEVNULL
         stderr = None if verbose else subprocess.DEVNULL
-        subprocess.run(build_cmd, shell=True, check=True, stdout=stdout, stderr=stderr)
+        subprocess.run(build_cmd, shell=True, check=True, stdout=stdout, stderr=stderr, cwd=build_dir)
         subprocess.run(make_cmd, shell=True, check=True, stdout=stdout, stderr=stderr)
         if nohup:
             with open(os.devnull, 'wb') as devnull:
@@ -89,15 +89,15 @@ def build_and_run_umfeld_processing_example(example_path: str, nohup: bool, verb
         print(f"{Fore.GREEN}Umfeld example for {example_name} started with PID {pid}.{Style.RESET_ALL}")
     except subprocess.CalledProcessError as e:
         print(f"{Fore.RED}Failed to build or run the example: {e}{Style.RESET_ALL}")
-        return -1
+        return None
     except Exception as e:
         print(f"{Fore.RED}Unexpected error: {e}{Style.RESET_ALL}")
-        return -1
+        return None
     finally:
         os.chdir(cwd)
     return pid
 
-def build_and_run_original_processing_example(example_path: str, nohup: bool) -> int:
+def build_and_run_original_processing_example(example_path: str, nohup: bool) -> Optional[int]:
     """
     Builds and runs the Processing example with processing-java.
     Returns the PID of the started process, or -1 if failed.
@@ -120,7 +120,8 @@ def build_and_run_original_processing_example(example_path: str, nohup: bool) ->
         finally:
             os.chdir(cwd)
     except Exception as e:
-        pid = -1
+        print(f"{Fore.RED}Failed to run original processing example: {e}{Style.RESET_ALL}")
+        pid = None
     return pid
 
 def load_test_props() -> Dict[str, Any]:
@@ -357,44 +358,101 @@ def record_window_video_async(window_rect: Tuple[int, int, int, int], duration: 
     t.start()
     return t
 
-def get_client_area_by_title(window_title: str, window_index: int = 0) -> Tuple[int, int, int, int]:
+def get_client_area(pid: int, window_title: str, is_java_process: bool = False) -> Tuple[int, int, int, int]:
     """
-    Returns (x, y, w, h) of the client area of the window with the given title.
-    If multiple windows match, uses the one at window_index (default 0).
-    Requires xdotool and xwininfo to be installed.
+    Finds the window geometry (x, y, w, h) by first looking for a window with a matching title,
+    and then verifying it's the correct process.
+    Retries for a few seconds to allow the window to appear.
+    Requires xdotool and xwininfo.
+
+    Args:
+        pid: The PID of the process that was launched.
+        window_title: The expected title of the window.
+        is_java_process: If True, verifies the window belongs to a 'java' process.
+                         If False, verifies the window's PID matches the provided 'pid'.
     """
-    import subprocess
-    import re
-    from colorama import Fore, Style
+    if not sys.platform.startswith("linux"):
+        print(f"{Fore.RED}get_client_area is only supported on Linux.{Style.RESET_ALL}")
+        return 0, 0, 0, 0
+
+    win_id = None
+    for _ in range(15):  # Retry for 3 seconds (15 * 0.2s)
+        try:
+            # 1. Find all windows with the matching title.
+            potential_win_ids = subprocess.check_output(
+                ["xdotool", "search", "--name", window_title]
+            ).decode().strip().splitlines()
+
+            if not potential_win_ids:
+                time.sleep(0.2)
+                continue
+
+            # 2. Verify the PID of the found windows.
+            for potential_id in potential_win_ids:
+                try:
+                    win_pid_str = subprocess.check_output(
+                        ["xdotool", "getwindowpid", potential_id]
+                    ).decode().strip()
+                    
+                    win_pid = int(win_pid_str)
+
+                    if is_java_process:
+                        # For Java, the window is owned by a 'java' process, not the launcher.
+                        # We check if the process name is 'java'.
+                        p_name = subprocess.check_output(
+                            ["ps", "-p", str(win_pid), "-o", "comm="]
+                        ).decode().strip()
+                        if p_name == "java":
+                            win_id = potential_id
+                            break # Found the correct java window
+                    else:
+                        # For native apps, the window PID should match the launched PID.
+                        if win_pid == pid:
+                            win_id = potential_id
+                            break # Found the correct native window
+                
+                except (subprocess.CalledProcessError, ValueError):
+                    # Window might have closed, or PID is not a number.
+                    continue
+            
+            if win_id:
+                break # Exit retry loop if we found our window
+
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            # xdotool might fail if not installed or if no windows are found yet.
+            time.sleep(0.2)
+            continue
+        
+        time.sleep(0.2)
+
+    if not win_id:
+        print(f"{Fore.RED}Failed to find a verified window for title '{window_title}' (PID: {pid}, Java: {is_java_process}).{Style.RESET_ALL}")
+        return 0, 0, 0, 0
+
+    # 3. Get window geometry using the verified win_id
     try:
-        win_ids = subprocess.check_output(
-            ["xdotool", "search", "--name", window_title]
-        ).decode().splitlines()
-        if not win_ids:
-            print(f"{Fore.RED}No window found with title '{window_title}'{Style.RESET_ALL}")
-            return 0, 0, 0, 0
-        if len(win_ids) > 1:
-            print(f"{Fore.YELLOW}Multiple windows found for '{window_title}': {win_ids}. Using index {window_index}.{Style.RESET_ALL}")
-        win_id = win_ids[window_index] if window_index < len(win_ids) else win_ids[0]
         output = subprocess.check_output(
             ["xwininfo", "-id", win_id]
         ).decode()
+        
         def extract(pattern, text, label):
             match = re.search(pattern, text)
             if not match:
                 print(f"{Fore.RED}Could not find {label} in xwininfo output!{Style.RESET_ALL}")
-                print(text)
                 return None
             return int(match.group(1))
+        
         x = extract(r"Absolute upper-left X:\s+(\d+)", output, "X")
         y = extract(r"Absolute upper-left Y:\s+(\d+)", output, "Y")
         w = extract(r"Width:\s+(\d+)", output, "Width")
         h = extract(r"Height:\s+(\d+)", output, "Height")
+        
         if None in (x, y, w, h):
             return 0, 0, 0, 0
         return x, y, w, h
-    except Exception as e:
-        print(f"{Fore.RED}Failed to get client area: {e}{Style.RESET_ALL}")
+
+    except (subprocess.CalledProcessError, FileNotFoundError, Exception) as e:
+        print(f"{Fore.RED}Failed to get client area geometry for win_id {win_id}: {e}{Style.RESET_ALL}")
         return 0, 0, 0, 0
 
 def add_bottom_text_padding(video_path: str, text: str, padding: int = 60, font_size: int = 36, font_color: str = "white", fontfile: str = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", verbose: bool = True) -> None:
