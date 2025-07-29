@@ -26,7 +26,7 @@ void draw() {
     background(0.f); //@diff(color_range)
     float dirY = (mouseY / float(height) - 0.5) * 2;
     float dirX = (mouseX / float(width) - 0.5) * 2;
-    directionalLight(.8f, .8f, .8f, -dirX, -dirY, -1.f); //FIXME: error: ‘directionalLight’ was not declared in this scope 
+//    directionalLight(.8f, .8f, .8f, -dirX, -dirY, -1.f); //FIXME: error: ‘directionalLight’ was not declared in this scope 
     translate(width / 2 - 100, height / 2, 0);
     sphere(80);
     translate(200, 0, 0);
