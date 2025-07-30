@@ -1,6 +1,6 @@
 colorama
+opencv_python
 Pillow
 pyautogui
 pynput
-python_osc
 rapidfuzz
