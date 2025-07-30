@@ -141,7 +141,13 @@ if __name__ == "__main__":
     parser.add_argument("--umfeld_example_dir", type=str, default="../Processing/", help="Root directory for Umfeld Processing examples.")
     parser.add_argument("--processing_example_dir", type=str, default="/opt/processing/modes/java/examples/", help="Root directory for original Processing examples.")
     parser.add_argument("--project", type=str, help="Run a single project by fuzzy matching its name.")
+    parser.add_argument("--category", type=str, help="Run projects from a specific category (e.g., 'Basics/Input', 'Basics/Math').")
     args = parser.parse_args()
+
+    # Check for mutually exclusive options
+    if args.project and args.category:
+        print(f"{Fore.RED}Error: --project and --category options cannot be used together. Please use only one.{Style.RESET_ALL}")
+        sys.exit(1)
 
     # Setup centralized logging
     log_file_name = f"run_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
@@ -202,6 +208,19 @@ if __name__ == "__main__":
                 sys.exit(1)
         else:
             log_message(f"No matching project found for '{args.project}'. Exiting.", component="Init", level="ERROR", color=Fore.RED)
+            sys.exit(1)
+
+    elif args.category:
+        # Filter projects by category
+        filtered_projects = filter_projects_by_category(umfeld_lst, args.category, args.umfeld_example_dir)
+        
+        if filtered_projects:
+            log_message(f"Found {len(filtered_projects)} projects in category '{args.category}':", component="Init", color=Fore.CYAN)
+            for proj in filtered_projects:
+                log_message(f"  - {os.path.basename(proj)}", component="Init", color=Fore.CYAN)
+            projects_to_run = filtered_projects
+        else:
+            log_message(f"No projects found in category '{args.category}'. Exiting.", component="Init", level="ERROR", color=Fore.RED)
             sys.exit(1)
 
     else:
