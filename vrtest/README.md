@@ -4,6 +4,13 @@
 
 This project is designed for Linux environments only.
 
+
+### 0. What it does
+- Builds and runs Umfeld-Processing and the counterpart Processing examples.
+- Records(5sec)/captures the output of each example.
+- Creates a concatenated video/image of all succeeded examples.
+- Stores the results in the respective Umfeld example directories.
+
 ### 1. Python & Pip
 - Python 3.8+
 - pip (Python package manager)
