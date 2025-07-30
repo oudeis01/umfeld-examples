@@ -73,6 +73,29 @@ def get_all_umfeld_processing_examples(root: str) -> List[str]:
 def get_all_original_processing_examples(root: str) -> List[str]:
     return get_all_umfeld_processing_examples(root) # Same logic
 
+def filter_projects_by_category(projects: List[str], category: str, root_dir: str) -> List[str]:
+    """
+    Filter projects by category path (e.g., 'Basics/Input', 'Basics/Math').
+    """
+    filtered = []
+    root_abs = os.path.abspath(root_dir)
+    
+    for project in projects:
+        project_abs = os.path.abspath(project)
+        # Get relative path from root directory
+        try:
+            rel_path = os.path.relpath(project_abs, root_abs)
+            # Extract category path (parent directories)
+            category_path = os.path.dirname(rel_path)
+            
+            if category_path == category:
+                filtered.append(project)
+        except ValueError:
+            # Skip if project is not under root directory
+            continue
+    
+    return filtered
+
 def build_and_run_umfeld_processing_example(example_path: str, nohup: bool, verbose: bool = True) -> Optional[int]:
     example_path = os.path.abspath(example_path)
     example_name = os.path.basename(example_path)
