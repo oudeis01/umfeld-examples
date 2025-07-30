@@ -77,15 +77,18 @@ def process_umfeld_project(
     # Prepare for interaction if any
     is_interactive_flag = is_interactive(_props, _project_name)
     
+    # animation 타입인지 확인 (영상 녹화하지만 인터랙션 없음)
+    is_animation = _project_name in _props and _props[_project_name] and _props[_project_name][0] == "animation"
+    
     # Determine output path (always in the Umfeld project directory)
     output_name = f"processing_{_pairs.get(_project_name)}" if original else f"umfeld_{_project_name}"
-    output_ext = ".mp4" if is_interactive_flag else ".png"
+    output_ext = ".mp4" if (is_interactive_flag or is_animation) else ".png"
     output_path = os.path.join(umfeld_path, output_name + output_ext)
 
     # Start recording or take screenshot
     record_thread = None
     with time_logger("capture/recording", "Capture", _project_name):
-        if is_interactive_flag:
+        if is_interactive_flag or is_animation:
             log_message(f"Starting video recording to: {output_path}", component=f"{component_prefix}-Record", color=Fore.CYAN)
             record_thread = record_window_video_async((x, y, w, h), duration=5, output_path=output_path)
         else:

@@ -163,11 +163,21 @@ def load_test_props() -> Dict[str, Any]:
             log_message(f"Error decoding JSON from {test_props_path}: {e}", component="Init", level="ERROR", color=Fore.RED)
             sys.exit(1)
 
-def is_interactive(props: Dict[str, Any], project_name: str) -> List[Any]:
+def is_interactive(props: Dict[str, Any], project_name: str) -> bool:
     if project_name not in props:
         log_message(f"Project '{project_name}' not found in test_props.json.", component="Config", level="WARNING", color=Fore.YELLOW)
-        return []
-    return props[project_name]
+        return False
+    
+    project_props = props[project_name]
+    if not project_props:
+        return False
+    
+    # animation 타입은 비대화형으로 처리 (영상만 녹화)
+    if project_props[0] == "animation":
+        return False
+    
+    # mouse, keyboard 타입은 대화형으로 처리
+    return project_props[0] in ["mouse", "keyboard"]
 
 def _get_category_from_path(path: str, root_path: str) -> str:
     try:
