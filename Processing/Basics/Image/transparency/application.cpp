@@ -25,6 +25,7 @@ void draw() {
     image(img, 0, 0); // Display at full opacity
     float dx = (mouseX - img->width / 2) - offset; //@diff(pointer)
     offset += dx * easing;
-    tint(255, 127); // Display at half opacity //unimplemented
+    //FIXME: error: ‘tint’ was not declared in this scope; did you mean ‘uint’?
+    // tint(255, 127); // Display at half opacity //unimplemented 
     image(img, offset, 0);
 }

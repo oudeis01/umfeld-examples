@@ -58,4 +58,5 @@ void keyTyped() {
         // Write the letter to the console
         println(key);
     }
+    println(key);
 }
