@@ -1,263 +1,246 @@
 from typing import Optional, List
-import threading
 import time
 import sys
 import argparse
-from utils import *
+import os
 from rapidfuzz import process
 from datetime import datetime
+from colorama import Fore, Style
 
+# Import the centralized logging and all other utils
+from utils import *
 
+def process_umfeld_project(
+    _project_name: str, 
+    _umfeld_lst: List[str], 
+    _original_lst: List[str], 
+    _pairs: dict, 
+    _props: dict, 
+    original: bool = False
+) -> Optional[str]:
+    """
+    Processes a single project (either Umfeld or original Processing).
+    Handles building, running, interaction, and recording.
+    """
+    project_start_time = time.time()
+    project_type = "Processing" if original else "Umfeld"
+    component_prefix = f"{project_type}"
 
-def process_umfeld_project(_project_name:str, _umfeld_lst: List, _original_lst: List, _pairs: dict, _props: dict, original: bool = False, verbose: bool = True) -> Optional[str]:
-    # 1. build run
-    # Always use Umfeld project path for output location
-    umfeld_path = next((p for p in _umfeld_lst if _project_name in p), None)
-    if umfeld_path is None:
-        print(f"{Fore.RED}No Umfeld project path found for {_project_name}.{Style.RESET_ALL}")
+    # Master Umfeld path is always needed for output location
+    umfeld_path = next((p for p in _umfeld_lst if os.path.basename(p) == _project_name), None)
+    if not umfeld_path:
+        log_message(f"[{_project_name}] Master Umfeld path not found in list.", component=component_prefix, level="ERROR", color=Fore.RED)
         return None
     umfeld_path = os.path.abspath(umfeld_path)
-    print(f"{Fore.CYAN}umfeld_path: {umfeld_path}{Style.RESET_ALL}")
+
     pid = None
-    if original:
-        # Find the original project path for running, but output stays in Umfeld dir
-        orig_proj_name = _pairs.get(_project_name)
-        orig_path = next((p for p in _original_lst if orig_proj_name in p), None)
-        if orig_path is None:
-            print(f"{Fore.RED}No original project path found for {orig_proj_name}.{Style.RESET_ALL}")
-            return None
-        orig_path = os.path.abspath(orig_path)
-        pid = build_and_run_original_processing_example(orig_path, True)
-    else:
-        pid = build_and_run_umfeld_processing_example(umfeld_path, True, verbose=verbose)
-    
+    project_path = None
+    window_title = None
+
+    with time_logger("build and run", f"{project_type}-Build", _project_name):
+        if original:
+            orig_proj_name = _pairs.get(_project_name)
+            if not orig_proj_name:
+                log_message(f"[{_project_name}] No matching Processing project found in pairs dict.", component=component_prefix, level="WARNING", color=Fore.YELLOW)
+                return None
+            
+            project_path = next((p for p in _original_lst if os.path.basename(p) == orig_proj_name), None)
+            if not project_path:
+                log_message(f"[{orig_proj_name}] Path not found in original list.", component=component_prefix, level="ERROR", color=Fore.RED)
+                return None
+            
+            project_path = os.path.abspath(project_path)
+            pid = build_and_run_original_processing_example(project_path, True)
+            window_title = orig_proj_name
+        else:
+            project_path = umfeld_path
+            pid = build_and_run_umfeld_processing_example(project_path, True)
+            window_title = _project_name
+
     if pid is None:
-        print(f"{Fore.YELLOW}Skipping project due to build/run failure: {_project_name}{Style.RESET_ALL}")
+        # The build/run function already logs the specific failure
         return None
 
-    time.sleep(1.5)
+    win_id = None
+    with time_logger("window detection", "Window", _project_name):
+        log_message("Waiting 3.0s for application window to initialize...", component=component_prefix, color=Fore.BLUE)
+        time.sleep(3.0)
 
-    # 2. check test_props.json
-    IS_INTERACTIVE = False
-    if _project_name in _props:
-        IS_INTERACTIVE = is_interactive(_props, _project_name)
-
-    # 3. prepare simulation
-    mouse_actions = []
-    keys = []
-    # Use client area for accurate recording region
-    window_title = _pairs[_project_name] if original else _project_name
-    x, y, w, h = get_client_area(pid, window_title, is_java_process=original)
-    if w == 0 or h == 0:
-        print(f"{Fore.RED}Could not find window for {window_title} with PID {pid}. Skipping.{Style.RESET_ALL}")
-        kill_process(pid)
-        return None
-    print(f"{Fore.BLUE}Client area for {window_title}: {x},{y},{w},{h}.{Style.RESET_ALL}")
-
-    if IS_INTERACTIVE:
-        if _props[_project_name][0] == "mouse":
-            include_click = "press" in _props[_project_name]
-            include_drag = "drag" in _props[_project_name]
-            mouse_actions = generate_random_mouse_actions(x, y, w, h, 10, include_click=include_click, include_drag=include_drag, seed=_project_name)
-        elif _props[_project_name][0] == "keyboard":
-            keys = _props[_project_name][1]
-
-    # 4. start recording
-    video_path = None
-    record_thread = None
-    if IS_INTERACTIVE:
-        if original:
-            video_path = os.path.join(umfeld_path, f"processing_{_pairs[_project_name]}.mp4")
-        else:
-            video_path = os.path.join(umfeld_path, f"umfeld_{_project_name}.mp4")
-        print(f"{Fore.CYAN}video_path: {video_path}{Style.RESET_ALL}")
-        record_thread = record_window_video_async(
-            (x,y,w,h), 
-            duration=5, 
-            output_path=video_path,
-            verbose=verbose
-        )   
-    else:
-        # For non-interactive projects, take a screenshot instead of recording video
-        if original:
-            video_path = os.path.join(umfeld_path, f"processing_{_pairs[_project_name]}.png")
-        else:
-            video_path = os.path.join(umfeld_path, f"umfeld_{_project_name}.png")
-        print(f"{Fore.CYAN}video_path: {video_path}{Style.RESET_ALL}")
-        capture_window_image(
-            (x, y, w, h), 
-            output_path=video_path,
-            verbose=verbose
-        )
-
-    # 5. run simulation
-    if IS_INTERACTIVE:
-        print(f"{Fore.GREEN}Running simulation for {_project_name}.{Style.RESET_ALL}-{IS_INTERACTIVE}")
-        try:
-            if _props[_project_name][0] == "mouse":
-                # Pass all mouse actions (move, press, release) for drag/click support
-                run_mouse_action_sequence((x, y, w, h), mouse_actions, total_duration=5)
-            elif _props[_project_name][0] == "keyboard":
-                # Ensure keys is a string, not a list
-                if isinstance(keys, list):
-                    keys_str = ''.join(keys)
-                else:
-                    keys_str = str(keys)
-                send_keys_to_window(window_title, keys_str, delay=100, total_duration=5, window_rect=(x, y, w, h))
-        except Exception as e:
-            print(f"{Fore.RED}Interaction failed for {_project_name}: {e}{Style.RESET_ALL}")
+        # Get window geometry and the specific window ID
+        x, y, w, h, win_id = get_client_area(pid, window_title, is_java_process=original)
+        if w == 0 or h == 0 or not win_id:
+            log_message(f"Could not find window for '{window_title}' (PID: {pid}). Skipping.", component=component_prefix, level="ERROR", color=Fore.RED)
             kill_process(pid)
             return None
+        log_message(f"Found window for '{window_title}' (ID: {win_id}): x={x}, y={y}, w={w}, h={h}", component=component_prefix, color=Fore.BLUE)
 
-    if IS_INTERACTIVE and record_thread is not None:
+    # Prepare for interaction if any
+    is_interactive_flag = is_interactive(_props, _project_name)
+    
+    # Determine output path (always in the Umfeld project directory)
+    output_name = f"processing_{_pairs.get(_project_name)}" if original else f"umfeld_{_project_name}"
+    output_ext = ".mp4" if is_interactive_flag else ".png"
+    output_path = os.path.join(umfeld_path, output_name + output_ext)
+
+    # Start recording or take screenshot
+    record_thread = None
+    with time_logger("capture/recording", "Capture", _project_name):
+        if is_interactive_flag:
+            log_message(f"Starting video recording to: {output_path}", component=f"{component_prefix}-Record", color=Fore.CYAN)
+            record_thread = record_window_video_async((x, y, w, h), duration=5, output_path=output_path)
+        else:
+            log_message(f"Capturing screenshot to: {output_path}", component=f"{component_prefix}-Capture", color=Fore.CYAN)
+            capture_window_image((x, y, w, h), output_path=output_path)
+
+    # Run simulation if interactive
+    if is_interactive_flag:
+        with time_logger("interaction", "Interact", _project_name):
+            interaction_type = _props[_project_name][0]
+            log_message(f"Running '{interaction_type}' simulation.", component=f"{component_prefix}-Interact", color=Fore.GREEN)
+            try:
+                if interaction_type == "mouse":
+                    mouse_actions = generate_random_mouse_actions(w, h, 10, "press" in _props[_project_name], "drag" in _props[_project_name], seed=_project_name)
+                    run_mouse_action_sequence((x, y, w, h), mouse_actions, total_duration=5)
+                elif interaction_type == "keyboard":
+                    keys = ''.join(_props[_project_name][1])
+                    # Pass the exact window ID to avoid ambiguity
+                    send_keys_to_window(win_id, keys, total_duration=5, window_rect=(x, y, w, h))
+            except Exception as e:
+                log_message(f"Interaction failed: {e}", component=f"{component_prefix}-Interact", level="ERROR", color=Fore.RED)
+                kill_process(pid)
+                if record_thread: record_thread.join() # Ensure recorder finishes
+                return None
+
+    if record_thread:
         record_thread.join()
 
-    # 6. pad video/image
-    if not video_path or not os.path.exists(video_path):
-        print(f"{Fore.RED}Video/image file not found after recording: {video_path}. Skipping.{Style.RESET_ALL}")
+    # Post-processing (padding) and cleanup
+    if not os.path.exists(output_path):
+        log_message(f"Output file not found after recording: {output_path}. Skipping.", component=component_prefix, level="ERROR", color=Fore.RED)
         kill_process(pid)
         return None
 
-    if original:
-        add_bottom_text_padding(video_path, "Processing", padding=50, verbose=verbose)
-    else:
-        add_bottom_text_padding(video_path, "Umfeld", padding=50, verbose=verbose)
-
-    # 7. kill process
+    with time_logger("post-processing", f"{component_prefix}-ffmpeg", _project_name):
+        log_message(f"Adding '{project_type}' label to output file.", component=f"{component_prefix}-ffmpeg", color=Fore.CYAN)
+        add_bottom_text_padding(output_path, project_type)
+    
     kill_process(pid)
     
-    return video_path
+    total_duration = time.time() - project_start_time
+    log_message(f"Total processing time: {total_duration:.2f}s",
+                component=f"{project_type}-Total", color=Fore.MAGENTA)
+    return output_path
 
-
-
-
-##==============================================================================
 ##==============================================================================
 if __name__ == "__main__":
-    
-
-    # Initial blank lines for status output
-    print("\n\n\n")
-
-    # Argument parsing
+    main_start_time = time.time()
     parser = argparse.ArgumentParser(description="Run Umfeld and Processing examples.")
-    parser.add_argument("--umfeld_example_dir", type=str, default="../Processing/",
-                        help="Root directory for Umfeld Processing examples.")
-    parser.add_argument("--processing_example_dir", type=str, default="/opt/processing/modes/java/examples/",
-                        help="Root directory for original Processing examples.")
+    parser.add_argument("--umfeld_example_dir", type=str, default="../Processing/", help="Root directory for Umfeld Processing examples.")
+    parser.add_argument("--processing_example_dir", type=str, default="/opt/processing/modes/java/examples/", help="Root directory for original Processing examples.")
     parser.add_argument("--project", type=str, help="Run a single project by fuzzy matching its name.")
     args = parser.parse_args()
 
-    umfeld_processing_example_root = args.umfeld_example_dir
-    original_processing_example_root = args.processing_example_dir
-
-    print(f"Umfeld Example Directory: {umfeld_processing_example_root}")
-    print(f"Processing Example Directory: {original_processing_example_root}")
-
-    if not args.project:
-        while True:
-            response = input("Do you want to proceed with these directories? (y/n): ").lower()
-            if response == 'y':
-                break
-            elif response == 'n':
-                print("Exiting program.")
-                sys.exit(0)
-            else:
-                print("Invalid input. Please enter 'y' or 'n'.")
-
-    # Setup logging
-    log_file_name = datetime.now().strftime("run_log_%Y%m%d_%H%M%S.txt")
+    # Setup centralized logging
+    log_file_name = f"run_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
     log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), log_file_name)
-    
-    def log_message(message):
-        with open(log_file_path, "a") as f:
-            f.write(message + "\n")
-        print(message) # Also print to console
+    setup_logging(log_file_path)
 
-    log_message(f"--- Test Run Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---")
-    log_message(f"Umfeld Example Directory: {umfeld_processing_example_root}")
-    log_message(f"Processing Example Directory: {original_processing_example_root}")
+    log_message("--- Test Run Started ---", component="Init", color=Fore.GREEN)
+    log_message(f"Umfeld Example Dir: {os.path.abspath(args.umfeld_example_dir)}", component="Init")
+    log_message(f"Processing Example Dir: {os.path.abspath(args.processing_example_dir)}", component="Init")
 
-    # global variables
-    umfeld_lst = get_all_umfeld_processing_examples(umfeld_processing_example_root)
-    original_lst = get_all_original_processing_examples(original_processing_example_root)
-    pairs = fuzzy_match_pairs(umfeld_lst, original_lst, umfeld_processing_example_root, original_processing_example_root)
+    # Load all projects and properties
+    umfeld_lst = get_all_umfeld_processing_examples(args.umfeld_example_dir)
+    original_lst = get_all_original_processing_examples(args.processing_example_dir)
     props = load_test_props()
-
-    VERBOSE = False
+    pairs = fuzzy_match_pairs(umfeld_lst, original_lst, args.umfeld_example_dir, args.processing_example_dir)
 
     projects_to_run = []
     if args.project:
-        # Find the best match for the given project name
-        project_name = args.project
+        def normalize_name(name):
+            return name.replace('_', '').replace(' ', '').lower()
+
         choices = [os.path.basename(p) for p in umfeld_lst]
-        result = process.extractOne(project_name, choices)
-        if result:
-            best_match, score, idx = result
-            log_message(f"Found project: {best_match} (score: {score})")
-            projects_to_run.append(umfeld_lst[idx])
+        normalized_input = normalize_name(args.project)
+
+        # Filter choices by the length of their normalized names
+        length_matched_choices = [
+            c for c in choices if len(normalize_name(c)) == len(normalized_input)
+        ]
+
+        best_match = None
+        # If we have candidates of the same length, perform fuzzy matching only on them
+        if length_matched_choices:
+            log_message(f"Found {len(length_matched_choices)} same-length candidate(s) for '{args.project}'.", component="Init")
+            # Use a dictionary to match against normalized names but retrieve the original
+            choices_dict = {name: normalize_name(name) for name in length_matched_choices}
+            result = process.extractOne(normalized_input, choices_dict)
+            if result:
+                # For dicts, result is (value, score, key)
+                _, _, best_match = result
+        
+        # If no same-length candidates were found, fall back to fuzzy matching all projects
+        if not best_match:
+            log_message(f"No same-length candidates. Falling back to fuzzy matching all {len(choices)} projects.", component="Init", level="WARNING", color=Fore.YELLOW)
+            result = process.extractOne(args.project, choices)
+            if result:
+                # For lists, result is (choice, score, index)
+                best_match, _, _ = result
+        
+        # If a project was selected, add its full path to the run list
+        if best_match:
+            log_message(f"Selected project to run: '{best_match}'", component="Init", color=Fore.CYAN)
+            try:
+                idx = choices.index(best_match)
+                projects_to_run.append(umfeld_lst[idx])
+            except ValueError:
+                # This should not happen if best_match came from choices
+                log_message(f"Internal error: Could not find path for selected project '{best_match}'.", component="Init", level="ERROR", color=Fore.RED)
+                sys.exit(1)
         else:
-            log_message(f"{Fore.RED}No matching project found for '{project_name}'.{Style.RESET_ALL}")
+            log_message(f"No matching project found for '{args.project}'. Exiting.", component="Init", level="ERROR", color=Fore.RED)
             sys.exit(1)
+
     else:
         projects_to_run = umfeld_lst
 
-    for u in projects_to_run:
-        
-        _umfeld_project_name = os.path.basename(u).split('.')[0]  # Extract project name from path
+    log_message(f"Found {len(umfeld_lst)} Umfeld and {len(original_lst)} Processing projects. Matched {len(pairs)} pairs.", component="Init")
+    log_message(f"Starting processing for {len(projects_to_run)} projects.", component="Init", color=Fore.GREEN)
 
-        log_message(f"\n{Fore.GREEN}Processing project: {_umfeld_project_name}{Style.RESET_ALL}")
-        project_status = f"Project: {_umfeld_project_name} - "
-        
-        umfeld_success = False
-        processing_success = False
-        concat_success = False
+    for u_path in projects_to_run:
+        umfeld_project_name = os.path.basename(u_path)
+        log_message(f"Processing Umfeld project: '{umfeld_project_name}'", component="Main", color=Style.BRIGHT)
 
-        umfeld_video = process_umfeld_project(_umfeld_project_name, umfeld_lst, original_lst, pairs, props, verbose=VERBOSE)
-        if not umfeld_video:
-            log_message(f"{Fore.YELLOW}Skipping project {_umfeld_project_name} due to Umfeld run failure.{Style.RESET_ALL}")
-            project_status += "Umfeld: FAILED, "
+        matched_name = pairs.get(umfeld_project_name)
+        if matched_name:
+            log_message(f"Matched with Processing project: '{matched_name}'", component="Match", color=Fore.CYAN)
         else:
-            umfeld_success = True
-            project_status += "Umfeld: SUCCESS, "
+            log_message(f"No match found. Skipping Processing part.", component="Match", level="WARNING", color=Fore.YELLOW)
 
-        processing_video = process_umfeld_project(_umfeld_project_name, umfeld_lst, original_lst, pairs, props, original=True, verbose=VERBOSE)
-        if not processing_video:
-            log_message(f"{Fore.YELLOW}Skipping concatenation for {_umfeld_project_name} due to Processing run failure.{Style.RESET_ALL}")
-            project_status += "Processing: FAILED, "
-        else:
-            processing_success = True
-            project_status += "Processing: SUCCESS, "
+        # Run Umfeld version
+        umfeld_video = process_umfeld_project(umfeld_project_name, umfeld_lst, original_lst, pairs, props)
+        
+        # Run Processing version
+        processing_video = process_umfeld_project(umfeld_project_name, umfeld_lst, original_lst, pairs, props, original=True)
 
-        # 8. Concatenate the two videos/images if both exist
-        if umfeld_success and processing_success and os.path.exists(umfeld_video) and os.path.exists(processing_video):
-            is_image = any(umfeld_video.lower().endswith(ext) for ext in ['.png', '.jpg', '.jpeg', '.bmp'])
+        # Concatenate results
+        if umfeld_video and processing_video:
+            is_image = umfeld_video.lower().endswith(('.png', '.jpg', '.jpeg'))
+            final_path = os.path.join(os.path.dirname(umfeld_video), f"comparison-{umfeld_project_name}{'.png' if is_image else '.mp4'}")
             
-            if is_image:
-                final_path = os.path.join(os.path.dirname(umfeld_video), f"comparison-{_umfeld_project_name}.png")
-                concat_images(
-                    processing_video,
-                    umfeld_video,
-                    output_path=final_path
-                )
-            else:
-                final_path = os.path.join(os.path.dirname(umfeld_video), f"comparison-{_umfeld_project_name}.mp4")
-                concat_videos_ffmpeg_filter(
-                    processing_video,
-                    umfeld_video,
-                    output_path=final_path,
-                    verbose=VERBOSE
-                )
-            concat_success = True
-            project_status += "Concatenation: SUCCESS"
+            with time_logger("concatenation", "Concat", umfeld_project_name):
+                log_message(f"Concatenating results to: {final_path}", component="Concat", color=Fore.GREEN)
+                if is_image:
+                    concat_images(processing_video, umfeld_video, final_path)
+                else:
+                    concat_videos_ffmpeg_filter(processing_video, umfeld_video, final_path)
         else:
-            log_message(
-                f"{Fore.RED}One or both video/image files are missing, skipping concatenation.{Style.RESET_ALL}"
-            )
-            project_status += "Concatenation: FAILED"
-        
-        log_message(project_status)
-        log_message("\n")
-    
-    log_message(f"--- Test Run Finished: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---")
-    log_message(f"{Fore.GREEN}Main program exiting.{Style.RESET_ALL}")
+            log_message("One or both outputs failed, skipping concatenation.", component="Concat", level="WARNING", color=Fore.YELLOW)
+            
+        log_message(f"Finished processing '{umfeld_project_name}'.", component="Main", color=Style.BRIGHT)
+        print("-" * 80)
+
+    main_end_time = time.time()
+    total_main_duration = main_end_time - main_start_time
+    log_message(f"Total script execution time: {total_main_duration:.2f}s", component="Init", color=Fore.GREEN)
+    log_message("--- Test Run Finished ---", component="Init", color=Fore.GREEN)

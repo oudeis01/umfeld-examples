@@ -23,6 +23,9 @@ std::vector<bool> loadStates(imgCount); //@diff(std::vector)
 // For loading animation
 float loaderX, loaderY, theta;
 
+void drawImages(); //@diff(forward_declaration
+void runLoaderAni(); //@diff(forward_declaration
+bool checkLoadStates(); //@diff(forward_declaration)
 
 void settings() {
     size(640, 360);
@@ -32,9 +35,9 @@ void setup() {
     imgW = width / imgCount;
 
     // Load images asynchronously
-    for (int i = 0; i < imgCount; i++) {
-        imgs[i] = requestImage("PT_anim" + nf(i, 4) + ".gif"); // unimplemented
-    }
+    // for (int i = 0; i < imgCount; i++) {
+    //     imgs[i] = requestImage("PT_anim" + nf(i, 4) + ".gif"); // unimplemented
+    // }
 }
 
 void draw() {
@@ -43,13 +46,13 @@ void draw() {
     // Start loading animation
     runLoaderAni();
 
-    for (int i = 0; i < imgs.size(); i++) { //@diff(std::vector)
-        // Check if individual images are fully loaded
-        if ((imgs[i]->width != 0) && (imgs[i]->width != -1)) { //@diff(pointer)
-            // As images are loaded set true in boolean array
-            loadStates[i] = true;
-        }
-    }
+    // for (int i = 0; i < imgs.size(); i++) { //@diff(std::vector)
+    //     // Check if individual images are fully loaded
+    //     if ((imgs[i]->width != 0) && (imgs[i]->width != -1)) { //@diff(pointer)
+    //         // As images are loaded set true in boolean array
+    //         loadStates[i] = true;
+    //     }
+    // }
     // When all images are loaded draw them to the screen
     if (checkLoadStates()) {
         drawImages();
@@ -57,10 +60,10 @@ void draw() {
 }
 
 void drawImages() {
-    int y = (height - imgs[0]->height) / 2;
-    for (int i = 0; i < imgs.size(); i++) { //@diff(std::vector)
-        image(imgs[i], width / imgs.size() * i, y, imgs[i]->height, imgs[i]->height); //@diff(pointer)
-    }
+    // int y = (height - imgs[0]->height) / 2;
+    // for (int i = 0; i < imgs.size(); i++) { //@diff(std::vector)
+    //     image(imgs[i], width / imgs.size() * i, y, imgs[i]->height, imgs[i]->height); //@diff(pointer)
+    // }
 }
 
 // Loading animation
@@ -80,10 +83,10 @@ void runLoaderAni() {
 
 // Return true when all images are loaded - no false values left in array
 bool checkLoadStates() {
-    for (int i = 0; i < imgs.size(); i++) { //@diff(std::vector)
-        if (loadStates[i] == false) {
-            return false;
-        }
-    }
+    // for (int i = 0; i < imgs.size(); i++) { //@diff(std::vector)
+    //     if (loadStates[i] == false) {
+    //         return false;
+    //     }
+    // }
     return true;
 }

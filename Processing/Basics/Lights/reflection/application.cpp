@@ -24,9 +24,9 @@ void draw() {
     background(0.f); //@diff(color_range)
     translate(width / 2, height / 2);
     // Set the specular color of lights that follow
-    lightSpecular(1, 1, 1); //FIXME: error: ‘lightSpecular’ was not declared in this scope
-    directionalLight(0.8, 0.8, 0.8, 0, 0, -1); //FIXME: error: ‘directionalLight’ was not declared in this scope
+    // lightSpecular(1, 1, 1); //FIXME: error: ‘lightSpecular’ was not declared in this scope
+    // directionalLight(0.8, 0.8, 0.8, 0, 0, -1); //FIXME: error: ‘directionalLight’ was not declared in this scope
     float s = mouseX / float(width);
-    specular(s, s, s); //FIXME: error: ‘specular’ was not declared in this scope
+    // specular(s, s, s); //FIXME: error: ‘specular’ was not declared in this scope
     sphere(120);
 }

@@ -19,8 +19,8 @@ void settings() {
 void setup() {
     img     = loadImage("moonwalk.jpg");
     imgMask = loadImage("mask.jpg");
-    img->mask(imgMask); //unimplemented
-    imageMode(CENTER); //unimplemented
+    // img->mask(imgMask); //unimplemented
+    // imageMode(CENTER); //unimplemented
     
 }
 
