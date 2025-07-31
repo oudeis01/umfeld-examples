@@ -6,6 +6,7 @@
 #include "Umfeld.h"
 #include "Geometry.h"
 
+// TODO WIP quite a lot of things are still broken or not implemented here
 // TODO: the following combinations are partly broken:
 //      - stroke_cap_mode : PROJECT + POINTED
 //      - stroke_join_mode: BEVEL + MITER
@@ -230,10 +231,22 @@ void keyPressed() {
         strokeCap(SQUARE);
         console("SQUARE");
     }
-    if (key == ',') {
-        g->set_stroke_render_mode(STROKE_RENDER_MODE_TRIANGULATE_2D);
+    if (key == 'a') {
+        // TODO WIP
+        g->set_stroke_render_mode(STROKE_RENDER_MODE_TUBE_3D);
+        console("STROKE_RENDER_MODE_TUBE_3D");
     }
-    if (key == '.') {
+    if (key == 's') {
+        g->set_stroke_render_mode(STROKE_RENDER_MODE_LINE_SHADER);
+        console("STROKE_RENDER_MODE_LINE_SHADER");
+    }
+    if (key == 'd') {
+        g->set_stroke_render_mode(STROKE_RENDER_MODE_TRIANGULATE_2D);
+        console("STROKE_RENDER_MODE_TRIANGULATE_2D");
+    }
+    if (key == 'f') {
+        // TODO WIP
         g->set_stroke_render_mode(STROKE_RENDER_MODE_NATIVE);
+        console("STROKE_RENDER_MODE_NATIVE");
     }
 }
