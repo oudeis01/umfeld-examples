@@ -56,5 +56,15 @@
     "star": ["animation"],
     "storing_input": ["mouse", "random"],
     "transparency": ["mouse", "random"],
-    "triangle_strip": ["mouse", "random"]
+    "triangle_strip": ["mouse", "random"],
+	"create_graphics": ["mouse", "random"],
+	"loop":["mouse","random","press"],
+	"redraw":["mouse","random","press"],
+	"setup_draw":["animation"],
+	"arm":["mouse","random"],
+	"rotate_push_pop":["animation"],
+	"rotate_xy": ["animation"],
+	"scale": ["animation"],
+	"translate": ["animation"],
+	"text_rotation":["animation"]
 }
