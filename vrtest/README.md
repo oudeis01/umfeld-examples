@@ -86,7 +86,7 @@ python main.py --category Basics/Image
 
 ```bash
 python main.py --category Basics/Image
-python main.py --project <project_name>
+python main.py --project brightness
 python main.py --project "conditionals_1" --umfeld_example_dir <umfeld_dir> --processing_example_dir <processing_dir>
 ```
 
@@ -107,5 +107,3 @@ python generate_report.py
 ## Notes
 - Not sure how to call it, I thought of it similar to the visual regression testing, though doesn't make sense to do such test in creative coding.
 - Only tested on Linux/X11. macOS/Windows support is partial or mostly unimplemented.
-- The resulting video and image are saved inside the umfeld example directory.
-
