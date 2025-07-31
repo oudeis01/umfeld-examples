@@ -14,7 +14,7 @@ void settings() {
 }
 
 void setup() {
-    img = loadImage("https://processingfoundation.org/content/1-home/processing-web.png"); //unimplemented
+    img = loadImage("https://github.com/dennisppaul/umfeld/blob/main/assets/umfeld-logotype.png?raw=true"); //@diff(pointer)
     noLoop();
 }
 
