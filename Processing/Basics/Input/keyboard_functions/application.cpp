@@ -10,6 +10,7 @@
  * Original 'Color Typewriter' concept by John Maeda. 
  */
 #include "Umfeld.h"
+#include <glm/gtx/color_space.hpp>
 
 using namespace umfeld;
 
@@ -26,53 +27,27 @@ bool newletter; //@diff(generic_type)
 int numChars = 26;    // There are 26 characters in the alphabet
 std::vector<uint32_t> colors(numChars); //@diff(std::vector, color_type)
 
-uint32_t hsb_to_rgb_packed(const float h, const float s, const float b, const float a = 1.0f) {
-    const float H = std::clamp(h, 0.0f, 1.0f);
-    const float S = std::clamp(s, 0.0f, 1.0f);
-    const float V = std::clamp(b, 0.0f, 1.0f);
-    const float A = std::clamp(a, 0.0f, 1.0f);
-
-    float r = 0, g = 0, bl = 0;
-    float hh = H * 6.0f;         // hue slice
-    int   i  = static_cast<int>(hh);
-    float f  = hh - i;
-    float p  = V * (1.0f - S);
-    float q  = V * (1.0f - S * f);
-    float t  = V * (1.0f - S * (1.0f - f));
-
-    switch (i % 6) {
-        case 0: r = V;  g = t;  bl = p; break;
-        case 1: r = q;  g = V;  bl = p; break;
-        case 2: r = p;  g = V;  bl = t; break;
-        case 3: r = p;  g = q;  bl = V; break;
-        case 4: r = t;  g = p;  bl = V; break;
-        case 5: r = V;  g = p;  bl = q; break;
-    }
-    return (static_cast<uint32_t>(A * 255) << 24) |
-           (static_cast<uint32_t>(bl * 255) << 16) |
-           (static_cast<uint32_t>(g  * 255) <<  8) |
-            static_cast<uint32_t>(r  * 255);
-}
-
-void fill_with_hsb_to_rgb(float h, float s, float b, float a = 1.0f) {
-    fill_color(hsb_to_rgb_packed(h, s, b, a));
-}
-void fill_with_hsb_to_rgb_uint(uint32_t color) {
-    float r, g, b, a;
-    color_unpack(color, r, g, b, a);
-    fill_with_hsb_to_rgb(r, g, b, a);
-}
-
 void settings() {
     size(640, 360);
+    
 }
 
 void setup() {
     noStroke();
-    background(.5f); //@diff(color_range)
+    background(0.5f); //@diff(color_mode)
     // Set a hue value for each key
     for (int i = 0; i < numChars; i++) {
-        colors[i] = color((float)i/(float)numChars, (float)numChars/(float)numChars, (float)numChars/(float)numChars); //@diff(color_range, color_type)
+        // use GLM to convert HSB to RGB and store it
+        // you can access the elements of glm::vec types 
+        // with either .x .y .z .w or .r .g .b .a or [0], [1], [2], [3]
+        glm::vec3 hsb;
+        glm::vec3 rgb;
+        // hsb.x is same as hsb.r or hsb[0]
+        hsb.x = (float)i / (float)numChars;  // hue: 0-1
+        hsb.y = 1.0f;  // saturation: full
+        hsb.z = 1.0f;  // brightness: full
+        rgb = glm::rgbColor(hsb);  // GLM expects hue in degrees
+        colors[i] = color(rgb.r, rgb.g, rgb.b);
     }
 }
 
@@ -86,28 +61,28 @@ void draw() {
         } else {
             y_pos = y + minHeight;
             rect( x, y_pos, letterWidth, letterHeight );
-            fill_with_hsb_to_rgb_uint(float(numChars/2)/255.f);
+            fill(0.5f);
             rect( x, y_pos-minHeight, letterWidth, letterHeight );
         }
         newletter = false;
     }
 }
 
-void keyPressed() { //FIXME: key is case insensitive?
+void keyPressed() {
     // If the key is between 'A'(65) to 'Z' and 'a' to 'z'(122)
     if((key >= 'A' && key <= 'Z') || (key >= 'a' && key <= 'z')) {
         int keyIndex;
         if(key <= 'Z') {
-        keyIndex = key-'A';
-        letterHeight = maxHeight;
-        fill_with_hsb_to_rgb_uint(colors[keyIndex]);
+            keyIndex = key-'A';
+            letterHeight = maxHeight;
+            fill_color(colors[keyIndex]);
         } else {
-        keyIndex = key-'a';
-        letterHeight = minHeight;
-        fill_with_hsb_to_rgb_uint(colors[keyIndex]);
+            keyIndex = key-'a';
+            letterHeight = minHeight;
+            fill_color(colors[keyIndex]);
         }
     } else {
-        fill(0.f);
+        fill(0.0f);
         letterHeight = 10;
     }
 
