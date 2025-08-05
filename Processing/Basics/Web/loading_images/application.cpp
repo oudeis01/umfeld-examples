@@ -14,7 +14,7 @@ void settings() {
 }
 
 void setup() {
-    img = loadImage("https://github.com/dennisppaul/umfeld/blob/main/assets/umfeld-logotype.png?raw=true"); //@diff(pointer)
+    img = loadImage("https://github.com/dennisppaul/umfeld-examples/blob/main/Advanced/texture-filtering/data/umfeld-logotype-64.png?raw=true"); //@diff(pointer)
     noLoop();
 }
 
