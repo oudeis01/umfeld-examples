@@ -3,25 +3,23 @@ import sys
 import subprocess
 import time
 import signal
-from enum import Enum, auto
-from rapidfuzz import process
 import json
-from colorama import Fore, Style
 import logging
-from contextlib import contextmanager
-
-# import pyautogui
-from pynput.mouse import Controller
 import random
 import re
 import threading
-from typing import Optional, List, Tuple, Dict, Any
-from PIL import Image
+from contextlib import contextmanager
 from datetime import datetime
+from enum import Enum, auto
+from typing import Optional, List, Tuple, Dict, Any
 
-def setup_logging(log_file_path: str):
+from colorama import Fore, Style
+from PIL import Image
+from pynput.mouse import Controller
+
+def setup_logging(log_file_path: str) -> None:
     """
-    Sets up centralized logging to both console and file.
+    Set up centralized logging to both console and file.
     """
     logging.basicConfig(
         level=logging.INFO,
@@ -32,18 +30,15 @@ def setup_logging(log_file_path: str):
         ]
     )
 
-def log_message(message, level="INFO", color=None, component=None):
-    # ANSI escape codes regex for cleaning
+def log_message(message: str, level: str = "INFO", color: Optional[str] = None, component: Optional[str] = None) -> None:
+    """
+    Log message to both file and console with optional color formatting.
+    """
+    # Clean ANSI escape codes for file logging
     ansi_escape = re.compile(r'\x1b\[([0-9]{1,2}(;[0-9]{1,2})*)?[mGK]')
     clean_message = ansi_escape.sub('', message)
 
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    if component:
-        formatted_file_message = f"[{timestamp}] [{level}] [{component}] {clean_message}"
-    else:
-        formatted_file_message = f"[{timestamp}] [{level}] {clean_message}"
-
-    # Log to file using the logging module
+    # Log to file using logging module
     logger = logging.getLogger()
     if level == "ERROR":
         logger.error(clean_message)
@@ -54,7 +49,7 @@ def log_message(message, level="INFO", color=None, component=None):
     else:
         logger.info(clean_message)
 
-    # Print to console with color if specified
+    # Print to console with optional color
     if color:
         print(f"{color}{message}{Style.RESET_ALL}")
     else:
@@ -63,7 +58,7 @@ def log_message(message, level="INFO", color=None, component=None):
 @contextmanager
 def time_logger(description: str, component: str, project_name: str):
     """
-    Context manager for timing operations and logging the results.
+    Context manager for timing operations and logging results.
     """
     start_time = time.time()
     log_message(f"Starting {description} for {project_name}", component=component, color=Fore.BLUE)
@@ -76,7 +71,7 @@ def time_logger(description: str, component: str, project_name: str):
 
 class InteractiveType(Enum):
     """
-    Enum for interactive types.
+    Enumeration of supported interaction types.
     """
     MOUSE_RANDOM = auto()
     MOUSE_CLICK = auto()
@@ -87,87 +82,131 @@ class InteractiveType(Enum):
 
 def get_all_umfeld_processing_examples(umfeld_processing_example_root: str) -> List[str]:
     """
-    Returns a list of all dirs 4 level down in the umfeld_processing_example_root directory, using os.walk.
-    but exclude the template directory.
+    Get all Umfeld processing example directories (excluding templates).
+    Returns directories 3 levels deep from root.
     """
     result = []
     for root, dirs, files in os.walk(umfeld_processing_example_root):
-        # Check if the current directory is 4 levels down
+        # Check if directory is at correct depth (3 levels from root)
         if root.count(os.sep) - umfeld_processing_example_root.count(os.sep) == 2:
-            # Exclude the template directory
-            if "template" not in root:
+            if "template" not in root.lower():
                 result.append(root)
     return result
+
+def get_cmake_project_name(project_path: str) -> Optional[str]:
+    """
+    Parse CMakeLists.txt to get the actual project name.
+    Returns None if not found or parsing fails.
+    """
+    cmake_file = os.path.join(project_path, "CMakeLists.txt")
+    if not os.path.exists(cmake_file):
+        return None
+    
+    try:
+        with open(cmake_file, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Look for project() declaration
+        import re
+        match = re.search(r'project\s*\(\s*([^)]+)\s*\)', content, re.IGNORECASE)
+        if match:
+            # Extract just the project name (first argument)
+            project_line = match.group(1).strip()
+            project_name = project_line.split()[0]  # Get first word
+            return project_name
+    except Exception as e:
+        print(f"Warning: Could not parse CMakeLists.txt in {project_path}: {e}")
+    
+    return None
 
 def get_all_original_processing_examples(original_processing_example_root: str) -> List[str]:
     """
-    Returns a list of all dirs 4 level down in the original_processing_example_root directory, using os.walk.
-    but exclude the template directory.
+    Get all original Processing example directories (excluding templates).
+    Returns directories 3 levels deep from root.
     """
     result = []
     for root, dirs, files in os.walk(original_processing_example_root):
-        # Check if the current directory is 4 levels down
+        # Check if directory is at correct depth (3 levels from root)
         if root.count(os.sep) - original_processing_example_root.count(os.sep) == 2:
-            # Exclude the template directory
-            if "template" not in root:
+            if "template" not in root.lower():
                 result.append(root)
     return result
 
-def build_and_run_umfeld_processing_example(example_path: str, nohup: bool, verbose: bool = True) -> Optional[int]:
+def build_and_run_umfeld_processing_example(example_path: str, nohup: bool, verbose: bool = True, clean_build: bool = False) -> Optional[int]:
     """
-    Builds and runs the Processing example with cmake and make.
-    Returns the PID of the started process, or -1 if failed.
+    Build and run Umfeld processing example using CMake and Make.
+    Returns PID of started process or None if failed.
     """
     example_path = os.path.abspath(example_path)
     example_name = os.path.basename(example_path)
     build_dir = os.path.join(example_path, "build")
-    build_cmd = f"cmake -S {example_path} -B {build_dir} -DCMAKE_BUILD_TYPE=Debug"
-    make_cmd = f"make -C {build_dir} -j32"
-    run_cmd = [os.path.join(build_dir, example_name)]
+    
+    # Get actual project name from CMakeLists.txt (may differ from folder name)
+    project_name = get_cmake_project_name(example_path) or example_name
+    
+    # Prepare build commands with proper path quoting
+    build_cmd = ["cmake", "-S", example_path, "-B", build_dir, "-DCMAKE_BUILD_TYPE=Debug"]
+    make_cmd = ["make", "-C", build_dir, "-j32"]
+    run_cmd = [os.path.join(build_dir, project_name)]
+    
     cwd = os.getcwd()
     try:
+        # Clean build directory if requested (for failed-list retries)
+        if clean_build and os.path.exists(build_dir):
+            import shutil
+            shutil.rmtree(build_dir)
+        
         if not os.path.exists(build_dir):
             os.makedirs(build_dir)
-        # os.chdir(build_dir) # chdir is not needed because of -C flag in make
+        
+        # Configure output redirection
         stdout = None if verbose else subprocess.DEVNULL
         stderr = None if verbose else subprocess.DEVNULL
-        subprocess.run(build_cmd, shell=True, check=True, stdout=stdout, stderr=stderr, cwd=build_dir)
-        subprocess.run(make_cmd, shell=True, check=True, stdout=stdout, stderr=stderr)
+        
+        # Build the project
+        subprocess.run(build_cmd, check=True, stdout=stdout, stderr=stderr)
+        subprocess.run(make_cmd, check=True, stdout=stdout, stderr=stderr)
+        
+        # Run the executable
         if nohup:
             with open(os.devnull, 'wb') as devnull:
                 proc = subprocess.Popen(run_cmd, stdout=devnull, stderr=devnull, preexec_fn=os.setsid)
         else:
             proc = subprocess.Popen(run_cmd)
+        
         pid = proc.pid
-        print(f"{Fore.GREEN}Umfeld example for {example_name} started with PID {pid}.{Style.RESET_ALL}")
+        print(f"{Fore.GREEN}Umfeld example '{example_name}' started with PID {pid}{Style.RESET_ALL}")
+        return pid
+        
     except subprocess.CalledProcessError as e:
-        print(f"{Fore.RED}Failed to build or run the example: {e}{Style.RESET_ALL}")
+        error_msg = f"COMPILE_ERROR: Failed to build Umfeld example '{example_name}': {e}"
+        print(f"{Fore.RED}{error_msg}{Style.RESET_ALL}")
+        log_message(error_msg, component="Umfeld-Build", level="ERROR", color=Fore.RED)
         return None
     except Exception as e:
-        print(f"{Fore.RED}Unexpected error: {e}{Style.RESET_ALL}")
+        error_msg = f"BUILD_ERROR: Unexpected build error for '{example_name}': {e}"
+        print(f"{Fore.RED}{error_msg}{Style.RESET_ALL}")
+        log_message(error_msg, component="Umfeld-Build", level="ERROR", color=Fore.RED)
         return None
     finally:
         os.chdir(cwd)
-    return pid
 
 def build_and_run_original_processing_example(example_path: str, nohup: bool) -> Optional[int]:
     """
-    Builds and runs the Processing example with processing-java.
-    Finds and returns the PID of the actual Java process, not the launcher script.
-    Returns the PID of the started process, or None if failed.
+    Build and run original Processing example using processing-java.
+    Returns PID of actual Java process, not launcher script.
     """
-    import os
-    import subprocess
     example_path = os.path.abspath(example_path)
     example_name = os.path.basename(example_path)
     cmd = ["processing-java", f"--sketch={example_path}", "--run"]
     
     script_proc = None
     cwd = os.getcwd()
+    
     try:
         os.chdir(example_path)
         
-        # Launch the script
+        # Launch processing-java script
         if nohup:
             with open(os.devnull, 'wb') as devnull:
                 script_proc = subprocess.Popen(cmd, stdout=devnull, stderr=devnull, preexec_fn=os.setsid)
@@ -176,133 +215,103 @@ def build_and_run_original_processing_example(example_path: str, nohup: bool) ->
         
         script_pid = script_proc.pid
 
-        # Find the actual Java process PID which is a child of the script
-        java_pid = None
-        for _ in range(15): # Retry for 3 seconds
-            try:
-                # Find child process of script_pid
-                pgrep_cmd = ["pgrep", "-P", str(script_pid)]
-                child_pids_str = subprocess.check_output(pgrep_cmd, stderr=subprocess.DEVNULL).decode().strip()
-                
-                for child_pid in child_pids_str.splitlines():
-                    try:
-                        comm_cmd = ["ps", "-p", child_pid, "-o", "comm="]
-                        comm = subprocess.check_output(comm_cmd, stderr=subprocess.DEVNULL).decode().strip()
-                        if "java" in comm:
-                            java_pid = int(child_pid)
-                            break
-                    except (subprocess.CalledProcessError, ValueError):
-                        continue
-                if java_pid:
-                    break
-            except (subprocess.CalledProcessError, ValueError):
-                time.sleep(0.2)
+        # Find actual Java process (child of launcher script)
+        java_pid = _find_java_child_process(script_pid)
         
         if java_pid is None:
-            print(f"{Fore.RED}Could not find child Java process for script PID {script_pid}{Style.RESET_ALL}")
+            error_msg = f"JAVA_PROCESS_ERROR: Could not find Java process for Processing example '{example_name}' (script PID {script_pid})"
+            print(f"{Fore.RED}{error_msg}{Style.RESET_ALL}")
+            log_message(error_msg, component="Processing-Build", level="ERROR", color=Fore.RED)
             if script_proc:
-                kill_process(script_pid) # kill the script process
+                kill_process(script_pid)
             return None
             
-        print(f"{Fore.GREEN}Original example for {example_name} started with Java PID {java_pid}.{Style.RESET_ALL}")
-        return java_pid # Return the java PID
+        print(f"{Fore.GREEN}Processing example '{example_name}' started with Java PID {java_pid}{Style.RESET_ALL}")
+        return java_pid
         
     except Exception as e:
-        print(f"{Fore.RED}Failed to run original processing example: {e}{Style.RESET_ALL}")
+        error_msg = f"BUILD_ERROR: Failed to run Processing example '{example_name}': {e}"
+        print(f"{Fore.RED}{error_msg}{Style.RESET_ALL}")
+        log_message(error_msg, component="Processing-Build", level="ERROR", color=Fore.RED)
         if script_proc:
             kill_process(script_proc.pid)
         return None
     finally:
-        # Ensure we always change back to the original directory
         if os.getcwd() != cwd:
             os.chdir(cwd)
 
+def _find_java_child_process(script_pid: int) -> Optional[int]:
+    """
+    Find Java child process of processing-java launcher script.
+    Retries for up to 3 seconds.
+    """
+    for _ in range(15):  # 15 * 0.2s = 3 seconds
+        try:
+            # Find child processes
+            pgrep_cmd = ["pgrep", "-P", str(script_pid)]
+            child_pids_str = subprocess.check_output(pgrep_cmd, stderr=subprocess.DEVNULL).decode().strip()
+            
+            for child_pid in child_pids_str.splitlines():
+                try:
+                    # Check if process is Java
+                    comm_cmd = ["ps", "-p", child_pid, "-o", "comm="]
+                    comm = subprocess.check_output(comm_cmd, stderr=subprocess.DEVNULL).decode().strip()
+                    if "java" in comm:
+                        return int(child_pid)
+                except (subprocess.CalledProcessError, ValueError):
+                    continue
+        except (subprocess.CalledProcessError, ValueError):
+            pass
+        
+        time.sleep(0.2)
+    
+    return None
+
 def load_test_props() -> Dict[str, Any]:
     """
-    Load the test_props.json file and return its content as a dictionary.
+    Load test properties from JSON configuration file.
     """
     test_props_path = "test_props.json"
     if not os.path.exists(test_props_path):
-        print(f"{Fore.RED}Error: {test_props_path} does not exist.{Style.RESET_ALL}")
+        print(f"{Fore.RED}Error: {test_props_path} does not exist{Style.RESET_ALL}")
         sys.exit(1)
     
-    with open(test_props_path, 'r') as f:
-        try:
-            props = json.load(f)
-        except json.JSONDecodeError as e:
-            print(f"{Fore.RED}Error decoding JSON from {test_props_path}: {e}{Style.RESET_ALL}")
-            exit(1)
-    
-    return props
+    try:
+        with open(test_props_path, 'r') as f:
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"{Fore.RED}Error decoding JSON from {test_props_path}: {e}{Style.RESET_ALL}")
+        sys.exit(1)
 
 def is_interactive(props: Dict[str, Any], project_name: str) -> List[Any]:
     """
-    Check the "test_props.json" and check if project is there.
+    Check if project requires interactive testing based on properties.
     """
     if project_name not in props:
-        print(f"{Fore.RED}Project {project_name} not found in test_props.json.{Style.RESET_ALL}")
         return []
     return props[project_name]
 
 def _get_category_from_path(path: str, root_path: str) -> str:
     """
-    Extracts the category name from a given example path.
-    Assumes path structure like: root_path/MainCategory/SubCategory/project_name/...
+    Extract category name from example path.
+    Expected structure: root_path/MainCategory/SubCategory/project_name/
     """
     try:
         relative_path = os.path.relpath(path, root_path)
         parts = relative_path.split(os.sep)
-        log_message(f"DEBUG: _get_category_from_path - path: {path}, root_path: {root_path}", level="DEBUG", color=Fore.MAGENTA)
-        log_message(f"DEBUG: _get_category_from_path - relative_path: {relative_path}, parts: {parts}", level="DEBUG", color=Fore.MAGENTA)
-
-        if len(parts) > 2: # Expecting root/MainCategory/SubCategory/ProjectName
-            return parts[1] # Return SubCategory
-        elif len(parts) > 1: # Fallback to MainCategory if no SubCategory
+        
+        if len(parts) > 2:  # Return SubCategory if available
+            return parts[1]
+        elif len(parts) > 1:  # Fallback to MainCategory
             return parts[0]
     except ValueError:
-        log_message(f"WARNING: ValueError in _get_category_from_path for path: {path}", level="WARNING", color=Fore.YELLOW)
-        pass
-    return "" # Return empty string if category cannot be determined
-
-def fuzzy_match_pairs(umfeld_lst: List[str], original_lst: List[str], umfeld_root: str, original_root: str) -> dict:
-    """
-    Fuzzy match the project names in the two lists, filtering by category first.
-    """
-    pairs = {}
-    original_categorized = {}
-    for example_path in original_lst:
-        category = _get_category_from_path(example_path, original_root)
-        log_message(f"[ORIGINAL] {os.path.basename(example_path)}: category = {category}", color=Fore.MAGENTA)
-        if category: # Only add if category is successfully extracted
-            if category not in original_categorized:
-                original_categorized[category] = []
-            original_categorized[category].append(example_path)
-
-    for umfeld_example_path in umfeld_lst:
-        umfeld_project_name = os.path.basename(umfeld_example_path)
-        umfeld_category = _get_category_from_path(umfeld_example_path, umfeld_root)
-        log_message(f"[UMFELD] {umfeld_project_name}: category = {umfeld_category}", color=Fore.MAGENTA)
-
-        if umfeld_category and umfeld_category in original_categorized:
-            # Filter original projects by category
-            category_choices_paths = original_categorized[umfeld_category]
-            category_choices_names = [os.path.basename(p) for p in category_choices_paths]
-
-            log_message(f"DEBUG: Fuzzy matching {umfeld_project_name} against category {umfeld_category} choices: {category_choices_names}", level="DEBUG", color=Fore.MAGENTA)
-            result = process.extractOne(umfeld_project_name, category_choices_names)
-            if result is not None:
-                best_match_name, score, idx = result
-                log_message(f"DEBUG: Best match for {umfeld_project_name} in category {umfeld_category}: {best_match_name} (score: {score})", level="DEBUG", color=Fore.MAGENTA)
-                pairs[umfeld_project_name] = best_match_name
-            else:
-                log_message(f"No category-matched fuzzy match found for {umfeld_project_name} in category {umfeld_category}", level="WARNING", color=Fore.YELLOW)
-        else:
-            log_message(f"No original projects found for category {umfeld_category} for {umfeld_project_name} or category could not be determined.", level="WARNING", color=Fore.YELLOW)
-    return pairs
+        log_message(f"Cannot determine category for path: {path}", level="WARNING", color=Fore.YELLOW)
+    
+    return ""
 
 def filter_projects_by_category(umfeld_lst: List[str], category: str, umfeld_root: str) -> List[str]:
     """
-    Filters projects by the specified category.
+    Filter projects by specified category.
     """
     filtered_projects = []
     for project_path in umfeld_lst:
@@ -313,29 +322,25 @@ def filter_projects_by_category(umfeld_lst: List[str], category: str, umfeld_roo
 
 def get_app_window_dimensions(app_name: str) -> Tuple[int, int, int, int]:
     """
-    Get the dimensions (x,y,width,height) of the first window matching app_name.
+    Get window dimensions (x, y, width, height) for first window matching app_name.
     Supports Linux (X11) and macOS.
     """
     if sys.platform.startswith("linux"):
         try:
-            # List windows with wmctrl
             output = subprocess.check_output(['wmctrl', '-lG']).decode()
             for line in output.splitlines():
                 if app_name in line:
                     parts = line.split()
-                    # wmctrl: 0-id 1-desktop 2-x 3-y 4-width 5-height 6-host 7-title...
-                    x = int(parts[2])
-                    y = int(parts[3])
-                    width = int(parts[4])
-                    height = int(parts[5])
+                    # wmctrl format: id desktop x y width height host title...
+                    x, y, width, height = int(parts[2]), int(parts[3]), int(parts[4]), int(parts[5])
                     return (x, y, width, height)
             print(f"{Fore.RED}No window found with title containing '{app_name}'{Style.RESET_ALL}")
         except Exception as e:
             print(f"{Fore.RED}wmctrl error: {e}{Style.RESET_ALL}")
         return (0, 0, 0, 0)
+    
     elif sys.platform == "darwin":
         try:
-            # Use AppleScript to get window bounds
             script = f'''
             tell application "System Events"
                 set appProc to first process whose name contains "{app_name}"
@@ -346,33 +351,33 @@ def get_app_window_dimensions(app_name: str) -> Tuple[int, int, int, int]:
             '''
             output = subprocess.check_output(['osascript', '-e', script]).decode().strip()
             w, h = map(int, output.split(','))
-            return (w, h)
+            return (0, 0, w, h)  # macOS returns size only
         except Exception as e:
             print(f"{Fore.RED}osascript error: {e}{Style.RESET_ALL}")
         return (0, 0, 0, 0)
+    
     else:
         print(f"{Fore.RED}Unsupported platform for window dimension lookup{Style.RESET_ALL}")
         return (0, 0, 0, 0)
-def run_mouse_action_sequence(window_rect, actions, total_duration=5, steps_per_move=20):
+def run_mouse_action_sequence(window_rect: Tuple[int, int, int, int], actions: List[Tuple], total_duration: float = 5, steps_per_move: int = 20) -> None:
     """
-    Executes a sequence of mouse actions with smooth transitions, starting from the window center.
-    The entire sequence is timed to match total_duration.
+    Execute sequence of mouse actions with smooth transitions.
+    Starts from window center and times actions to match total_duration.
     """
     from pynput.mouse import Controller, Button
-    import time
+    
     mouse = Controller()
     x0, y0, w, h = window_rect
 
-    # Move to the center of the window to start
+    # Start from window center
     center_x, center_y = x0 + w // 2, y0 + h // 2
     mouse.position = (center_x, center_y)
-    time.sleep(0.2)  # Small delay to ensure window is focused
+    time.sleep(0.2)  # Ensure window focus
 
-    n = len(actions)
-    if n == 0:
+    if not actions:
         return
 
-    time_per_action = total_duration / n if n > 0 else 0
+    time_per_action = total_duration / len(actions)
 
     for action in actions:
         act_type, rel_x, rel_y = action
@@ -381,7 +386,7 @@ def run_mouse_action_sequence(window_rect, actions, total_duration=5, steps_per_
 
         start_pos_x, start_pos_y = mouse.position
 
-        # Smoothly move to the target position
+        # Smooth movement to target position
         if steps_per_move > 0:
             step_duration = time_per_action / steps_per_move
             for i in range(1, steps_per_move + 1):
@@ -394,93 +399,77 @@ def run_mouse_action_sequence(window_rect, actions, total_duration=5, steps_per_
         
         mouse.position = (target_x, target_y)
 
-        # Perform the action (press or release) with minimal delay
+        # Execute action
         if act_type == 'press':
             mouse.press(Button.left)
-            time.sleep(0.05) # Minimal delay after press
+            time.sleep(0.05)
         elif act_type == 'release':
             mouse.release(Button.left)
-            time.sleep(0.05) # Minimal delay after release
+            time.sleep(0.05)
 
 
 def move_mouse_sequence(window_rect: Tuple[int, int, int, int], mouse_coords: List[Tuple[int, int]], total_duration: float = 2.0, steps_per_move: int = 20) -> None:
     """
-    Moves the mouse smoothly in sequence within the given window using pynput.
-    The entire sequence takes exactly total_duration seconds.
+    Move mouse smoothly through sequence of coordinates within window.
+    Complete sequence takes exactly total_duration seconds.
     """
     x, y, w, h = window_rect
     mouse = Controller()
+    
     if not mouse_coords or len(mouse_coords) < 2:
         return
+        
+    # Start at first coordinate
     prev = mouse_coords[0]
     mouse.position = (x + prev[0], y + prev[1])
 
     num_moves = len(mouse_coords) - 1
-    total_steps = num_moves * steps_per_move
-    step_duration = total_duration / total_steps
+    step_duration = total_duration / (num_moves * steps_per_move)
 
     for target in mouse_coords[1:]:
+        # Smooth interpolation between points
         for i in range(1, steps_per_move + 1):
-            t = i / (steps_per_move + 1)
+            t = i / steps_per_move
             interp_x = prev[0] + (target[0] - prev[0]) * t
             interp_y = prev[1] + (target[1] - prev[1]) * t
             mouse.position = (int(x + interp_x), int(y + interp_y))
             time.sleep(step_duration)
+        
         mouse.position = (x + target[0], y + target[1])
         prev = target
 
 def record_window_video(window_rect: Tuple[int, int, int, int], duration: int, output_path: str, framerate: int = 60, verbose: bool = True) -> None:
     """
-    Records the given window area (x, y, w, h) for 'duration' seconds and saves to output_path.
+    Record window area using ffmpeg for specified duration.
     Requires ffmpeg installed and in PATH.
     """
     x, y, w, h = window_rect
+    
+    # Platform-specific ffmpeg commands
     if sys.platform.startswith("linux"):
-        # X11: Use :0.0 for default display
         cmd = [
-            "ffmpeg",
-            "-hide_banner",
-            "-loglevel", "error",
-            "-y",
-            "-video_size", f"{w}x{h}",
-            "-framerate", str(framerate),
-            "-f", "x11grab",
-            "-i", f":0.0+{x},{y}",
-            "-t", str(duration),
-            output_path
+            "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+            "-video_size", f"{w}x{h}", "-framerate", str(framerate),
+            "-f", "x11grab", "-i", f":0.0+{x},{y}",
+            "-t", str(duration), output_path
         ]
     elif sys.platform == "darwin":
-        # macOS: Use avfoundation and crop
         cmd = [
-            "ffmpeg",
-            "-hide_banner",
-            "-loglevel", "error",
-            "-y",
-            "-f", "avfoundation",
-            "-framerate", str(framerate),
-            "-i", "1:none",  # 1 is usually the main screen
-            "-vf", f"crop={w}:{h}:{x}:{y}",
-            "-t", str(duration),
-            output_path
+            "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+            "-f", "avfoundation", "-framerate", str(framerate),
+            "-i", "1:none", "-vf", f"crop={w}:{h}:{x}:{y}",
+            "-t", str(duration), output_path
         ]
     elif sys.platform.startswith("win"):
-        # Windows: Use gdigrab
         cmd = [
-            "ffmpeg",
-            "-hide_banner",
-            "-loglevel", "error",
-            "-y",
-            "-f", "gdigrab",
-            "-framerate", str(framerate),
-            "-offset_x", str(x),
-            "-offset_y", str(y),
-            "-video_size", f"{w}x{h}",
-            "-i", "desktop",
-            "-t", str(duration),
-            output_path
+            "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+            "-f", "gdigrab", "-framerate", str(framerate),
+            "-offset_x", str(x), "-offset_y", str(y),
+            "-video_size", f"{w}x{h}", "-i", "desktop",
+            "-t", str(duration), output_path
         ]
     else:
-        print(f"{Fore.RED}Unsupported platform for screen recording.{Style.RESET_ALL}")
+        print(f"{Fore.RED}Unsupported platform for screen recording{Style.RESET_ALL}")
         return
 
     try:
@@ -494,14 +483,15 @@ def record_window_video(window_rect: Tuple[int, int, int, int], duration: int, o
 
 def record_window_video_async(window_rect: Tuple[int, int, int, int], duration: int, output_path: str, verbose: bool = True) -> threading.Thread:
     """
-    Starts recording in a separate thread so that mouse can move while recording.
-    Returns the thread object.
+    Start video recording in separate thread to allow concurrent mouse interaction.
+    Returns thread object for synchronization.
     """
     def record():
         record_window_video(window_rect, duration, output_path, verbose=verbose)
-    t = threading.Thread(target=record)
-    t.start()
-    return t
+    
+    thread = threading.Thread(target=record)
+    thread.start()
+    return thread
 
 def get_client_area(pid: int, window_title: str, is_java_process: bool = False) -> Tuple[int, int, int, int, str]:
     """
@@ -546,12 +536,28 @@ def get_client_area(pid: int, window_title: str, is_java_process: bool = False) 
                         full_window_name = subprocess.check_output(
                             ["xdotool", "getwindowname", potential_id]
                         ).decode().strip()
+                        
+                        # Get window class for additional filtering
+                        try:
+                            window_class = subprocess.check_output(
+                                ["xdotool", "getwindowclassname", potential_id]
+                            ).decode().strip().lower()
+                        except (subprocess.CalledProcessError, ValueError):
+                            window_class = ""
+                        
+                        # Check if this is a terminal/shell window
+                        terminal_keywords = ["terminal", "bash", "zsh", "shell", "konsole", "gnome-terminal", "xterm", "terminator", "tilix", "alacritty", "kitty"]
+                        is_terminal = (
+                            any(term in full_window_name.lower() for term in terminal_keywords) or
+                            any(term in window_class for term in terminal_keywords) or
+                            window_class in ["terminal", "gnome-terminal", "konsole", "xterm", "terminator", "tilix", "alacritty", "kitty"]
+                        )
 
-                        if full_window_name == window_title: # Exact match is highest priority
+                        if full_window_name == window_title and not is_terminal: # Exact match is highest priority
                             exact_match_win_id = potential_id
                             break # Found the best possible match, no need to check further
-                        elif window_title.lower() in full_window_name.lower() and "terminal" not in full_window_name.lower():
-                            # This is a partial match and not a terminal, keep it as a fallback
+                        elif window_title.lower() in full_window_name.lower() and not is_terminal:
+                            # This is a partial match and not a terminal/shell, keep it as a fallback
                             non_terminal_partial_match_win_id = potential_id
                     except (subprocess.CalledProcessError, ValueError):
                         continue
@@ -577,8 +583,36 @@ def get_client_area(pid: int, window_title: str, is_java_process: bool = False) 
 
                         # For native apps, the window PID should match the launched PID.
                         if win_pid == pid:
-                            win_id = potential_id
-                            break # Found the correct native window
+                            # Double check this isn't a terminal window
+                            try:
+                                full_window_name = subprocess.check_output(
+                                    ["xdotool", "getwindowname", potential_id]
+                                ).decode().strip()
+                                
+                                # Get window class for additional filtering
+                                try:
+                                    window_class = subprocess.check_output(
+                                        ["xdotool", "getwindowclassname", potential_id]
+                                    ).decode().strip().lower()
+                                except (subprocess.CalledProcessError, ValueError):
+                                    window_class = ""
+                                
+                                # Check if this is a terminal/shell window
+                                terminal_keywords = ["terminal", "bash", "zsh", "shell", "konsole", "gnome-terminal", "xterm", "terminator", "tilix", "alacritty", "kitty"]
+                                is_terminal = (
+                                    any(term in full_window_name.lower() for term in terminal_keywords) or
+                                    any(term in window_class for term in terminal_keywords) or
+                                    window_class in ["terminal", "gnome-terminal", "konsole", "xterm", "terminator", "tilix", "alacritty", "kitty"]
+                                )
+                                
+                                if not is_terminal:
+                                    win_id = potential_id
+                                    break # Found the correct native window
+                            except (subprocess.CalledProcessError, ValueError):
+                                # If we can't get window name/class, still use this window as fallback if it's the only match
+                                if len(potential_win_ids) == 1:
+                                    win_id = potential_id
+                                    break
                     
                     except (subprocess.CalledProcessError, ValueError):
                         # Window might have closed, or PID is not a number.
