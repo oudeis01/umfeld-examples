@@ -176,19 +176,6 @@ vrtest/
 
 ---
 
-## GitHub Pages Deployment
-
-This folder can be deployed as a GitHub Pages site:
-
-1. **Repository Settings** → **Pages**
-2. **Source:** "Deploy from a branch"  
-3. **Branch:** `main`
-4. **Folder:** `/vrtest` (or root if this is your main directory)
-
-The generated `index.html` will be automatically served at:  
-`https://[username].github.io/[repository]/`
-
----
 
 ## Notes
 
