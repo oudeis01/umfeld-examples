@@ -586,12 +586,14 @@ class HTMLReportGenerator:
             else:
                 return "❓ Unknown Issue"
         
-        abs_path = os.path.abspath(project.comparison_file)
-        media_tag = f'<img src="{abs_path}" alt="Preview">' if project.file_type == 'image' else f'<video src="{abs_path}" autoplay muted loop></video>'
+        # Calculate relative path from HTML output file to comparison file
+        html_output_dir = os.path.dirname(os.path.abspath(self.args.output))
+        rel_path = os.path.relpath(project.comparison_file, html_output_dir)
+        media_tag = f'<img src="{rel_path}" alt="Preview">' if project.file_type == 'image' else f'<video src="{rel_path}" autoplay muted loop></video>'
 
         return f'''
 <div class="tooltip">
-    <a href="#" onclick="openModal('{abs_path}', '{project.file_type}'); return false;">View</a>
+    <a href="#" onclick="openModal('{rel_path}', '{project.file_type}'); return false;">View</a>
     <div class="tooltip-content">{media_tag}</div>
 </div>
 '''
