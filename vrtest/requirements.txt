@@ -1,6 +1,0 @@
-colorama
-opencv_python
-Pillow
-pyautogui
-pynput
-rapidfuzz
