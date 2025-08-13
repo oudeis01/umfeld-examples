@@ -8,6 +8,9 @@ int   stroke_cap_mode  = ROUND;
 float stroke_weight    = 30;
 bool  close_shape      = false;
 
+PImage* umfeld_image;
+PImage* point_image;
+
 void settings() {
     size(1024, 768);
 }
@@ -20,11 +23,27 @@ void setup() {
     hint(ENABLE_SMOOTH_LINES);
     g->stroke_properties(radians(10), radians(10), 179);
     g->set_stroke_render_mode(STROKE_RENDER_MODE_TRIANGULATE_2D);
+
+    umfeld_image = loadImage("umfeld.png");
+    point_image  = loadImage("point.png");
+
+    // TODO explain and test `render modes` ( default: `RENDER_MODE_SORTED_BY_Z_ORDER` or `RENDER_MODE_SORTED_BY_SUBMISSION_ORDER` )
+    //      set_render_mode()
+    //      hint(DISABLE_DEPTH_TEST); // add this as a reasonable default
+    g->set_render_mode(RENDER_MODE_IMMEDIATELY);
+    g->set_render_mode(RENDER_MODE_SORTED_BY_Z_ORDER);
+    g->set_render_mode(RENDER_MODE_SORTED_BY_SUBMISSION_ORDER);
+
+    g->set_point_render_mode(POINT_RENDER_MODE_TRIANGULATE);
+    pointSize(32);
 }
 
 void draw() {
     TRACE_FRAME;
     background(0.85f);
+
+    fill(0);
+    debug_text("FPS: " + std::to_string(frameRate), 10, 20);
 
     {
         TRACE_SCOPE_N("CIRCLE_STROKE_FILL");
@@ -38,6 +57,7 @@ void draw() {
         TRACE_SCOPE_N("CIRCLE_FILL");
         noStroke();
         fill(0.5f, 0.85f, 1.0f);
+        fill(0.85f);
         circle(width / 2.0f, height / 2, mouseY - 30);
     }
     {
@@ -63,10 +83,35 @@ void draw() {
         endShape(close_shape);
     }
     {
+        TRACE_SCOPE_N("POINTS");
+        stroke(0.0f);
+        noFill();
+        texture(point_image);
+        beginShape(POINTS);
+        for (int i = 0; i < 32; i++) {
+            const float r = TWO_PI * (frameCount + i * sin((frameCount - i) * 0.0537)) * ((i + 32) * 0.0137f) / 360.0f;
+            const float x = sin(r) * 300 + width / 2;
+            const float y = cos(r) * 300 + height / 2;
+            vertex(x, y);
+        }
+        endShape();
+        texture();
+    }
+    {
         TRACE_SCOPE_N("LINE");
         noFill();
         stroke(1.0f, 0.25f, 0.35f);
         line(width / 2.0f - 30, height / 2 - 100, width / 2.0f + 30, height / 2 - 40);
+    }
+    {
+        TRACE_SCOPE_N("IMAGE");
+        fill(1);
+        noStroke();
+        image(umfeld_image, mouseX, mouseY);
+    }
+    {
+        TRACE_SCOPE_N("FLUSH");
+        flush();
     }
 }
 
