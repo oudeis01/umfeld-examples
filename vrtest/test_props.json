@@ -115,5 +115,25 @@
     "TriangleStrip": ["mouse", "random"],
     "Vertices": ["animation"],
     "Wolfram": ["mouse", "random", "press"],
-    "Zoom": ["mouse", "random", "press"]
+    "Zoom": ["mouse", "random", "press"],
+	"Bounce":["animation"],
+	"BouncyBubbles":["animation"],
+	"Brownian":["animation"],
+	"CircleCollision":["animation"],
+	"CubesWithinCube":["animation"],
+	"Linear":["animation"],
+	"Morph":["animation"],
+	"MovingOnCurves":["mouse","random","press"],
+	"Reflection1":["animation"],
+	"Reflection2":["animation"],
+	"Flocking":["mouse","random","press"],
+	"ForcesWithVectors":["mouse","random","press"],
+	"GravitationalAttraction3D":["animation"],
+	"MultipleParticleSystems":["mouse","random","press"],
+	"SimpleParticleSystem":["animation"],
+	"SmokeParticleSystem":["mouse","random"],
+	"AccelerationWithVectors":["mouse","random"],
+	"BouncingBall":["animation"],
+	"VectorMath":["mouse","random"]
+
 }
