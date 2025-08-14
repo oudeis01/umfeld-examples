@@ -4,7 +4,7 @@ in vec4 vertColor;
 in vec2 vTexCoord;
 out vec4 FragColor;
 
-uniform sampler2D texture;
+uniform sampler2D tex;
 uniform float time;
 uniform vec2 resolution;
 uniform vec2 mouse;
@@ -23,7 +23,7 @@ void main(void) {
   uv.y = sin(2.0 * (a1 - a2));
 
   float w = r1 * r2 * 0.8;
-  vec3 col = texture2D(texture, 0.5 - 0.495 * uv).xyz;
+  vec3 col = texture2D(tex, 0.5 - 0.495 * uv).xyz;
 
   FragColor = vec4(col / (0.1 + w), 1.0);
 }

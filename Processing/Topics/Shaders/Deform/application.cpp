@@ -29,19 +29,13 @@ void setup() {
 }
 
 void draw() {
-    // 1. Render scene normally
     background(0.5f);
     image(tex, 0, 0, width, height);
     
-    // 2. Use umfeld's built-in framebuffer texture binding
-    g->bind_framebuffer_texture();
-    
-    // 3. Apply deform shader with proper uniforms
     deform->set_uniform("tex", 0);
     deform->set_uniform("time", millis() / 1000.f);
     deform->set_uniform("mouse", float(mouseX), float(mouseY));
     shader(deform);
     
-    // 4. Render fullscreen quad
     rect(0, 0, width, height);
 }
