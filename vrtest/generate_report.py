@@ -254,6 +254,9 @@ def analyze_log_files(project_name: str) -> Tuple[List[str], List[str], List[str
     # Find the most recent log file
     script_dir = os.path.dirname(os.path.abspath(__file__))
     log_files = glob.glob(os.path.join(script_dir, "run_log_*.txt"))
+
+    # Define the project root to sanitize absolute paths
+    project_root = os.path.abspath(os.path.join(script_dir, '..'))
     
     if not log_files:
         return errors, warnings, failures, compile_errors, window_errors, concat_errors
@@ -269,44 +272,47 @@ def analyze_log_files(project_name: str) -> Tuple[List[str], List[str], List[str
         project_section = False
         
         for i, line in enumerate(lines):
+            # Sanitize the line by removing the absolute project path
+            sanitized_line = line.replace(project_root, '')
+
             # Check if we're in the relevant project section
-            if f"Processing project: '{project_name}'" in line:
+            if f"Processing project: '{project_name}'" in sanitized_line:
                 project_section = True
                 continue
-            elif "Processing project:" in line and project_section:
+            elif "Processing project:" in sanitized_line and project_section:
                 # We've moved to the next project
                 break
-            elif "--- Test Run Finished ---" in line:
+            elif "--- Test Run Finished ---" in sanitized_line:
                 break
                 
             if project_section:
                 # Look for specific error types first
-                if "COMPILE_ERROR:" in line:
-                    compile_errors.append(f"**Compile Error in {project_name}:**\\n```\\n{line.strip()}\\n```")
-                elif "BUILD_ERROR:" in line:
-                    compile_errors.append(f"**Build Error in {project_name}:**\\n```\\n{line.strip()}\\n```")
-                elif "WINDOW_NOT_FOUND:" in line:
-                    window_errors.append(f"**Window Detection Error in {project_name}:**\\n```\\n{line.strip()}\\n```")
-                elif "CONCAT_ERROR:" in line:
-                    concat_errors.append(f"**Concatenation Error in {project_name}:**\\n```\\n{line.strip()}\\n```")
-                elif "CONCAT_SKIP:" in line:
-                    concat_errors.append(f"**Concatenation Skipped in {project_name}:**\\n```\\n{line.strip()}\\n```")
+                if "COMPILE_ERROR:" in sanitized_line:
+                    compile_errors.append(f"**Compile Error in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
+                elif "BUILD_ERROR:" in sanitized_line:
+                    compile_errors.append(f"**Build Error in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
+                elif "WINDOW_NOT_FOUND:" in sanitized_line:
+                    window_errors.append(f"**Window Detection Error in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
+                elif "CONCAT_ERROR:" in sanitized_line:
+                    concat_errors.append(f"**Concatenation Error in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
+                elif "CONCAT_SKIP:" in sanitized_line:
+                    concat_errors.append(f"**Concatenation Skipped in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
                 # Then look for general ERROR level messages
-                elif "[ERROR]" in line or "level=\"ERROR\"" in line:
+                elif "[ERROR]" in sanitized_line or "level=\"ERROR\"" in sanitized_line:
                     # Get some context around the error
                     context_start = max(0, i - 1)
                     context_end = min(len(lines), i + 2)
-                    context_lines = lines[context_start:context_end]
-                    error_context = "\\n".join(context_lines)
-                    errors.append(f"**General Error in {project_name}:**\\n```\\n{error_context}\\n```")
+                    context_lines = [l.replace(project_root, '') for l in lines[context_start:context_end]]
+                    error_context = "\n".join(context_lines)
+                    errors.append(f"**General Error in {project_name}:**\n```\n{error_context}{os.linesep}```")
                 
                 # Look for WARNING level messages
-                elif "[WARNING]" in line or "level=\"WARNING\"" in line:
-                    warnings.append(f"**Warning in {project_name}:**\\n```\\n{line.strip()}\\n```")
+                elif "[WARNING]" in sanitized_line or "level=\"WARNING\"" in sanitized_line:
+                    warnings.append(f"**Warning in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
                 
                 # Look for failure indicators
-                elif any(fail_word in line.lower() for fail_word in ["failed", "failure", "could not", "unable to", "timeout"]):
-                    failures.append(f"**Failure in {project_name}:**\\n```\\n{line.strip()}\\n```")
+                elif any(fail_word in sanitized_line.lower() for fail_word in ["failed", "failure", "could not", "unable to", "timeout"]):
+                    failures.append(f"**Failure in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
                     
     except Exception as e:
         print(f"Warning: Could not analyze log file {most_recent_log}: {e}")
