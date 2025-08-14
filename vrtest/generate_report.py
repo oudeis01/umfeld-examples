@@ -52,6 +52,7 @@ class ProjectResult:
     notes: List[str] = field(default_factory=list)
     fixmes: List[str] = field(default_factory=list)
     unimplementeds: List[str] = field(default_factory=list)
+    unsupporteds: List[str] = field(default_factory=list)
     log_errors: List[str] = field(default_factory=list)
     log_warnings: List[str] = field(default_factory=list)
     log_failures: List[str] = field(default_factory=list)
@@ -61,8 +62,14 @@ class ProjectResult:
 
     def __post_init__(self):
         # Status is now determined by log analysis and file existence
+        # Only mark as successful if comparison exists AND only has notes (or no issues at all)
         if self.comparison_file and os.path.exists(self.comparison_file):
-            self.status = "success"
+            # Check if project has any blocking issues (unsupported, unimplemented, fixme)
+            has_blocking_issues = bool(self.unsupporteds or self.unimplementeds or self.fixmes)
+            if not has_blocking_issues:
+                self.status = "success"
+            else:
+                self.status = "success"  # Still successful if comparison exists, but flagged in issues
         elif self.compile_errors:
             self.status = "build_failed"
         elif self.window_errors:
@@ -77,7 +84,7 @@ class ProjectResult:
 
     @property
     def has_issues(self) -> bool:
-        return bool(self.notes or self.fixmes or self.unimplementeds or self.log_errors or self.log_warnings or self.log_failures or self.compile_errors or self.window_errors or self.concat_errors)
+        return bool(self.notes or self.fixmes or self.unimplementeds or self.unsupporteds or self.log_errors or self.log_warnings or self.log_failures or self.compile_errors or self.window_errors or self.concat_errors)
 
 
 def extract_metadata(file_path: str) -> Dict:
@@ -146,14 +153,14 @@ def get_category_from_path(project_path: str, root_dir: str) -> str:
         return "Unknown"
 
 
-def analyze_source_code(project_path: str) -> Tuple[List[str], List[str], List[str]]:
-    """Analyze source files for notes, fixmes, and unimplemented tags."""
-    notes, fixmes, unimplementeds = [], [], []
+def analyze_source_code(project_path: str) -> Tuple[List[str], List[str], List[str], List[str]]:
+    """Analyze source files for notes, fixmes, unimplemented, and unsupported tags."""
+    notes, fixmes, unimplementeds, unsupporteds = [], [], [], []
     source_files = glob.glob(os.path.join(project_path, "**", "*.cpp"), recursive=True) + \
                    glob.glob(os.path.join(project_path, "**", "*.h"), recursive=True)
 
     note_pattern = re.compile(r'/\*+\s*\n\s*note:(.*?)\*/', re.DOTALL | re.IGNORECASE)
-    keyword_pattern = re.compile(r'.*(unimplemented|fixme).*', re.IGNORECASE)
+    keyword_pattern = re.compile(r'.*(unimplemented|fixme|unsupported).*', re.IGNORECASE)
 
     for file_path in source_files:
         try:
@@ -175,14 +182,16 @@ def analyze_source_code(project_path: str) -> Tuple[List[str], List[str], List[s
                         unimplementeds.append(f"**Unimplemented in {os.path.basename(file_path)} (line {i+1}):**\n```cpp\n{context}\n```")
                     if "fixme" in line.lower():
                         fixmes.append(f"**FIXME in {os.path.basename(file_path)} (line {i+1}):**\n```cpp\n{context}\n```")
+                    if "unsupported" in line.lower():
+                        unsupporteds.append(f"**Unsupported in {os.path.basename(file_path)} (line {i+1}):**\n```cpp\n{context}\n```")
 
         except Exception as e:
             print(f"Warning: Could not analyze source file {file_path}: {e}")
             
-    return notes, fixmes, unimplementeds
+    return notes, fixmes, unimplementeds, unsupporteds
 
 
-def collect_all_results(root_dir: str, include_logs: bool = False) -> Dict[str, ProjectResult]:
+def collect_all_results(root_dir: str, include_logs: bool = False, log_files: Optional[List[str]] = None) -> Dict[str, ProjectResult]:
     """Collect results for all projects, including failed ones"""
     results = {}
     
@@ -217,13 +226,13 @@ def collect_all_results(root_dir: str, include_logs: bool = False) -> Dict[str, 
             metadata = extract_metadata(str(comp_file))
         
         # Analyze source code
-        notes, fixmes, unimplementeds = analyze_source_code(project_path)
+        notes, fixmes, unimplementeds, unsupporteds = analyze_source_code(project_path)
         
         # Analyze log files if requested
         log_errors, log_warnings, log_failures = [], [], []
         compile_errors, window_errors, concat_errors = [], [], []
         if include_logs:
-            log_errors, log_warnings, log_failures, compile_errors, window_errors, concat_errors = analyze_log_files(project_name)
+            log_errors, log_warnings, log_failures, compile_errors, window_errors, concat_errors = analyze_log_files(project_name, log_files)
         
         results[project_name] = ProjectResult(
             project_name=project_name,
@@ -236,6 +245,7 @@ def collect_all_results(root_dir: str, include_logs: bool = False) -> Dict[str, 
             notes=notes,
             fixmes=fixmes,
             unimplementeds=unimplementeds,
+            unsupporteds=unsupporteds,
             log_errors=log_errors,
             log_warnings=log_warnings,
             log_failures=log_failures,
@@ -246,76 +256,90 @@ def collect_all_results(root_dir: str, include_logs: bool = False) -> Dict[str, 
     return results
 
 
-def analyze_log_files(project_name: str) -> Tuple[List[str], List[str], List[str], List[str], List[str], List[str]]:
+def analyze_log_files(project_name: str, specified_log_files: Optional[List[str]] = None) -> Tuple[List[str], List[str], List[str], List[str], List[str], List[str]]:
     """Analyze log files for errors, warnings, failures, and specific error types for a specific project"""
     errors, warnings, failures = [], [], []
     compile_errors, window_errors, concat_errors = [], [], []
     
-    # Find the most recent log file
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    log_files = glob.glob(os.path.join(script_dir, "run_log_*.txt"))
-
     # Define the project root to sanitize absolute paths
+    script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.abspath(os.path.join(script_dir, '..'))
     
-    if not log_files:
+    # Determine which log files to process
+    if specified_log_files:
+        # Use specified log files, converting relative paths to absolute if needed
+        log_files_to_process = []
+        for log_file in specified_log_files:
+            if os.path.isabs(log_file):
+                log_files_to_process.append(log_file)
+            else:
+                log_files_to_process.append(os.path.join(script_dir, log_file))
+        # Filter to only existing files
+        log_files_to_process = [f for f in log_files_to_process if os.path.exists(f)]
+    else:
+        # Find and use the most recent log file (original behavior)
+        log_files = glob.glob(os.path.join(script_dir, "run_log_*.txt"))
+        if not log_files:
+            return errors, warnings, failures, compile_errors, window_errors, concat_errors
+        log_files_to_process = [max(log_files, key=os.path.getmtime)]
+    
+    if not log_files_to_process:
         return errors, warnings, failures, compile_errors, window_errors, concat_errors
     
-    # Use the most recent log file
-    most_recent_log = max(log_files, key=os.path.getmtime)
-    
-    try:
-        with open(most_recent_log, 'r', encoding='utf-8', errors='ignore') as f:
-            content = f.read()
-        
-        lines = content.splitlines()
-        project_section = False
-        
-        for i, line in enumerate(lines):
-            # Sanitize the line by removing the absolute project path
-            sanitized_line = line.replace(project_root, '')
+    # Process each log file
+    for log_file_path in log_files_to_process:
+        try:
+            with open(log_file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                content = f.read()
+            
+            lines = content.splitlines()
+            project_section = False
+            
+            for i, line in enumerate(lines):
+                # Sanitize the line by removing the absolute project path
+                sanitized_line = line.replace(project_root, '')
 
-            # Check if we're in the relevant project section
-            if f"Processing project: '{project_name}'" in sanitized_line:
-                project_section = True
-                continue
-            elif "Processing project:" in sanitized_line and project_section:
-                # We've moved to the next project
-                break
-            elif "--- Test Run Finished ---" in sanitized_line:
-                break
-                
-            if project_section:
-                # Look for specific error types first
-                if "COMPILE_ERROR:" in sanitized_line:
-                    compile_errors.append(f"**Compile Error in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
-                elif "BUILD_ERROR:" in sanitized_line:
-                    compile_errors.append(f"**Build Error in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
-                elif "WINDOW_NOT_FOUND:" in sanitized_line:
-                    window_errors.append(f"**Window Detection Error in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
-                elif "CONCAT_ERROR:" in sanitized_line:
-                    concat_errors.append(f"**Concatenation Error in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
-                elif "CONCAT_SKIP:" in sanitized_line:
-                    concat_errors.append(f"**Concatenation Skipped in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
-                # Then look for general ERROR level messages
-                elif "[ERROR]" in sanitized_line or "level=\"ERROR\"" in sanitized_line:
-                    # Get some context around the error
-                    context_start = max(0, i - 1)
-                    context_end = min(len(lines), i + 2)
-                    context_lines = [l.replace(project_root, '') for l in lines[context_start:context_end]]
-                    error_context = "\n".join(context_lines)
-                    errors.append(f"**General Error in {project_name}:**\n```\n{error_context}{os.linesep}```")
-                
-                # Look for WARNING level messages
-                elif "[WARNING]" in sanitized_line or "level=\"WARNING\"" in sanitized_line:
-                    warnings.append(f"**Warning in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
-                
-                # Look for failure indicators
-                elif any(fail_word in sanitized_line.lower() for fail_word in ["failed", "failure", "could not", "unable to", "timeout"]):
-                    failures.append(f"**Failure in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
+                # Check if we're in the relevant project section
+                if f"Processing project: '{project_name}'" in sanitized_line:
+                    project_section = True
+                    continue
+                elif "Processing project:" in sanitized_line and project_section:
+                    # We've moved to the next project
+                    break
+                elif "--- Test Run Finished ---" in sanitized_line:
+                    break
                     
-    except Exception as e:
-        print(f"Warning: Could not analyze log file {most_recent_log}: {e}")
+                if project_section:
+                    # Look for specific error types first
+                    if "COMPILE_ERROR:" in sanitized_line:
+                        compile_errors.append(f"**Compile Error in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
+                    elif "BUILD_ERROR:" in sanitized_line:
+                        compile_errors.append(f"**Build Error in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
+                    elif "WINDOW_NOT_FOUND:" in sanitized_line:
+                        window_errors.append(f"**Window Detection Error in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
+                    elif "CONCAT_ERROR:" in sanitized_line:
+                        concat_errors.append(f"**Concatenation Error in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
+                    elif "CONCAT_SKIP:" in sanitized_line:
+                        concat_errors.append(f"**Concatenation Skipped in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
+                    # Then look for general ERROR level messages
+                    elif "[ERROR]" in sanitized_line or "level=\"ERROR\"" in sanitized_line:
+                        # Get some context around the error
+                        context_start = max(0, i - 1)
+                        context_end = min(len(lines), i + 2)
+                        context_lines = [l.replace(project_root, '') for l in lines[context_start:context_end]]
+                        error_context = "\n".join(context_lines)
+                        errors.append(f"**General Error in {project_name}:**\n```\n{error_context}{os.linesep}```")
+                    
+                    # Look for WARNING level messages
+                    elif "[WARNING]" in sanitized_line or "level=\"WARNING\"" in sanitized_line:
+                        warnings.append(f"**Warning in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
+                    
+                    # Look for failure indicators
+                    elif any(fail_word in sanitized_line.lower() for fail_word in ["failed", "failure", "could not", "unable to", "timeout"]):
+                        failures.append(f"**Failure in {project_name}:**\n```\n{sanitized_line.strip()}{os.linesep}```")
+                        
+        except Exception as e:
+            print(f"Warning: Could not analyze log file {log_file_path}: {e}")
     
     return errors, warnings, failures, compile_errors, window_errors, concat_errors
 
@@ -354,7 +378,8 @@ class HTMLReportGenerator:
 
         issue_projects = {k: v for k, v in results.items() if v.has_issues}
         failed_projects = {k: v for k, v in results.items() if v.status != "success"}
-        successful_projects = {k: v for k, v in results.items() if v.status == "success"}
+        # Only consider projects successful if they have notes only or no issues at all
+        successful_projects = {k: v for k, v in results.items() if v.status == "success" and not (v.unsupporteds or v.unimplementeds or v.fixmes)}
 
         html_content = self.generate_html_header()
         html_content += "<div class=\"report-container\">"
@@ -371,17 +396,25 @@ class HTMLReportGenerator:
             unknown_failed = {k: v for k, v in failed_projects.items() if v.status == "unknown"}
             
             if build_failed:
-                html_content += self.generate_table_section("🔨 Build/Compile Failures", build_failed, section_id="section-build-failed")
+                html_content += self.generate_table_section("🔨 Build/Compile Failures", build_failed, section_id="section-build-failed", collapsible=True)
             if window_failed:
-                html_content += self.generate_table_section("🪟 Window Detection Failures", window_failed, section_id="section-window-failed")
+                html_content += self.generate_table_section("🪟 Window Detection Failures", window_failed, section_id="section-window-failed", collapsible=True)
             if concat_failed:
-                html_content += self.generate_table_section("🔗 Concatenation Failures", concat_failed, section_id="section-concat-failed")
+                html_content += self.generate_table_section("🔗 Concatenation Failures", concat_failed, section_id="section-concat-failed", collapsible=True)
             if unknown_failed:
-                html_content += self.generate_table_section("❓ Unknown Failures", unknown_failed, section_id="section-unknown-failed")
+                html_content += self.generate_table_section("❓ Unknown Failures", unknown_failed, section_id="section-unknown-failed", collapsible=True)
 
-        # Generate issues section for projects with code issues
-        if issue_projects:
-            html_content += self.generate_table_section("🚩 Projects with Code Issues", issue_projects, section_id="section-issues")
+        # Generate separate sections for each type of code issue
+        unimplemented_projects = {k: v for k, v in results.items() if v.unimplementeds}
+        unsupported_projects = {k: v for k, v in results.items() if v.unsupporteds}
+        fixme_projects = {k: v for k, v in results.items() if v.fixmes}
+        
+        if unimplemented_projects:
+            html_content += self.generate_table_section("🚧 Unimplemented Features", unimplemented_projects, section_id="section-unimplemented", collapsible=True)
+        if unsupported_projects:
+            html_content += self.generate_table_section("❌ Unsupported Features", unsupported_projects, section_id="section-unsupported", collapsible=True)
+        if fixme_projects:
+            html_content += self.generate_table_section("🔧 FIXME Items", fixme_projects, section_id="section-fixme", collapsible=True)
         
         # Generate successful projects by categories
         if successful_projects:
@@ -490,8 +523,8 @@ class HTMLReportGenerator:
     def generate_summary_section(self, results: Dict, issue_projects: Dict, interactive_count: int) -> str:
         total = len(results)
         
-        # Count by status
-        successful = sum(1 for r in results.values() if r.status == "success")
+        # Count by status - only successful if no unsupported/unimplemented/fixme issues
+        successful = sum(1 for r in results.values() if r.status == "success" and not (r.unsupporteds or r.unimplementeds or r.fixmes))
         build_failed = sum(1 for r in results.values() if r.status == "build_failed")
         window_failed = sum(1 for r in results.values() if r.status == "window_failed")
         concat_failed = sum(1 for r in results.values() if r.status == "concat_failed")
@@ -500,21 +533,60 @@ class HTMLReportGenerator:
         # Count source code issues
         unimplemented_count = sum(1 for r in issue_projects.values() if r.unimplementeds)
         fixme_count = sum(1 for r in issue_projects.values() if r.fixmes)
+        unsupported_count = sum(1 for r in issue_projects.values() if r.unsupporteds)
         
-        return f"""
-    <h2>📊 Executive Summary</h2>
+        # Create linked summary
+        summary_html = f"""
+    <h2>📊 Report Summary</h2>
     <ul>
-        <li><strong>Total Projects:</strong> {total}</li>
-        <li><strong>✅ Successful:</strong> {successful}</li>
-        <li><strong>🔨 Build Failures:</strong> {build_failed}</li>
-        <li><strong>🪟 Window Failures:</strong> {window_failed}</li>
-        <li><strong>🔗 Concat Failures:</strong> {concat_failed}</li>
-        <li><strong>❓ Unknown Issues:</strong> {unknown_failed}</li>
-        <li><strong>Unimplemented Features:</strong> {unimplemented_count}</li>
-        <li><strong>FIXME Items:</strong> {fixme_count}</li>
+        <li><strong>Total Projects:</strong> {total}</li>"""
+        
+        if successful > 0:
+            summary_html += f'<li><strong><a href="#section-successful">✅ Successful:</a></strong> {successful}</li>'
+        else:
+            summary_html += f'<li><strong>✅ Successful:</strong> {successful}</li>'
+            
+        if build_failed > 0:
+            summary_html += f'<li><strong><a href="#section-build-failed">🔨 Build Failures:</a></strong> {build_failed}</li>'
+        else:
+            summary_html += f'<li><strong>🔨 Build Failures:</strong> {build_failed}</li>'
+            
+        if window_failed > 0:
+            summary_html += f'<li><strong><a href="#section-window-failed">🪟 Window Failures:</a></strong> {window_failed}</li>'
+        else:
+            summary_html += f'<li><strong>🪟 Window Failures:</strong> {window_failed}</li>'
+            
+        if concat_failed > 0:
+            summary_html += f'<li><strong><a href="#section-concat-failed">🔗 Concat Failures:</a></strong> {concat_failed}</li>'
+        else:
+            summary_html += f'<li><strong>🔗 Concat Failures:</strong> {concat_failed}</li>'
+            
+        if unknown_failed > 0:
+            summary_html += f'<li><strong><a href="#section-unknown-failed">❓ Unknown Issues:</a></strong> {unknown_failed}</li>'
+        else:
+            summary_html += f'<li><strong>❓ Unknown Issues:</strong> {unknown_failed}</li>'
+            
+        # Add individual issue type links to summary
+        if unsupported_count > 0:
+            summary_html += f'<li><strong><a href="#section-unsupported">❌ Unsupported Features:</a></strong> {unsupported_count}</li>'
+        else:
+            summary_html += f'<li><strong>❌ Unsupported Features:</strong> {unsupported_count}</li>'
+            
+        if unimplemented_count > 0:
+            summary_html += f'<li><strong><a href="#section-unimplemented">🚧 Unimplemented Features:</a></strong> {unimplemented_count}</li>'
+        else:
+            summary_html += f'<li><strong>🚧 Unimplemented Features:</strong> {unimplemented_count}</li>'
+            
+        if fixme_count > 0:
+            summary_html += f'<li><strong><a href="#section-fixme">🔧 FIXME Items:</a></strong> {fixme_count}</li>'
+        else:
+            summary_html += f'<li><strong>🔧 FIXME Items:</strong> {fixme_count}</li>'
+            
+        summary_html += f"""
         <li><strong>Interactive Projects:</strong> {interactive_count}</li>
     </ul>
 """
+        return summary_html
 
     def generate_toc(self, results: Dict[str, ProjectResult], issue_projects: Dict[str, ProjectResult]) -> str:
         toc_html = "<h2>Table of Contents</h2><div class=\"toc\"><ul>"
@@ -536,9 +608,17 @@ class HTMLReportGenerator:
             if unknown_failed > 0:
                 toc_html += f'<li><a href="#section-unknown-failed">❓ Unknown Failures ({unknown_failed} projects)</a></li>'
         
-        # Add issues section to TOC if applicable
-        if issue_projects:
-            toc_html += f'<li><a href="#section-issues">🚩 Projects with Code Issues ({len(issue_projects)} projects)</a></li>'
+        # Add separate code issue sections to TOC
+        unimplemented_projects = {k: v for k, v in results.items() if v.unimplementeds}
+        unsupported_projects = {k: v for k, v in results.items() if v.unsupporteds}
+        fixme_projects = {k: v for k, v in results.items() if v.fixmes}
+        
+        if unimplemented_projects:
+            toc_html += f'<li><a href="#section-unimplemented">🚧 Unimplemented Features ({len(unimplemented_projects)} projects)</a></li>'
+        if unsupported_projects:
+            toc_html += f'<li><a href="#section-unsupported">❌ Unsupported Features ({len(unsupported_projects)} projects)</a></li>'
+        if fixme_projects:
+            toc_html += f'<li><a href="#section-fixme">🔧 FIXME Items ({len(fixme_projects)} projects)</a></li>'
 
         # Add successful projects by categories
         successful_projects = {k: v for k, v in results.items() if v.status == "success"}
@@ -554,7 +634,7 @@ class HTMLReportGenerator:
         toc_html += "</ul></div>"
         return toc_html
 
-    def generate_table_section(self, title: str, projects: Dict[str, ProjectResult], is_category: bool = False, section_id: str = None) -> str:
+    def generate_table_section(self, title: str, projects: Dict[str, ProjectResult], is_category: bool = False, section_id: str = None, collapsible: bool = False) -> str:
         section_tag = f'<h2 id="{section_id}">{title}</h2>' if section_id else f'<h2>{title}</h2>'
         
         table_rows = ""
@@ -576,8 +656,8 @@ class HTMLReportGenerator:
         </table>
 """
 
-        if is_category:
-            return f"<details open><summary>{section_tag.replace('h2', 'span')}</summary>{table_html}</details>"
+        if is_category or collapsible:
+            return f"<details><summary>{section_tag.replace('h2', 'span')}</summary>{table_html}</details>"
         else:
             return f"{section_tag}{table_html}"
 
@@ -622,14 +702,33 @@ class HTMLReportGenerator:
         
         content = ""
         
-        # Group issues by type
+        # Group issues by type and determine the primary issue type for summary
         issue_groups = [
-            ("Source Code Issues", project.notes + project.fixmes + project.unimplementeds),
+            ("Source Code Issues", project.notes + project.fixmes + project.unimplementeds + project.unsupporteds),
             ("Build/Compile Issues", project.compile_errors),
             ("Window Detection Issues", project.window_errors),
             ("Concatenation Issues", project.concat_errors),
             ("General Log Issues", project.log_errors + project.log_warnings + project.log_failures)
         ]
+        
+        # Determine the primary issue type for the summary
+        primary_issue = "Details"
+        if project.unsupporteds:
+            primary_issue = "unsupported"
+        elif project.unimplementeds:
+            primary_issue = "unimplemented"
+        elif project.fixmes:
+            primary_issue = "FIXME"
+        elif project.notes and not (project.unsupporteds or project.unimplementeds or project.fixmes):
+            primary_issue = "note"
+        elif project.compile_errors:
+            primary_issue = "build error"
+        elif project.window_errors:
+            primary_issue = "window error"
+        elif project.concat_errors:
+            primary_issue = "concat error"
+        elif project.log_errors or project.log_warnings or project.log_failures:
+            primary_issue = "log issue"
         
         for group_title, group_issues in issue_groups:
             if group_issues:
@@ -638,7 +737,7 @@ class HTMLReportGenerator:
                     content += self.format_note(note)
         
         total_issues = sum(len(group[1]) for group in issue_groups)
-        return f"<details><summary>Details ({total_issues})</summary>{content}</details>"
+        return f"<details><summary>{primary_issue} ({total_issues})</summary>{content}</details>"
 
     def generate_html_footer(self) -> str:
         return '''
@@ -705,11 +804,15 @@ def main():
                        help="Path to test_props.json for interactive project counting")
     parser.add_argument("--include-logs", action="store_true",
                        help="Include log file analysis (errors, warnings, failures) in the report")
+    parser.add_argument("--log-files", nargs="*", type=str,
+                       help="Specific log files to analyze (if not provided, uses most recent run_log_*.txt)")
     
     args = parser.parse_args()
     
     print(f"🔍 Collecting results from: {os.path.abspath(args.input_dir)}")
-    results = collect_all_results(args.input_dir, include_logs=args.include_logs)
+    if args.log_files:
+        print(f"📋 Using specified log files: {', '.join(args.log_files)}")
+    results = collect_all_results(args.input_dir, include_logs=args.include_logs, log_files=args.log_files)
     
     if not results:
         print("❌ No results found! Make sure you've run main.py first.")

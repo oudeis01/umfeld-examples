@@ -1,9 +1,1 @@
-../Processing/Topics/Shaders/Deform
-../Processing/Topics/Fractals and L-Systems/Penrose Tile
-../Processing/Topics/Motion/Refelction2
-../Processing/Topics/File IO/SafeFile2
 ../Processing/Topics/File IO/TileImages
-../Processing/Topics/ImageProcessing/convolution
-../Processing/Topics/File IO/saveOneImage
-../Processing/Topics/ImageProcessing/sharpen
-../Processing/Topics/ImageProcessing/zoom
