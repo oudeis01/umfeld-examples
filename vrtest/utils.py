@@ -775,6 +775,7 @@ def concat_videos_ffmpeg_filter(video1: str, video2: str, output_path: str, dire
         '-filter_complex', filter_str,
         '-map', '[v]',
         '-c:v', 'libx264',
+        '-pix_fmt', 'yuv420p',
         '-crf', '23',
         '-preset', 'veryfast',
         output_path

@@ -84,7 +84,7 @@
 </head>
 <body>
     <h1>Umfeld vs Processing Comparison Report</h1>
-    <p><em>Generated on: 2025-08-13 21:20:02</em></p>
+    <p><em>Generated on: 2025-08-14 13:25:40</em></p>
 <div class="report-container">
     <h2>📊 Executive Summary</h2>
     <ul>
@@ -2451,6 +2451,8 @@ environment: OpenGL 3.3 Core, NVIDIA GeForce RTX 4080, Linux x11, gcc15.1.1</cod
             if (type === 'video') {
                 element.controls = true;
                 element.autoplay = true;
+                element.muted = true;
+                element.loop = true;
             }
             modalContentContainer.appendChild(element);
             modal.style.display = "block";

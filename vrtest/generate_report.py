@@ -17,6 +17,7 @@ from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass, field
 from pathlib import Path
 import glob
+from urllib.parse import quote
 
 # Import project discovery functions from utils
 from utils import get_all_umfeld_processing_examples
@@ -589,11 +590,13 @@ class HTMLReportGenerator:
         # Calculate relative path from HTML output file to comparison file
         html_output_dir = os.path.dirname(os.path.abspath(self.args.output))
         rel_path = os.path.relpath(project.comparison_file, html_output_dir)
-        media_tag = f'<img src="{rel_path}" alt="Preview">' if project.file_type == 'image' else f'<video src="{rel_path}" autoplay muted loop></video>'
+        safe_path = quote(rel_path)
+
+        media_tag = f'<img src="{safe_path}" alt="Preview">' if project.file_type == 'image' else f'<video src="{safe_path}" autoplay muted loop></video>'
 
         return f'''
 <div class="tooltip">
-    <a href="#" onclick="openModal('{rel_path}', '{project.file_type}'); return false;">View</a>
+    <a href="#" onclick="openModal('{safe_path}', '{project.file_type}'); return false;">View</a>
     <div class="tooltip-content">{media_tag}</div>
 </div>
 '''
@@ -651,6 +654,8 @@ class HTMLReportGenerator:
             if (type === 'video') {
                 element.controls = true;
                 element.autoplay = true;
+                element.muted = true;
+                element.loop = true;
             }
             modalContentContainer.appendChild(element);
             modal.style.display = "block";
