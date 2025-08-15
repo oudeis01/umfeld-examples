@@ -24,9 +24,9 @@ void draw() {
     translate(width / 2, height / 2, 0);
     rotateY(map(mouseX, 0, width, -PI, PI));
     texture(img);
-    beginShape();
-    vertex(-100, -100, 0, 0, 0);
-    vertex(100, -40, 0, 300, 120);
-    vertex(0, 100, 0, 200, 400);
+    beginShape(TRIANGLES);
+    vertex(-100, -100, 0, 0.0f, 0.0f); // Top-left corner of texture (0,0)
+    vertex(100, -40, 0, 1.0f, 0.3f); // Right side, slightly down (1, 0.3)
+    vertex(0, 100, 0, 0.5f, 1.0f); // Bottom center (0.5, 1)
     endShape();
 }

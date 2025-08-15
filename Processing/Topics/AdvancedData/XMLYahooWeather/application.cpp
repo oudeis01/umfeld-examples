@@ -3,7 +3,7 @@
 using namespace umfeld;
 
 void settings() {
-    size(1024, 768);
+    size(640, 360);
 }
 
 void setup() {

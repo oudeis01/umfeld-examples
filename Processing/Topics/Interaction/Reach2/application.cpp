@@ -30,7 +30,7 @@ void setup() {
     x[x.size() - 1] = width / 2; // Set base x-coordinate
     y[y.size() - 1] = height;    // Set base y-coordinate
     
-    // umfeld: enable round stroke caps (but doesn't work, see note below)
+    // FIXME: enable round stroke caps (but doesn't work, see note below)
     // strokeJoin(ROUND);
     strokeCap(ROUND);
 }

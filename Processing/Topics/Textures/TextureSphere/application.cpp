@@ -122,8 +122,8 @@ void initializeSphere(int numPtsW, int numPtsH_2pi) {
 
 void textureSphere(float rx, float ry, float rz, PImage* t) {
     // These are so we can map certain parts of the image on to the shape
-    float changeU = t->width / (float) (numPointsW - 1);
-    float changeV = t->height / (float) (numPointsH - 1);
+    float changeU = 1.0f / (float) (numPointsW - 1);  // Normalized to 0.0-1.0 range
+    float changeV = 1.0f / (float) (numPointsH - 1);  // Normalized to 0.0-1.0 range
     float u       = 0; // Width variable for the texture
     float v       = 0; // Height variable for the texture
 
@@ -149,3 +149,7 @@ void textureSphere(float rx, float ry, float rz, PImage* t) {
     }
     endShape();
 }
+/*
+note:
+- texCoords must be given normalized.
+*/

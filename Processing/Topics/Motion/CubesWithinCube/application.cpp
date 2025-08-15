@@ -22,13 +22,13 @@ void setup() {
     for (int i = 0; i < cubies.size(); i++) {
         // Cubies are randomly sized
         float cubieSize = random(5, 15);
-        cubies[i]       = Cube(cubieSize, cubieSize, cubieSize);
+        cubies[i] = Cube(cubieSize, cubieSize, cubieSize);
     }
 }
 
 void draw() {
     background(.19f); //@diff(color_range)
-    lights();
+    lights(); //FIXME: this turns the object into grey(no lighting)
 
     // Center in display window
     translate(width / 2, height / 2, -130);

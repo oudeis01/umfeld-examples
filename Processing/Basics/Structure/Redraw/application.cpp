@@ -39,8 +39,8 @@ void mousePressed() {
 }
 /*
 note:
+- FIXME
 - redraw behaves different than in processing.
-- processing::redraw() runs the draw() once,
-- but umfeld::redraw() disables the noLoop() and 
-  enables the loop again.
+- processing::redraw() runs the draw() for one frame,
+- but umfeld::redraw() disables the noLoop() and enables the loop again.
 */

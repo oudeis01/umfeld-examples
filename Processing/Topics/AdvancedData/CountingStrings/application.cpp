@@ -25,12 +25,10 @@ int counter = 0;
 
 
 void settings() {
-    size(1024, 768);
+    size(640, 360);
 }
 
 void setup() {
-    size(640, 360);
-
     // Load file and chop it up
     std::vector<std::string> lines = loadStrings("dracula.txt");
     std::string allText = join(lines, " ");

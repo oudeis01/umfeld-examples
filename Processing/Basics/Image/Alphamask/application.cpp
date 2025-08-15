@@ -20,6 +20,7 @@ void setup() {
     img     = loadImage("moonwalk.jpg");
     imgMask = loadImage("mask.jpg");
     // img->mask(imgMask); //unimplemented
+	rectMode(CENTER);
     // imageMode(CENTER); //unimplemented
     
 }

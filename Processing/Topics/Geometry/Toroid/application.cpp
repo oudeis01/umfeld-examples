@@ -52,7 +52,7 @@ void setup() {
 void draw() {
     background(0.20f, 0.25f, 0.16f);
     // basic lighting setup
-    lights(); //note: lights() turns the shape color into grey
+    lights(); //FIXME: lights() turns the shape color into grey
     // 2 rendering styles
     // wireframe or solid
     if (isWireFrame) {
