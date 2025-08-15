@@ -39,7 +39,7 @@ void setup() {
 
 void draw() {
     background(0.66f, 0.37f, 0.37f); //@diff(color_range)
-    lights();// note: this turns the shape into gray
+    lights();// FIXME: this turns the shape into gray
     fill(1.0f, 0.78f, 0.78f); //@diff(color_range)
     translate(width / 2, height / 2);
     rotateX(frameCount * angleInc);

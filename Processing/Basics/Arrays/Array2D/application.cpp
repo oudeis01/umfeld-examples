@@ -30,7 +30,7 @@ void setup() {
     }
     std::cout << std::endl;
     spacer = 10;
-    strokeWeight(6);
+    strokeWeight(6); //FIXME: doesn't change the point size
     noLoop(); // Run once and stop
 }
 

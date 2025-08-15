@@ -1,0 +1,41 @@
+2025-08-15 11:11:02,714 [INFO] --- Test Run Started ---
+2025-08-15 11:11:02,714 [INFO] Umfeld Example Dir: /home/choiharam/works/umfeld/umfeld-examples-fork/Processing
+2025-08-15 11:11:02,714 [INFO] Processing Example Dir: /opt/processing/modes/java/examples
+2025-08-15 11:11:02,746 [INFO] Selected project: 'SineCosine'
+2025-08-15 11:11:02,746 [INFO] Found 199 Umfeld and 254 Processing projects
+2025-08-15 11:11:02,746 [INFO] Starting processing for 1 projects
+2025-08-15 11:11:02,746 [INFO] Processing project: 'SineCosine'
+2025-08-15 11:11:02,746 [INFO] Starting build and run for SineCosine
+2025-08-15 11:11:07,561 [INFO] Completed build and run for SineCosine in 4.81s
+2025-08-15 11:11:07,561 [INFO] Starting window detection for SineCosine
+2025-08-15 11:11:07,561 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:11:10,585 [INFO] Found window for 'SineCosine' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 11:11:10,585 [INFO] Completed window detection for SineCosine in 3.02s
+2025-08-15 11:11:10,585 [INFO] Starting capture/recording for SineCosine
+2025-08-15 11:11:10,585 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_SineCosine.mp4
+2025-08-15 11:11:10,585 [INFO] Completed capture/recording for SineCosine in 0.00s
+2025-08-15 11:11:15,649 [INFO] Starting post-processing for SineCosine
+2025-08-15 11:11:15,650 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 11:11:15,904 [INFO] Completed post-processing for SineCosine in 0.25s
+2025-08-15 11:11:15,904 [INFO] Total processing time: 13.16s
+2025-08-15 11:11:15,904 [INFO] Starting build and run for SineCosine
+2025-08-15 11:11:16,135 [INFO] Completed build and run for SineCosine in 0.23s
+2025-08-15 11:11:16,135 [INFO] Starting window detection for SineCosine
+2025-08-15 11:11:16,135 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:11:19,163 [INFO] Found window for 'SineCosine' (ID: 81788935): x=1989, y=569, w=640, h=360
+2025-08-15 11:11:19,163 [INFO] Completed window detection for SineCosine in 3.03s
+2025-08-15 11:11:19,163 [INFO] Starting capture/recording for SineCosine
+2025-08-15 11:11:19,163 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_SineCosine.mp4
+2025-08-15 11:11:19,164 [INFO] Completed capture/recording for SineCosine in 0.00s
+2025-08-15 11:11:24,230 [INFO] Starting post-processing for SineCosine
+2025-08-15 11:11:24,231 [INFO] Adding 'Processing' label to output file
+2025-08-15 11:11:24,485 [INFO] Completed post-processing for SineCosine in 0.25s
+2025-08-15 11:11:24,485 [INFO] Total processing time: 8.58s
+2025-08-15 11:11:24,486 [INFO] Starting concatenation for SineCosine
+2025-08-15 11:11:24,486 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-SineCosine.mp4
+2025-08-15 11:11:24,725 [INFO] Deleted individual Umfeld file: umfeld_SineCosine.mp4
+2025-08-15 11:11:24,725 [INFO] Deleted individual Processing file: processing_SineCosine.mp4
+2025-08-15 11:11:24,725 [INFO] Completed concatenation for SineCosine in 0.24s
+2025-08-15 11:11:24,725 [INFO] Finished processing 'SineCosine'
+2025-08-15 11:11:24,725 [INFO] Total script execution time: 22.01s
+2025-08-15 11:11:24,725 [INFO] --- Test Run Finished ---

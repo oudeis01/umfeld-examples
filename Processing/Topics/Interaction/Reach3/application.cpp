@@ -34,6 +34,7 @@ void setup() {
     stroke(1.f, .39f); //@diff(color_range)
     noFill();
     ellipseDetail(36); // Ensure smooth circles
+	//FIXME: enums for strokeJoin() and strokeCap() might need re-organization
     strokeJoin(ROUND); // Use round joins to avoid spikes at segment connections
     
     // hacky, but the ellipse stroke doesn't appear properly otherwise
@@ -95,6 +96,5 @@ void segment(float x, float y, float a, float sw) {
 }
 /*
 note:
-- I see the stroke triangulation of the RENDER_MODE_BUFFERED is not implemented yet. (inside src/PGraphicsOpenGL_3_3_core.cpp)
-- this example, then, might not be ready yet.
+- I see the stroke triangulation of the RENDER_MODE_BUFFERED is unimplemented yet. (inside src/PGraphicsOpenGL_3_3_core.cpp)
 */

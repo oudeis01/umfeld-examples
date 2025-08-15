@@ -1,0 +1,41 @@
+2025-08-15 11:06:26,540 [INFO] --- Test Run Started ---
+2025-08-15 11:06:26,540 [INFO] Umfeld Example Dir: /home/choiharam/works/umfeld/umfeld-examples-fork/Processing
+2025-08-15 11:06:26,540 [INFO] Processing Example Dir: /opt/processing/modes/java/examples
+2025-08-15 11:06:26,576 [INFO] Selected project: 'Sine'
+2025-08-15 11:06:26,576 [INFO] Found 199 Umfeld and 254 Processing projects
+2025-08-15 11:06:26,576 [INFO] Starting processing for 1 projects
+2025-08-15 11:06:26,576 [INFO] Processing project: 'Sine'
+2025-08-15 11:06:26,576 [INFO] Starting build and run for Sine
+2025-08-15 11:06:31,380 [INFO] Completed build and run for Sine in 4.80s
+2025-08-15 11:06:31,380 [INFO] Starting window detection for Sine
+2025-08-15 11:06:31,380 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:06:34,398 [INFO] Found window for 'Sine' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 11:06:34,398 [INFO] Completed window detection for Sine in 3.02s
+2025-08-15 11:06:34,398 [INFO] Starting capture/recording for Sine
+2025-08-15 11:06:34,398 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_Sine.mp4
+2025-08-15 11:06:34,398 [INFO] Completed capture/recording for Sine in 0.00s
+2025-08-15 11:06:39,469 [INFO] Starting post-processing for Sine
+2025-08-15 11:06:39,469 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 11:06:39,793 [INFO] Completed post-processing for Sine in 0.32s
+2025-08-15 11:06:39,793 [INFO] Total processing time: 13.22s
+2025-08-15 11:06:39,793 [INFO] Starting build and run for Sine
+2025-08-15 11:06:40,026 [INFO] Completed build and run for Sine in 0.23s
+2025-08-15 11:06:40,026 [INFO] Starting window detection for Sine
+2025-08-15 11:06:40,026 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:06:43,044 [INFO] Found window for 'Sine' (ID: 79691783): x=1989, y=569, w=640, h=356
+2025-08-15 11:06:43,044 [INFO] Completed window detection for Sine in 3.02s
+2025-08-15 11:06:43,044 [INFO] Starting capture/recording for Sine
+2025-08-15 11:06:43,044 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_Sine.mp4
+2025-08-15 11:06:43,044 [INFO] Completed capture/recording for Sine in 0.00s
+2025-08-15 11:06:48,114 [INFO] Starting post-processing for Sine
+2025-08-15 11:06:48,114 [INFO] Adding 'Processing' label to output file
+2025-08-15 11:06:48,393 [INFO] Completed post-processing for Sine in 0.28s
+2025-08-15 11:06:48,393 [INFO] Total processing time: 8.60s
+2025-08-15 11:06:48,393 [INFO] Starting concatenation for Sine
+2025-08-15 11:06:48,393 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-Sine.mp4
+2025-08-15 11:06:48,660 [INFO] Deleted individual Umfeld file: umfeld_Sine.mp4
+2025-08-15 11:06:48,660 [INFO] Deleted individual Processing file: processing_Sine.mp4
+2025-08-15 11:06:48,660 [INFO] Completed concatenation for Sine in 0.27s
+2025-08-15 11:06:48,660 [INFO] Finished processing 'Sine'
+2025-08-15 11:06:48,660 [INFO] Total script execution time: 22.12s
+2025-08-15 11:06:48,660 [INFO] --- Test Run Finished ---

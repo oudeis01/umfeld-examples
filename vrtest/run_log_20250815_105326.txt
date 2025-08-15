@@ -1,0 +1,1118 @@
+2025-08-15 10:53:26,167 [INFO] --- Test Run Started ---
+2025-08-15 10:53:26,167 [INFO] Umfeld Example Dir: /home/choiharam/works/umfeld/umfeld-examples-fork/Processing
+2025-08-15 10:53:26,167 [INFO] Processing Example Dir: /opt/processing/modes/java/examples
+2025-08-15 10:53:26,204 [INFO] Loaded 32 failed project paths from 'failed_projects.txt':
+2025-08-15 10:53:26,204 [INFO] Found 31 matching projects to re-run:
+2025-08-15 10:53:26,204 [INFO]   - TextureCube
+2025-08-15 10:53:26,204 [INFO]   - TextureSphere
+2025-08-15 10:53:26,204 [INFO]   - TextureQuad
+2025-08-15 10:53:26,204 [INFO]   - TextureTriangle
+2025-08-15 10:53:26,204 [INFO]   - TextureCylinder
+2025-08-15 10:53:26,204 [INFO]   - RGBCube
+2025-08-15 10:53:26,204 [INFO]   - Vertices
+2025-08-15 10:53:26,204 [INFO]   - Toroid
+2025-08-15 10:53:26,204 [INFO]   - ShapeTransform
+2025-08-15 10:53:26,204 [INFO]   - NoiseSphere
+2025-08-15 10:53:26,204 [INFO]   - Icosahedra
+2025-08-15 10:53:26,204 [INFO]   - CubesWithinCube
+2025-08-15 10:53:26,204 [INFO]   - Extrusion
+2025-08-15 10:53:26,204 [INFO]   - Blending
+2025-08-15 10:53:26,204 [INFO]   - EdgeDetection
+2025-08-15 10:53:26,204 [INFO]   - GroupPShape
+2025-08-15 10:53:26,204 [INFO]   - Reach2
+2025-08-15 10:53:26,204 [INFO]   - Reach3
+2025-08-15 10:53:26,204 [INFO]   - XMLYahooWeather
+2025-08-15 10:53:26,204 [INFO]   - CountingStrings
+2025-08-15 10:53:26,204 [INFO]   - IntListLottery
+2025-08-15 10:53:26,204 [INFO]   - Threads
+2025-08-15 10:53:26,204 [INFO]   - TileImages
+2025-08-15 10:53:26,204 [INFO]   - LoadFile2
+2025-08-15 10:53:26,204 [INFO]   - Sine
+2025-08-15 10:53:26,204 [INFO]   - AdditiveWave
+2025-08-15 10:53:26,204 [INFO]   - SineCosine
+2025-08-15 10:53:26,204 [INFO]   - Redraw
+2025-08-15 10:53:26,204 [INFO]   - Array2D
+2025-08-15 10:53:26,204 [INFO]   - Alphamask
+2025-08-15 10:53:26,204 [INFO]   - GetChild
+2025-08-15 10:53:26,204 [INFO] Found 199 Umfeld and 254 Processing projects
+2025-08-15 10:53:26,204 [INFO] Starting processing for 31 projects
+2025-08-15 10:53:26,204 [INFO] Processing project: 'TextureCube'
+2025-08-15 10:53:26,204 [INFO] Starting build and run for TextureCube
+2025-08-15 10:53:31,255 [INFO] Completed build and run for TextureCube in 5.05s
+2025-08-15 10:53:31,256 [INFO] Starting window detection for TextureCube
+2025-08-15 10:53:31,256 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:53:34,284 [INFO] Found window for 'TextureCube' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:53:34,285 [INFO] Completed window detection for TextureCube in 3.03s
+2025-08-15 10:53:34,285 [INFO] Starting capture/recording for TextureCube
+2025-08-15 10:53:34,285 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_TextureCube.mp4
+2025-08-15 10:53:34,285 [INFO] Completed capture/recording for TextureCube in 0.00s
+2025-08-15 10:53:34,285 [INFO] Starting interaction for TextureCube
+2025-08-15 10:53:34,285 [INFO] Running 'mouse' simulation
+2025-08-15 10:53:39,953 [INFO] Completed interaction for TextureCube in 5.67s
+2025-08-15 10:53:39,953 [INFO] Starting post-processing for TextureCube
+2025-08-15 10:53:39,953 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:53:40,173 [INFO] Completed post-processing for TextureCube in 0.22s
+2025-08-15 10:53:40,173 [INFO] Total processing time: 13.97s
+2025-08-15 10:53:40,173 [INFO] Starting build and run for TextureCube
+2025-08-15 10:53:40,193 [INFO] Completed build and run for TextureCube in 0.02s
+2025-08-15 10:53:40,193 [INFO] Starting window detection for TextureCube
+2025-08-15 10:53:40,193 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:53:43,274 [INFO] Found window for 'TextureCube' (ID: 88080386): x=1984, y=540, w=640, h=360
+2025-08-15 10:53:43,274 [INFO] Completed window detection for TextureCube in 3.08s
+2025-08-15 10:53:43,274 [INFO] Starting capture/recording for TextureCube
+2025-08-15 10:53:43,274 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_TextureCube.mp4
+2025-08-15 10:53:43,274 [INFO] Completed capture/recording for TextureCube in 0.00s
+2025-08-15 10:53:43,274 [INFO] Starting interaction for TextureCube
+2025-08-15 10:53:43,274 [INFO] Running 'mouse' simulation
+2025-08-15 10:53:48,937 [INFO] Completed interaction for TextureCube in 5.66s
+2025-08-15 10:53:48,937 [INFO] Starting post-processing for TextureCube
+2025-08-15 10:53:48,938 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:53:49,152 [INFO] Completed post-processing for TextureCube in 0.21s
+2025-08-15 10:53:49,152 [INFO] Total processing time: 8.98s
+2025-08-15 10:53:49,152 [INFO] Starting concatenation for TextureCube
+2025-08-15 10:53:49,152 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-TextureCube.mp4
+2025-08-15 10:53:49,376 [INFO] Deleted individual Umfeld file: umfeld_TextureCube.mp4
+2025-08-15 10:53:49,376 [INFO] Deleted individual Processing file: processing_TextureCube.mp4
+2025-08-15 10:53:49,376 [INFO] Completed concatenation for TextureCube in 0.22s
+2025-08-15 10:53:49,376 [INFO] Finished processing 'TextureCube'
+2025-08-15 10:53:49,376 [INFO] Processing project: 'TextureSphere'
+2025-08-15 10:53:49,376 [INFO] Starting build and run for TextureSphere
+2025-08-15 10:53:54,756 [INFO] Completed build and run for TextureSphere in 5.38s
+2025-08-15 10:53:54,756 [INFO] Starting window detection for TextureSphere
+2025-08-15 10:53:54,756 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:53:57,777 [INFO] Found window for 'TextureSphere' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:53:57,777 [INFO] Completed window detection for TextureSphere in 3.02s
+2025-08-15 10:53:57,777 [INFO] Starting capture/recording for TextureSphere
+2025-08-15 10:53:57,777 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_TextureSphere.png
+2025-08-15 10:53:58,041 [INFO] Completed capture/recording for TextureSphere in 0.26s
+2025-08-15 10:53:58,041 [INFO] Starting post-processing for TextureSphere
+2025-08-15 10:53:58,041 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:53:58,099 [INFO] Completed post-processing for TextureSphere in 0.06s
+2025-08-15 10:53:58,099 [INFO] Total processing time: 8.72s
+2025-08-15 10:53:58,099 [INFO] Starting build and run for TextureSphere
+2025-08-15 10:53:58,327 [INFO] Completed build and run for TextureSphere in 0.23s
+2025-08-15 10:53:58,327 [INFO] Starting window detection for TextureSphere
+2025-08-15 10:53:58,328 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:54:01,412 [INFO] Found window for 'TextureSphere' (ID: 79691778): x=1984, y=540, w=640, h=360
+2025-08-15 10:54:01,413 [INFO] Completed window detection for TextureSphere in 3.09s
+2025-08-15 10:54:01,413 [INFO] Starting capture/recording for TextureSphere
+2025-08-15 10:54:01,413 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_TextureSphere.png
+2025-08-15 10:54:01,674 [INFO] Completed capture/recording for TextureSphere in 0.26s
+2025-08-15 10:54:01,674 [INFO] Starting post-processing for TextureSphere
+2025-08-15 10:54:01,674 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:54:01,731 [INFO] Completed post-processing for TextureSphere in 0.06s
+2025-08-15 10:54:01,731 [INFO] Total processing time: 3.63s
+2025-08-15 10:54:01,731 [INFO] Starting concatenation for TextureSphere
+2025-08-15 10:54:01,731 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-TextureSphere.png
+2025-08-15 10:54:01,754 [INFO] Deleted individual Umfeld file: umfeld_TextureSphere.png
+2025-08-15 10:54:01,754 [INFO] Deleted individual Processing file: processing_TextureSphere.png
+2025-08-15 10:54:01,754 [INFO] Completed concatenation for TextureSphere in 0.02s
+2025-08-15 10:54:01,754 [INFO] Finished processing 'TextureSphere'
+2025-08-15 10:54:01,754 [INFO] Processing project: 'TextureQuad'
+2025-08-15 10:54:01,754 [INFO] Starting build and run for TextureQuad
+2025-08-15 10:54:06,909 [INFO] Completed build and run for TextureQuad in 5.15s
+2025-08-15 10:54:06,909 [INFO] Starting window detection for TextureQuad
+2025-08-15 10:54:06,909 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:54:09,925 [INFO] Found window for 'TextureQuad' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:54:09,925 [INFO] Completed window detection for TextureQuad in 3.02s
+2025-08-15 10:54:09,925 [INFO] Starting capture/recording for TextureQuad
+2025-08-15 10:54:09,925 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_TextureQuad.mp4
+2025-08-15 10:54:09,925 [INFO] Completed capture/recording for TextureQuad in 0.00s
+2025-08-15 10:54:09,925 [INFO] Starting interaction for TextureQuad
+2025-08-15 10:54:09,925 [INFO] Running 'mouse' simulation
+2025-08-15 10:54:15,164 [INFO] Completed interaction for TextureQuad in 5.24s
+2025-08-15 10:54:15,164 [INFO] Starting post-processing for TextureQuad
+2025-08-15 10:54:15,164 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:54:15,458 [INFO] Completed post-processing for TextureQuad in 0.29s
+2025-08-15 10:54:15,458 [INFO] Total processing time: 13.70s
+2025-08-15 10:54:15,458 [INFO] Starting build and run for TextureQuad
+2025-08-15 10:54:15,685 [INFO] Completed build and run for TextureQuad in 0.23s
+2025-08-15 10:54:15,685 [INFO] Starting window detection for TextureQuad
+2025-08-15 10:54:15,685 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:54:18,774 [INFO] Found window for 'TextureQuad' (ID: 88080386): x=1984, y=540, w=640, h=360
+2025-08-15 10:54:18,774 [INFO] Completed window detection for TextureQuad in 3.09s
+2025-08-15 10:54:18,774 [INFO] Starting capture/recording for TextureQuad
+2025-08-15 10:54:18,774 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_TextureQuad.mp4
+2025-08-15 10:54:18,774 [INFO] Completed capture/recording for TextureQuad in 0.00s
+2025-08-15 10:54:18,774 [INFO] Starting interaction for TextureQuad
+2025-08-15 10:54:18,774 [INFO] Running 'mouse' simulation
+2025-08-15 10:54:24,019 [INFO] Completed interaction for TextureQuad in 5.24s
+2025-08-15 10:54:24,019 [INFO] Starting post-processing for TextureQuad
+2025-08-15 10:54:24,019 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:54:24,313 [INFO] Completed post-processing for TextureQuad in 0.29s
+2025-08-15 10:54:24,313 [INFO] Total processing time: 8.85s
+2025-08-15 10:54:24,313 [INFO] Starting concatenation for TextureQuad
+2025-08-15 10:54:24,313 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-TextureQuad.mp4
+2025-08-15 10:54:24,583 [INFO] Deleted individual Umfeld file: umfeld_TextureQuad.mp4
+2025-08-15 10:54:24,583 [INFO] Deleted individual Processing file: processing_TextureQuad.mp4
+2025-08-15 10:54:24,583 [INFO] Completed concatenation for TextureQuad in 0.27s
+2025-08-15 10:54:24,583 [INFO] Finished processing 'TextureQuad'
+2025-08-15 10:54:24,583 [INFO] Processing project: 'TextureTriangle'
+2025-08-15 10:54:24,583 [INFO] Starting build and run for TextureTriangle
+2025-08-15 10:54:29,910 [INFO] Completed build and run for TextureTriangle in 5.33s
+2025-08-15 10:54:29,910 [INFO] Starting window detection for TextureTriangle
+2025-08-15 10:54:29,910 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:54:32,929 [INFO] Found window for 'TextureTriangle' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:54:32,929 [INFO] Completed window detection for TextureTriangle in 3.02s
+2025-08-15 10:54:32,929 [INFO] Starting capture/recording for TextureTriangle
+2025-08-15 10:54:32,929 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_TextureTriangle.png
+2025-08-15 10:54:33,192 [INFO] Completed capture/recording for TextureTriangle in 0.26s
+2025-08-15 10:54:33,192 [INFO] Starting post-processing for TextureTriangle
+2025-08-15 10:54:33,192 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:54:33,251 [INFO] Completed post-processing for TextureTriangle in 0.06s
+2025-08-15 10:54:33,251 [INFO] Total processing time: 8.67s
+2025-08-15 10:54:33,251 [INFO] Starting build and run for TextureTriangle
+2025-08-15 10:54:33,481 [INFO] Completed build and run for TextureTriangle in 0.23s
+2025-08-15 10:54:33,481 [INFO] Starting window detection for TextureTriangle
+2025-08-15 10:54:33,481 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:54:36,566 [INFO] Found window for 'TextureTriangle' (ID: 90177538): x=1984, y=540, w=640, h=360
+2025-08-15 10:54:36,566 [INFO] Completed window detection for TextureTriangle in 3.09s
+2025-08-15 10:54:36,566 [INFO] Starting capture/recording for TextureTriangle
+2025-08-15 10:54:36,566 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_TextureTriangle.png
+2025-08-15 10:54:36,837 [INFO] Completed capture/recording for TextureTriangle in 0.27s
+2025-08-15 10:54:36,837 [INFO] Starting post-processing for TextureTriangle
+2025-08-15 10:54:36,837 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:54:36,908 [INFO] Completed post-processing for TextureTriangle in 0.07s
+2025-08-15 10:54:36,908 [INFO] Total processing time: 3.66s
+2025-08-15 10:54:36,908 [INFO] Starting concatenation for TextureTriangle
+2025-08-15 10:54:36,908 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-TextureTriangle.png
+2025-08-15 10:54:36,924 [INFO] Deleted individual Umfeld file: umfeld_TextureTriangle.png
+2025-08-15 10:54:36,924 [INFO] Deleted individual Processing file: processing_TextureTriangle.png
+2025-08-15 10:54:36,924 [INFO] Completed concatenation for TextureTriangle in 0.02s
+2025-08-15 10:54:36,924 [INFO] Finished processing 'TextureTriangle'
+2025-08-15 10:54:36,924 [INFO] Processing project: 'TextureCylinder'
+2025-08-15 10:54:36,924 [INFO] Starting build and run for TextureCylinder
+2025-08-15 10:54:42,170 [INFO] Completed build and run for TextureCylinder in 5.25s
+2025-08-15 10:54:42,170 [INFO] Starting window detection for TextureCylinder
+2025-08-15 10:54:42,170 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:54:45,187 [INFO] Found window for 'TextureCylinder' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:54:45,187 [INFO] Completed window detection for TextureCylinder in 3.02s
+2025-08-15 10:54:45,187 [INFO] Starting capture/recording for TextureCylinder
+2025-08-15 10:54:45,187 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_TextureCylinder.mp4
+2025-08-15 10:54:45,188 [INFO] Completed capture/recording for TextureCylinder in 0.00s
+2025-08-15 10:54:45,188 [INFO] Starting interaction for TextureCylinder
+2025-08-15 10:54:45,188 [INFO] Running 'mouse' simulation
+2025-08-15 10:54:50,445 [INFO] Completed interaction for TextureCylinder in 5.26s
+2025-08-15 10:54:50,445 [INFO] Starting post-processing for TextureCylinder
+2025-08-15 10:54:50,445 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:54:50,740 [INFO] Completed post-processing for TextureCylinder in 0.30s
+2025-08-15 10:54:50,741 [INFO] Total processing time: 13.82s
+2025-08-15 10:54:50,741 [INFO] Starting build and run for TextureCylinder
+2025-08-15 10:54:50,969 [INFO] Completed build and run for TextureCylinder in 0.23s
+2025-08-15 10:54:50,969 [INFO] Starting window detection for TextureCylinder
+2025-08-15 10:54:50,969 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:54:54,064 [INFO] Found window for 'TextureCylinder' (ID: 88080386): x=1984, y=540, w=640, h=360
+2025-08-15 10:54:54,064 [INFO] Completed window detection for TextureCylinder in 3.10s
+2025-08-15 10:54:54,064 [INFO] Starting capture/recording for TextureCylinder
+2025-08-15 10:54:54,064 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_TextureCylinder.mp4
+2025-08-15 10:54:54,065 [INFO] Completed capture/recording for TextureCylinder in 0.00s
+2025-08-15 10:54:54,065 [INFO] Starting interaction for TextureCylinder
+2025-08-15 10:54:54,065 [INFO] Running 'mouse' simulation
+2025-08-15 10:54:59,333 [INFO] Completed interaction for TextureCylinder in 5.27s
+2025-08-15 10:54:59,333 [INFO] Starting post-processing for TextureCylinder
+2025-08-15 10:54:59,333 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:54:59,641 [INFO] Completed post-processing for TextureCylinder in 0.31s
+2025-08-15 10:54:59,641 [INFO] Total processing time: 8.90s
+2025-08-15 10:54:59,641 [INFO] Starting concatenation for TextureCylinder
+2025-08-15 10:54:59,641 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-TextureCylinder.mp4
+2025-08-15 10:54:59,897 [INFO] Deleted individual Umfeld file: umfeld_TextureCylinder.mp4
+2025-08-15 10:54:59,897 [INFO] Deleted individual Processing file: processing_TextureCylinder.mp4
+2025-08-15 10:54:59,897 [INFO] Completed concatenation for TextureCylinder in 0.26s
+2025-08-15 10:54:59,897 [INFO] Finished processing 'TextureCylinder'
+2025-08-15 10:54:59,897 [INFO] Processing project: 'RGBCube'
+2025-08-15 10:54:59,897 [INFO] Starting build and run for RGBCube
+2025-08-15 10:55:05,051 [INFO] Completed build and run for RGBCube in 5.15s
+2025-08-15 10:55:05,051 [INFO] Starting window detection for RGBCube
+2025-08-15 10:55:05,051 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:55:08,071 [INFO] Found window for 'RGBCube' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:55:08,071 [INFO] Completed window detection for RGBCube in 3.02s
+2025-08-15 10:55:08,071 [INFO] Starting capture/recording for RGBCube
+2025-08-15 10:55:08,071 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_RGBCube.mp4
+2025-08-15 10:55:08,071 [INFO] Completed capture/recording for RGBCube in 0.00s
+2025-08-15 10:55:08,071 [INFO] Starting interaction for RGBCube
+2025-08-15 10:55:08,071 [INFO] Running 'mouse' simulation
+2025-08-15 10:55:13,325 [INFO] Completed interaction for RGBCube in 5.25s
+2025-08-15 10:55:13,325 [INFO] Starting post-processing for RGBCube
+2025-08-15 10:55:13,325 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:55:13,657 [INFO] Completed post-processing for RGBCube in 0.33s
+2025-08-15 10:55:13,657 [INFO] Total processing time: 13.76s
+2025-08-15 10:55:13,658 [INFO] Starting build and run for RGBCube
+2025-08-15 10:55:13,887 [INFO] Completed build and run for RGBCube in 0.23s
+2025-08-15 10:55:13,887 [INFO] Starting window detection for RGBCube
+2025-08-15 10:55:13,887 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:55:16,965 [INFO] Found window for 'RGBCube' (ID: 88080386): x=1984, y=540, w=640, h=360
+2025-08-15 10:55:16,965 [INFO] Completed window detection for RGBCube in 3.08s
+2025-08-15 10:55:16,965 [INFO] Starting capture/recording for RGBCube
+2025-08-15 10:55:16,965 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_RGBCube.mp4
+2025-08-15 10:55:16,965 [INFO] Completed capture/recording for RGBCube in 0.00s
+2025-08-15 10:55:16,965 [INFO] Starting interaction for RGBCube
+2025-08-15 10:55:16,966 [INFO] Running 'mouse' simulation
+2025-08-15 10:55:22,214 [INFO] Completed interaction for RGBCube in 5.25s
+2025-08-15 10:55:22,214 [INFO] Starting post-processing for RGBCube
+2025-08-15 10:55:22,214 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:55:22,556 [INFO] Completed post-processing for RGBCube in 0.34s
+2025-08-15 10:55:22,557 [INFO] Total processing time: 8.90s
+2025-08-15 10:55:22,557 [INFO] Starting concatenation for RGBCube
+2025-08-15 10:55:22,557 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-RGBCube.mp4
+2025-08-15 10:55:22,833 [INFO] Deleted individual Umfeld file: umfeld_RGBCube.mp4
+2025-08-15 10:55:22,833 [INFO] Deleted individual Processing file: processing_RGBCube.mp4
+2025-08-15 10:55:22,833 [INFO] Completed concatenation for RGBCube in 0.28s
+2025-08-15 10:55:22,833 [INFO] Finished processing 'RGBCube'
+2025-08-15 10:55:22,833 [INFO] Processing project: 'Vertices'
+2025-08-15 10:55:22,833 [INFO] Starting build and run for Vertices
+2025-08-15 10:55:28,011 [INFO] Completed build and run for Vertices in 5.18s
+2025-08-15 10:55:28,011 [INFO] Starting window detection for Vertices
+2025-08-15 10:55:28,012 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:55:31,030 [INFO] Found window for 'Vertices' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:55:31,030 [INFO] Completed window detection for Vertices in 3.02s
+2025-08-15 10:55:31,030 [INFO] Starting capture/recording for Vertices
+2025-08-15 10:55:31,030 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_Vertices.mp4
+2025-08-15 10:55:31,030 [INFO] Completed capture/recording for Vertices in 0.00s
+2025-08-15 10:55:36,096 [INFO] Starting post-processing for Vertices
+2025-08-15 10:55:36,096 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:55:36,316 [INFO] Completed post-processing for Vertices in 0.22s
+2025-08-15 10:55:36,316 [INFO] Total processing time: 13.48s
+2025-08-15 10:55:36,316 [INFO] Starting build and run for Vertices
+2025-08-15 10:55:36,541 [INFO] Completed build and run for Vertices in 0.23s
+2025-08-15 10:55:36,542 [INFO] Starting window detection for Vertices
+2025-08-15 10:55:36,542 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:55:39,631 [INFO] Found window for 'Vertices' (ID: 88080386): x=1984, y=540, w=640, h=360
+2025-08-15 10:55:39,631 [INFO] Completed window detection for Vertices in 3.09s
+2025-08-15 10:55:39,631 [INFO] Starting capture/recording for Vertices
+2025-08-15 10:55:39,631 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_Vertices.mp4
+2025-08-15 10:55:39,631 [INFO] Completed capture/recording for Vertices in 0.00s
+2025-08-15 10:55:44,696 [INFO] Starting post-processing for Vertices
+2025-08-15 10:55:44,696 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:55:44,903 [INFO] Completed post-processing for Vertices in 0.21s
+2025-08-15 10:55:44,903 [INFO] Total processing time: 8.59s
+2025-08-15 10:55:44,903 [INFO] Starting concatenation for Vertices
+2025-08-15 10:55:44,903 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-Vertices.mp4
+2025-08-15 10:55:45,121 [INFO] Deleted individual Umfeld file: umfeld_Vertices.mp4
+2025-08-15 10:55:45,122 [INFO] Deleted individual Processing file: processing_Vertices.mp4
+2025-08-15 10:55:45,122 [INFO] Completed concatenation for Vertices in 0.22s
+2025-08-15 10:55:45,122 [INFO] Finished processing 'Vertices'
+2025-08-15 10:55:45,122 [INFO] Processing project: 'Toroid'
+2025-08-15 10:55:45,122 [INFO] Starting build and run for Toroid
+2025-08-15 10:55:50,450 [INFO] Completed build and run for Toroid in 5.33s
+2025-08-15 10:55:50,450 [INFO] Starting window detection for Toroid
+2025-08-15 10:55:50,450 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:55:53,468 [INFO] Found window for 'Toroid' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:55:53,468 [INFO] Completed window detection for Toroid in 3.02s
+2025-08-15 10:55:53,468 [INFO] Starting capture/recording for Toroid
+2025-08-15 10:55:53,468 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_Toroid.mp4
+2025-08-15 10:55:53,468 [INFO] Completed capture/recording for Toroid in 0.00s
+2025-08-15 10:55:58,537 [INFO] Starting post-processing for Toroid
+2025-08-15 10:55:58,537 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:55:58,804 [INFO] Completed post-processing for Toroid in 0.27s
+2025-08-15 10:55:58,804 [INFO] Total processing time: 13.68s
+2025-08-15 10:55:58,804 [INFO] Starting build and run for Toroid
+2025-08-15 10:55:59,028 [INFO] Completed build and run for Toroid in 0.22s
+2025-08-15 10:55:59,028 [INFO] Starting window detection for Toroid
+2025-08-15 10:55:59,028 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:56:02,118 [INFO] Found window for 'Toroid' (ID: 88080386): x=1984, y=540, w=640, h=360
+2025-08-15 10:56:02,118 [INFO] Completed window detection for Toroid in 3.09s
+2025-08-15 10:56:02,118 [INFO] Starting capture/recording for Toroid
+2025-08-15 10:56:02,118 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_Toroid.mp4
+2025-08-15 10:56:02,119 [INFO] Completed capture/recording for Toroid in 0.00s
+2025-08-15 10:56:07,199 [INFO] Starting post-processing for Toroid
+2025-08-15 10:56:07,199 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:56:07,468 [INFO] Completed post-processing for Toroid in 0.27s
+2025-08-15 10:56:07,468 [INFO] Total processing time: 8.66s
+2025-08-15 10:56:07,468 [INFO] Starting concatenation for Toroid
+2025-08-15 10:56:07,468 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-Toroid.mp4
+2025-08-15 10:56:07,700 [INFO] Deleted individual Umfeld file: umfeld_Toroid.mp4
+2025-08-15 10:56:07,700 [INFO] Deleted individual Processing file: processing_Toroid.mp4
+2025-08-15 10:56:07,700 [INFO] Completed concatenation for Toroid in 0.23s
+2025-08-15 10:56:07,700 [INFO] Finished processing 'Toroid'
+2025-08-15 10:56:07,700 [INFO] Processing project: 'ShapeTransform'
+2025-08-15 10:56:07,700 [INFO] Starting build and run for ShapeTransform
+2025-08-15 10:56:12,830 [INFO] Completed build and run for ShapeTransform in 5.13s
+2025-08-15 10:56:12,830 [INFO] Starting window detection for ShapeTransform
+2025-08-15 10:56:12,830 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:56:15,848 [INFO] Found window for 'ShapeTransform' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:56:15,848 [INFO] Completed window detection for ShapeTransform in 3.02s
+2025-08-15 10:56:15,848 [INFO] Starting capture/recording for ShapeTransform
+2025-08-15 10:56:15,848 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_ShapeTransform.mp4
+2025-08-15 10:56:15,848 [INFO] Completed capture/recording for ShapeTransform in 0.00s
+2025-08-15 10:56:15,848 [INFO] Starting interaction for ShapeTransform
+2025-08-15 10:56:15,849 [INFO] Running 'keyboard' simulation
+2025-08-15 10:56:20,078 [INFO] Completed interaction for ShapeTransform in 4.23s
+2025-08-15 10:56:20,915 [INFO] Starting post-processing for ShapeTransform
+2025-08-15 10:56:20,915 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:56:21,171 [INFO] Completed post-processing for ShapeTransform in 0.26s
+2025-08-15 10:56:21,171 [INFO] Total processing time: 13.47s
+2025-08-15 10:56:21,171 [INFO] Starting build and run for ShapeTransform
+2025-08-15 10:56:21,395 [INFO] Completed build and run for ShapeTransform in 0.22s
+2025-08-15 10:56:21,395 [INFO] Starting window detection for ShapeTransform
+2025-08-15 10:56:21,395 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:56:24,485 [INFO] Found window for 'ShapeTransform' (ID: 88080386): x=1984, y=540, w=640, h=360
+2025-08-15 10:56:24,485 [INFO] Completed window detection for ShapeTransform in 3.09s
+2025-08-15 10:56:24,485 [INFO] Starting capture/recording for ShapeTransform
+2025-08-15 10:56:24,485 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_ShapeTransform.mp4
+2025-08-15 10:56:24,485 [INFO] Completed capture/recording for ShapeTransform in 0.00s
+2025-08-15 10:56:24,485 [INFO] Starting interaction for ShapeTransform
+2025-08-15 10:56:24,485 [INFO] Running 'keyboard' simulation
+2025-08-15 10:56:28,710 [INFO] Completed interaction for ShapeTransform in 4.23s
+2025-08-15 10:56:29,567 [INFO] Starting post-processing for ShapeTransform
+2025-08-15 10:56:29,567 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:56:29,848 [INFO] Completed post-processing for ShapeTransform in 0.28s
+2025-08-15 10:56:29,848 [INFO] Total processing time: 8.68s
+2025-08-15 10:56:29,848 [INFO] Starting concatenation for ShapeTransform
+2025-08-15 10:56:29,848 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-ShapeTransform.mp4
+2025-08-15 10:56:30,093 [INFO] Deleted individual Umfeld file: umfeld_ShapeTransform.mp4
+2025-08-15 10:56:30,093 [INFO] Deleted individual Processing file: processing_ShapeTransform.mp4
+2025-08-15 10:56:30,093 [INFO] Completed concatenation for ShapeTransform in 0.25s
+2025-08-15 10:56:30,093 [INFO] Finished processing 'ShapeTransform'
+2025-08-15 10:56:30,093 [INFO] Processing project: 'NoiseSphere'
+2025-08-15 10:56:30,093 [INFO] Starting build and run for NoiseSphere
+2025-08-15 10:56:35,242 [INFO] Completed build and run for NoiseSphere in 5.15s
+2025-08-15 10:56:35,242 [INFO] Starting window detection for NoiseSphere
+2025-08-15 10:56:35,242 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:56:38,260 [INFO] Found window for 'NoiseSphere' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:56:38,260 [INFO] Completed window detection for NoiseSphere in 3.02s
+2025-08-15 10:56:38,261 [INFO] Starting capture/recording for NoiseSphere
+2025-08-15 10:56:38,261 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_NoiseSphere.mp4
+2025-08-15 10:56:38,261 [INFO] Completed capture/recording for NoiseSphere in 0.00s
+2025-08-15 10:56:38,261 [INFO] Starting interaction for NoiseSphere
+2025-08-15 10:56:38,261 [INFO] Running 'mouse' simulation
+2025-08-15 10:56:43,513 [INFO] Completed interaction for NoiseSphere in 5.25s
+2025-08-15 10:56:43,513 [INFO] Starting post-processing for NoiseSphere
+2025-08-15 10:56:43,513 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:56:43,722 [INFO] Completed post-processing for NoiseSphere in 0.21s
+2025-08-15 10:56:43,722 [INFO] Total processing time: 13.63s
+2025-08-15 10:56:43,722 [INFO] Starting build and run for NoiseSphere
+2025-08-15 10:56:43,945 [INFO] Completed build and run for NoiseSphere in 0.22s
+2025-08-15 10:56:43,945 [INFO] Starting window detection for NoiseSphere
+2025-08-15 10:56:43,945 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:56:47,024 [INFO] Found window for 'NoiseSphere' (ID: 88080386): x=1984, y=540, w=640, h=360
+2025-08-15 10:56:47,024 [INFO] Completed window detection for NoiseSphere in 3.08s
+2025-08-15 10:56:47,024 [INFO] Starting capture/recording for NoiseSphere
+2025-08-15 10:56:47,024 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_NoiseSphere.mp4
+2025-08-15 10:56:47,024 [INFO] Completed capture/recording for NoiseSphere in 0.00s
+2025-08-15 10:56:47,024 [INFO] Starting interaction for NoiseSphere
+2025-08-15 10:56:47,024 [INFO] Running 'mouse' simulation
+2025-08-15 10:56:52,273 [INFO] Completed interaction for NoiseSphere in 5.25s
+2025-08-15 10:56:52,273 [INFO] Starting post-processing for NoiseSphere
+2025-08-15 10:56:52,273 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:56:52,706 [INFO] Completed post-processing for NoiseSphere in 0.43s
+2025-08-15 10:56:52,706 [INFO] Total processing time: 8.98s
+2025-08-15 10:56:52,706 [INFO] Starting concatenation for NoiseSphere
+2025-08-15 10:56:52,706 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-NoiseSphere.mp4
+2025-08-15 10:56:52,950 [INFO] Deleted individual Umfeld file: umfeld_NoiseSphere.mp4
+2025-08-15 10:56:52,950 [INFO] Deleted individual Processing file: processing_NoiseSphere.mp4
+2025-08-15 10:56:52,950 [INFO] Completed concatenation for NoiseSphere in 0.24s
+2025-08-15 10:56:52,950 [INFO] Finished processing 'NoiseSphere'
+2025-08-15 10:56:52,950 [INFO] Processing project: 'Icosahedra'
+2025-08-15 10:56:52,950 [INFO] Starting build and run for Icosahedra
+2025-08-15 10:56:58,469 [INFO] Completed build and run for Icosahedra in 5.52s
+2025-08-15 10:56:58,469 [INFO] Starting window detection for Icosahedra
+2025-08-15 10:56:58,469 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:57:01,486 [INFO] Found window for 'Icosahedra' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:57:01,486 [INFO] Completed window detection for Icosahedra in 3.02s
+2025-08-15 10:57:01,486 [INFO] Starting capture/recording for Icosahedra
+2025-08-15 10:57:01,486 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_Icosahedra.mp4
+2025-08-15 10:57:01,486 [INFO] Completed capture/recording for Icosahedra in 0.00s
+2025-08-15 10:57:06,575 [INFO] Starting post-processing for Icosahedra
+2025-08-15 10:57:06,575 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:57:06,974 [INFO] Completed post-processing for Icosahedra in 0.40s
+2025-08-15 10:57:06,974 [INFO] Total processing time: 14.02s
+2025-08-15 10:57:06,974 [INFO] Starting build and run for Icosahedra
+2025-08-15 10:57:07,203 [INFO] Completed build and run for Icosahedra in 0.23s
+2025-08-15 10:57:07,203 [INFO] Starting window detection for Icosahedra
+2025-08-15 10:57:07,203 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:57:10,298 [INFO] Found window for 'Icosahedra' (ID: 88080386): x=1984, y=540, w=640, h=360
+2025-08-15 10:57:10,299 [INFO] Completed window detection for Icosahedra in 3.10s
+2025-08-15 10:57:10,299 [INFO] Starting capture/recording for Icosahedra
+2025-08-15 10:57:10,299 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_Icosahedra.mp4
+2025-08-15 10:57:10,299 [INFO] Completed capture/recording for Icosahedra in 0.00s
+2025-08-15 10:57:15,397 [INFO] Starting post-processing for Icosahedra
+2025-08-15 10:57:15,397 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:57:15,825 [INFO] Completed post-processing for Icosahedra in 0.43s
+2025-08-15 10:57:15,825 [INFO] Total processing time: 8.85s
+2025-08-15 10:57:15,825 [INFO] Starting concatenation for Icosahedra
+2025-08-15 10:57:15,825 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-Icosahedra.mp4
+2025-08-15 10:57:16,074 [INFO] Deleted individual Umfeld file: umfeld_Icosahedra.mp4
+2025-08-15 10:57:16,074 [INFO] Deleted individual Processing file: processing_Icosahedra.mp4
+2025-08-15 10:57:16,074 [INFO] Completed concatenation for Icosahedra in 0.25s
+2025-08-15 10:57:16,074 [INFO] Finished processing 'Icosahedra'
+2025-08-15 10:57:16,074 [INFO] Processing project: 'CubesWithinCube'
+2025-08-15 10:57:16,074 [INFO] Starting build and run for CubesWithinCube
+2025-08-15 10:57:21,407 [INFO] Completed build and run for CubesWithinCube in 5.33s
+2025-08-15 10:57:21,407 [INFO] Starting window detection for CubesWithinCube
+2025-08-15 10:57:21,407 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:57:24,429 [INFO] Found window for 'CubesWithinCube' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:57:24,429 [INFO] Completed window detection for CubesWithinCube in 3.02s
+2025-08-15 10:57:24,429 [INFO] Starting capture/recording for CubesWithinCube
+2025-08-15 10:57:24,429 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_CubesWithinCube.mp4
+2025-08-15 10:57:24,429 [INFO] Completed capture/recording for CubesWithinCube in 0.00s
+2025-08-15 10:57:29,514 [INFO] Starting post-processing for CubesWithinCube
+2025-08-15 10:57:29,514 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:57:29,806 [INFO] Completed post-processing for CubesWithinCube in 0.29s
+2025-08-15 10:57:29,806 [INFO] Total processing time: 13.73s
+2025-08-15 10:57:29,806 [INFO] Starting build and run for CubesWithinCube
+2025-08-15 10:57:30,033 [INFO] Completed build and run for CubesWithinCube in 0.23s
+2025-08-15 10:57:30,033 [INFO] Starting window detection for CubesWithinCube
+2025-08-15 10:57:30,033 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:57:33,133 [INFO] Found window for 'CubesWithinCube' (ID: 88080386): x=1984, y=540, w=640, h=360
+2025-08-15 10:57:33,133 [INFO] Completed window detection for CubesWithinCube in 3.10s
+2025-08-15 10:57:33,133 [INFO] Starting capture/recording for CubesWithinCube
+2025-08-15 10:57:33,133 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_CubesWithinCube.mp4
+2025-08-15 10:57:33,134 [INFO] Completed capture/recording for CubesWithinCube in 0.00s
+2025-08-15 10:57:38,216 [INFO] Starting post-processing for CubesWithinCube
+2025-08-15 10:57:38,216 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:57:38,482 [INFO] Completed post-processing for CubesWithinCube in 0.27s
+2025-08-15 10:57:38,482 [INFO] Total processing time: 8.68s
+2025-08-15 10:57:38,482 [INFO] Starting concatenation for CubesWithinCube
+2025-08-15 10:57:38,482 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-CubesWithinCube.mp4
+2025-08-15 10:57:38,723 [INFO] Deleted individual Umfeld file: umfeld_CubesWithinCube.mp4
+2025-08-15 10:57:38,723 [INFO] Deleted individual Processing file: processing_CubesWithinCube.mp4
+2025-08-15 10:57:38,723 [INFO] Completed concatenation for CubesWithinCube in 0.24s
+2025-08-15 10:57:38,723 [INFO] Finished processing 'CubesWithinCube'
+2025-08-15 10:57:38,723 [INFO] Processing project: 'Extrusion'
+2025-08-15 10:57:38,723 [INFO] Starting build and run for Extrusion
+2025-08-15 10:57:43,814 [INFO] Completed build and run for Extrusion in 5.09s
+2025-08-15 10:57:43,814 [INFO] Starting window detection for Extrusion
+2025-08-15 10:57:43,814 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:57:46,833 [INFO] Found window for 'Extrusion' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:57:46,833 [INFO] Completed window detection for Extrusion in 3.02s
+2025-08-15 10:57:46,834 [INFO] Starting capture/recording for Extrusion
+2025-08-15 10:57:46,834 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_Extrusion.png
+2025-08-15 10:57:47,100 [INFO] Completed capture/recording for Extrusion in 0.27s
+2025-08-15 10:57:47,100 [INFO] Starting post-processing for Extrusion
+2025-08-15 10:57:47,100 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:57:47,164 [INFO] Completed post-processing for Extrusion in 0.06s
+2025-08-15 10:57:47,164 [INFO] Total processing time: 8.44s
+2025-08-15 10:57:47,164 [INFO] Starting build and run for Extrusion
+2025-08-15 10:57:47,394 [INFO] Completed build and run for Extrusion in 0.23s
+2025-08-15 10:57:47,394 [INFO] Starting window detection for Extrusion
+2025-08-15 10:57:47,394 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:57:50,478 [INFO] Found window for 'Extrusion' (ID: 79691778): x=1984, y=540, w=640, h=360
+2025-08-15 10:57:50,478 [INFO] Completed window detection for Extrusion in 3.08s
+2025-08-15 10:57:50,478 [INFO] Starting capture/recording for Extrusion
+2025-08-15 10:57:50,479 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_Extrusion.png
+2025-08-15 10:57:50,740 [INFO] Completed capture/recording for Extrusion in 0.26s
+2025-08-15 10:57:50,740 [INFO] Starting post-processing for Extrusion
+2025-08-15 10:57:50,740 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:57:50,798 [INFO] Completed post-processing for Extrusion in 0.06s
+2025-08-15 10:57:50,798 [INFO] Total processing time: 3.63s
+2025-08-15 10:57:50,798 [INFO] Starting concatenation for Extrusion
+2025-08-15 10:57:50,798 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-Extrusion.png
+2025-08-15 10:57:50,810 [INFO] Deleted individual Umfeld file: umfeld_Extrusion.png
+2025-08-15 10:57:50,810 [INFO] Deleted individual Processing file: processing_Extrusion.png
+2025-08-15 10:57:50,810 [INFO] Completed concatenation for Extrusion in 0.01s
+2025-08-15 10:57:50,810 [INFO] Finished processing 'Extrusion'
+2025-08-15 10:57:50,810 [INFO] Processing project: 'Blending'
+2025-08-15 10:57:50,810 [INFO] Starting build and run for Blending
+2025-08-15 10:57:56,154 [INFO] Completed build and run for Blending in 5.34s
+2025-08-15 10:57:56,154 [INFO] Starting window detection for Blending
+2025-08-15 10:57:56,154 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:57:59,172 [INFO] Found window for 'Blending' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:57:59,172 [INFO] Completed window detection for Blending in 3.02s
+2025-08-15 10:57:59,172 [INFO] Starting capture/recording for Blending
+2025-08-15 10:57:59,172 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_Blending.png
+2025-08-15 10:57:59,433 [INFO] Completed capture/recording for Blending in 0.26s
+2025-08-15 10:57:59,433 [INFO] Starting post-processing for Blending
+2025-08-15 10:57:59,433 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:57:59,489 [INFO] Completed post-processing for Blending in 0.06s
+2025-08-15 10:57:59,489 [INFO] Total processing time: 8.68s
+2025-08-15 10:57:59,489 [INFO] Starting build and run for Blending
+2025-08-15 10:57:59,713 [INFO] Completed build and run for Blending in 0.22s
+2025-08-15 10:57:59,713 [INFO] Starting window detection for Blending
+2025-08-15 10:57:59,713 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:58:02,799 [INFO] Found window for 'Blending' (ID: 79691778): x=1984, y=540, w=640, h=360
+2025-08-15 10:58:02,799 [INFO] Completed window detection for Blending in 3.09s
+2025-08-15 10:58:02,799 [INFO] Starting capture/recording for Blending
+2025-08-15 10:58:02,799 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_Blending.png
+2025-08-15 10:58:03,064 [INFO] Completed capture/recording for Blending in 0.26s
+2025-08-15 10:58:03,064 [INFO] Starting post-processing for Blending
+2025-08-15 10:58:03,064 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:58:03,135 [INFO] Completed post-processing for Blending in 0.07s
+2025-08-15 10:58:03,135 [INFO] Total processing time: 3.65s
+2025-08-15 10:58:03,135 [INFO] Starting concatenation for Blending
+2025-08-15 10:58:03,135 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-Blending.png
+2025-08-15 10:58:03,163 [INFO] Deleted individual Umfeld file: umfeld_Blending.png
+2025-08-15 10:58:03,164 [INFO] Deleted individual Processing file: processing_Blending.png
+2025-08-15 10:58:03,164 [INFO] Completed concatenation for Blending in 0.03s
+2025-08-15 10:58:03,164 [INFO] Finished processing 'Blending'
+2025-08-15 10:58:03,164 [INFO] Processing project: 'EdgeDetection'
+2025-08-15 10:58:03,164 [INFO] Starting build and run for EdgeDetection
+2025-08-15 10:58:08,367 [INFO] Completed build and run for EdgeDetection in 5.20s
+2025-08-15 10:58:08,367 [INFO] Starting window detection for EdgeDetection
+2025-08-15 10:58:08,367 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:58:11,382 [INFO] Found window for 'EdgeDetection' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:58:11,382 [INFO] Completed window detection for EdgeDetection in 3.02s
+2025-08-15 10:58:11,382 [INFO] Starting capture/recording for EdgeDetection
+2025-08-15 10:58:11,382 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_EdgeDetection.png
+2025-08-15 10:58:11,646 [INFO] Completed capture/recording for EdgeDetection in 0.26s
+2025-08-15 10:58:11,646 [INFO] Starting post-processing for EdgeDetection
+2025-08-15 10:58:11,646 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:58:11,704 [INFO] Completed post-processing for EdgeDetection in 0.06s
+2025-08-15 10:58:11,705 [INFO] Total processing time: 8.54s
+2025-08-15 10:58:11,705 [INFO] Starting build and run for EdgeDetection
+2025-08-15 10:58:11,927 [INFO] Completed build and run for EdgeDetection in 0.22s
+2025-08-15 10:58:11,928 [INFO] Starting window detection for EdgeDetection
+2025-08-15 10:58:11,928 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:58:14,941 [INFO] Found window for 'EdgeDetection' (ID: 81788935): x=1989, y=569, w=640, h=356
+2025-08-15 10:58:14,941 [INFO] Completed window detection for EdgeDetection in 3.01s
+2025-08-15 10:58:14,941 [INFO] Starting capture/recording for EdgeDetection
+2025-08-15 10:58:14,941 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_EdgeDetection.png
+2025-08-15 10:58:15,204 [INFO] Completed capture/recording for EdgeDetection in 0.26s
+2025-08-15 10:58:15,204 [INFO] Starting post-processing for EdgeDetection
+2025-08-15 10:58:15,204 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:58:15,290 [INFO] Completed post-processing for EdgeDetection in 0.09s
+2025-08-15 10:58:15,290 [INFO] Total processing time: 3.59s
+2025-08-15 10:58:15,290 [INFO] Starting concatenation for EdgeDetection
+2025-08-15 10:58:15,290 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-EdgeDetection.png
+2025-08-15 10:58:15,331 [INFO] Deleted individual Umfeld file: umfeld_EdgeDetection.png
+2025-08-15 10:58:15,331 [INFO] Deleted individual Processing file: processing_EdgeDetection.png
+2025-08-15 10:58:15,331 [INFO] Completed concatenation for EdgeDetection in 0.04s
+2025-08-15 10:58:15,331 [INFO] Finished processing 'EdgeDetection'
+2025-08-15 10:58:15,332 [INFO] Processing project: 'GroupPShape'
+2025-08-15 10:58:15,332 [INFO] Starting build and run for GroupPShape
+2025-08-15 10:58:20,389 [INFO] Completed build and run for GroupPShape in 5.06s
+2025-08-15 10:58:20,389 [INFO] Starting window detection for GroupPShape
+2025-08-15 10:58:20,389 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:58:23,408 [INFO] Found window for 'GroupPShape' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:58:23,408 [INFO] Completed window detection for GroupPShape in 3.02s
+2025-08-15 10:58:23,408 [INFO] Starting capture/recording for GroupPShape
+2025-08-15 10:58:23,408 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_GroupPShape.png
+2025-08-15 10:58:23,672 [INFO] Completed capture/recording for GroupPShape in 0.26s
+2025-08-15 10:58:23,672 [INFO] Starting post-processing for GroupPShape
+2025-08-15 10:58:23,673 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:58:23,727 [INFO] Completed post-processing for GroupPShape in 0.05s
+2025-08-15 10:58:23,727 [INFO] Total processing time: 8.40s
+2025-08-15 10:58:23,727 [INFO] Starting build and run for GroupPShape
+2025-08-15 10:58:23,958 [INFO] Completed build and run for GroupPShape in 0.23s
+2025-08-15 10:58:23,958 [INFO] Starting window detection for GroupPShape
+2025-08-15 10:58:23,958 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:58:27,035 [INFO] Found window for 'GroupPShape' (ID: 90177538): x=1984, y=540, w=640, h=360
+2025-08-15 10:58:27,035 [INFO] Completed window detection for GroupPShape in 3.08s
+2025-08-15 10:58:27,035 [INFO] Starting capture/recording for GroupPShape
+2025-08-15 10:58:27,035 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_GroupPShape.png
+2025-08-15 10:58:27,299 [INFO] Completed capture/recording for GroupPShape in 0.26s
+2025-08-15 10:58:27,299 [INFO] Starting post-processing for GroupPShape
+2025-08-15 10:58:27,299 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:58:27,356 [INFO] Completed post-processing for GroupPShape in 0.06s
+2025-08-15 10:58:27,356 [INFO] Total processing time: 3.63s
+2025-08-15 10:58:27,357 [INFO] Starting concatenation for GroupPShape
+2025-08-15 10:58:27,357 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-GroupPShape.png
+2025-08-15 10:58:27,365 [INFO] Deleted individual Umfeld file: umfeld_GroupPShape.png
+2025-08-15 10:58:27,365 [INFO] Deleted individual Processing file: processing_GroupPShape.png
+2025-08-15 10:58:27,365 [INFO] Completed concatenation for GroupPShape in 0.01s
+2025-08-15 10:58:27,365 [INFO] Finished processing 'GroupPShape'
+2025-08-15 10:58:27,365 [INFO] Processing project: 'Reach2'
+2025-08-15 10:58:27,365 [INFO] Starting build and run for Reach2
+2025-08-15 10:58:32,611 [INFO] Completed build and run for Reach2 in 5.25s
+2025-08-15 10:58:32,611 [INFO] Starting window detection for Reach2
+2025-08-15 10:58:32,611 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:58:35,629 [INFO] Found window for 'Reach2' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:58:35,629 [INFO] Completed window detection for Reach2 in 3.02s
+2025-08-15 10:58:35,629 [INFO] Starting capture/recording for Reach2
+2025-08-15 10:58:35,629 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_Reach2.mp4
+2025-08-15 10:58:35,630 [INFO] Completed capture/recording for Reach2 in 0.00s
+2025-08-15 10:58:35,630 [INFO] Starting interaction for Reach2
+2025-08-15 10:58:35,630 [INFO] Running 'mouse' simulation
+2025-08-15 10:58:40,873 [INFO] Completed interaction for Reach2 in 5.24s
+2025-08-15 10:58:40,874 [INFO] Starting post-processing for Reach2
+2025-08-15 10:58:40,874 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:58:41,125 [INFO] Completed post-processing for Reach2 in 0.25s
+2025-08-15 10:58:41,126 [INFO] Total processing time: 13.76s
+2025-08-15 10:58:41,126 [INFO] Starting build and run for Reach2
+2025-08-15 10:58:41,350 [INFO] Completed build and run for Reach2 in 0.22s
+2025-08-15 10:58:41,350 [INFO] Starting window detection for Reach2
+2025-08-15 10:58:41,350 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:58:44,371 [INFO] Found window for 'Reach2' (ID: 79691783): x=1989, y=569, w=640, h=360
+2025-08-15 10:58:44,371 [INFO] Completed window detection for Reach2 in 3.02s
+2025-08-15 10:58:44,371 [INFO] Starting capture/recording for Reach2
+2025-08-15 10:58:44,371 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_Reach2.mp4
+2025-08-15 10:58:44,372 [INFO] Completed capture/recording for Reach2 in 0.00s
+2025-08-15 10:58:44,372 [INFO] Starting interaction for Reach2
+2025-08-15 10:58:44,372 [INFO] Running 'mouse' simulation
+2025-08-15 10:58:49,628 [INFO] Completed interaction for Reach2 in 5.26s
+2025-08-15 10:58:49,628 [INFO] Starting post-processing for Reach2
+2025-08-15 10:58:49,628 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:58:49,857 [INFO] Completed post-processing for Reach2 in 0.23s
+2025-08-15 10:58:49,857 [INFO] Total processing time: 8.73s
+2025-08-15 10:58:49,857 [INFO] Starting concatenation for Reach2
+2025-08-15 10:58:49,857 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-Reach2.mp4
+2025-08-15 10:58:50,086 [INFO] Deleted individual Umfeld file: umfeld_Reach2.mp4
+2025-08-15 10:58:50,086 [INFO] Deleted individual Processing file: processing_Reach2.mp4
+2025-08-15 10:58:50,086 [INFO] Completed concatenation for Reach2 in 0.23s
+2025-08-15 10:58:50,086 [INFO] Finished processing 'Reach2'
+2025-08-15 10:58:50,086 [INFO] Processing project: 'Reach3'
+2025-08-15 10:58:50,086 [INFO] Starting build and run for Reach3
+2025-08-15 10:58:55,201 [INFO] Completed build and run for Reach3 in 5.11s
+2025-08-15 10:58:55,201 [INFO] Starting window detection for Reach3
+2025-08-15 10:58:55,201 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:58:58,218 [INFO] Found window for 'Reach3' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:58:58,218 [INFO] Completed window detection for Reach3 in 3.02s
+2025-08-15 10:58:58,219 [INFO] Starting capture/recording for Reach3
+2025-08-15 10:58:58,219 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_Reach3.mp4
+2025-08-15 10:58:58,219 [INFO] Completed capture/recording for Reach3 in 0.00s
+2025-08-15 10:58:58,219 [INFO] Starting interaction for Reach3
+2025-08-15 10:58:58,219 [INFO] Running 'mouse' simulation
+2025-08-15 10:59:03,470 [INFO] Completed interaction for Reach3 in 5.25s
+2025-08-15 10:59:03,470 [INFO] Starting post-processing for Reach3
+2025-08-15 10:59:03,470 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:59:03,706 [INFO] Completed post-processing for Reach3 in 0.24s
+2025-08-15 10:59:03,706 [INFO] Total processing time: 13.62s
+2025-08-15 10:59:03,706 [INFO] Starting build and run for Reach3
+2025-08-15 10:59:03,934 [INFO] Completed build and run for Reach3 in 0.23s
+2025-08-15 10:59:03,935 [INFO] Starting window detection for Reach3
+2025-08-15 10:59:03,935 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:59:06,953 [INFO] Found window for 'Reach3' (ID: 79691783): x=1989, y=569, w=640, h=356
+2025-08-15 10:59:06,953 [INFO] Completed window detection for Reach3 in 3.02s
+2025-08-15 10:59:06,953 [INFO] Starting capture/recording for Reach3
+2025-08-15 10:59:06,953 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_Reach3.mp4
+2025-08-15 10:59:06,953 [INFO] Completed capture/recording for Reach3 in 0.00s
+2025-08-15 10:59:06,953 [INFO] Starting interaction for Reach3
+2025-08-15 10:59:06,953 [INFO] Running 'mouse' simulation
+2025-08-15 10:59:12,201 [INFO] Completed interaction for Reach3 in 5.25s
+2025-08-15 10:59:12,201 [INFO] Starting post-processing for Reach3
+2025-08-15 10:59:12,201 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:59:12,425 [INFO] Completed post-processing for Reach3 in 0.22s
+2025-08-15 10:59:12,425 [INFO] Total processing time: 8.72s
+2025-08-15 10:59:12,425 [INFO] Starting concatenation for Reach3
+2025-08-15 10:59:12,425 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-Reach3.mp4
+2025-08-15 10:59:12,645 [INFO] Deleted individual Umfeld file: umfeld_Reach3.mp4
+2025-08-15 10:59:12,645 [INFO] Deleted individual Processing file: processing_Reach3.mp4
+2025-08-15 10:59:12,645 [INFO] Completed concatenation for Reach3 in 0.22s
+2025-08-15 10:59:12,645 [INFO] Finished processing 'Reach3'
+2025-08-15 10:59:12,645 [INFO] Processing project: 'XMLYahooWeather'
+2025-08-15 10:59:12,645 [INFO] Starting build and run for XMLYahooWeather
+2025-08-15 10:59:17,774 [INFO] Completed build and run for XMLYahooWeather in 5.13s
+2025-08-15 10:59:17,774 [INFO] Starting window detection for XMLYahooWeather
+2025-08-15 10:59:17,774 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:59:20,790 [INFO] Found window for 'XMLYahooWeather' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:59:20,790 [INFO] Completed window detection for XMLYahooWeather in 3.02s
+2025-08-15 10:59:20,790 [INFO] Starting capture/recording for XMLYahooWeather
+2025-08-15 10:59:20,790 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_XMLYahooWeather.png
+2025-08-15 10:59:21,054 [INFO] Completed capture/recording for XMLYahooWeather in 0.26s
+2025-08-15 10:59:21,054 [INFO] Starting post-processing for XMLYahooWeather
+2025-08-15 10:59:21,054 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:59:21,107 [INFO] Completed post-processing for XMLYahooWeather in 0.05s
+2025-08-15 10:59:21,107 [INFO] Total processing time: 8.46s
+2025-08-15 10:59:21,107 [INFO] Starting build and run for XMLYahooWeather
+2025-08-15 10:59:21,340 [INFO] Completed build and run for XMLYahooWeather in 0.23s
+2025-08-15 10:59:21,340 [INFO] Starting window detection for XMLYahooWeather
+2025-08-15 10:59:21,340 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:59:24,354 [INFO] Found window for 'XMLYahooWeather' (ID: 81788935): x=2009, y=569, w=600, h=356
+2025-08-15 10:59:24,354 [INFO] Completed window detection for XMLYahooWeather in 3.01s
+2025-08-15 10:59:24,354 [INFO] Starting capture/recording for XMLYahooWeather
+2025-08-15 10:59:24,354 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_XMLYahooWeather.png
+2025-08-15 10:59:24,616 [INFO] Completed capture/recording for XMLYahooWeather in 0.26s
+2025-08-15 10:59:24,616 [INFO] Starting post-processing for XMLYahooWeather
+2025-08-15 10:59:24,616 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:59:24,672 [INFO] Completed post-processing for XMLYahooWeather in 0.06s
+2025-08-15 10:59:24,672 [INFO] Total processing time: 3.56s
+2025-08-15 10:59:24,672 [INFO] Starting concatenation for XMLYahooWeather
+2025-08-15 10:59:24,672 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-XMLYahooWeather.png
+2025-08-15 10:59:24,684 [INFO] Deleted individual Umfeld file: umfeld_XMLYahooWeather.png
+2025-08-15 10:59:24,684 [INFO] Deleted individual Processing file: processing_XMLYahooWeather.png
+2025-08-15 10:59:24,684 [INFO] Completed concatenation for XMLYahooWeather in 0.01s
+2025-08-15 10:59:24,684 [INFO] Finished processing 'XMLYahooWeather'
+2025-08-15 10:59:24,684 [INFO] Processing project: 'CountingStrings'
+2025-08-15 10:59:24,685 [INFO] Starting build and run for CountingStrings
+2025-08-15 10:59:30,096 [INFO] Completed build and run for CountingStrings in 5.41s
+2025-08-15 10:59:30,096 [INFO] Starting window detection for CountingStrings
+2025-08-15 10:59:30,096 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:59:33,112 [INFO] Found window for 'CountingStrings' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 10:59:33,112 [INFO] Completed window detection for CountingStrings in 3.02s
+2025-08-15 10:59:33,112 [INFO] Starting capture/recording for CountingStrings
+2025-08-15 10:59:33,112 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_CountingStrings.mp4
+2025-08-15 10:59:33,112 [INFO] Completed capture/recording for CountingStrings in 0.00s
+2025-08-15 10:59:38,197 [INFO] Starting post-processing for CountingStrings
+2025-08-15 10:59:38,197 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:59:38,422 [INFO] Completed post-processing for CountingStrings in 0.23s
+2025-08-15 10:59:38,423 [INFO] Total processing time: 13.74s
+2025-08-15 10:59:38,423 [INFO] Starting build and run for CountingStrings
+2025-08-15 10:59:38,644 [INFO] Completed build and run for CountingStrings in 0.22s
+2025-08-15 10:59:38,644 [INFO] Starting window detection for CountingStrings
+2025-08-15 10:59:38,644 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:59:41,659 [INFO] Found window for 'CountingStrings' (ID: 79691783): x=1989, y=569, w=640, h=356
+2025-08-15 10:59:41,659 [INFO] Completed window detection for CountingStrings in 3.01s
+2025-08-15 10:59:41,659 [INFO] Starting capture/recording for CountingStrings
+2025-08-15 10:59:41,659 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_CountingStrings.mp4
+2025-08-15 10:59:41,660 [INFO] Completed capture/recording for CountingStrings in 0.00s
+2025-08-15 10:59:46,730 [INFO] Starting post-processing for CountingStrings
+2025-08-15 10:59:46,730 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:59:46,929 [INFO] Completed post-processing for CountingStrings in 0.20s
+2025-08-15 10:59:46,929 [INFO] Total processing time: 8.51s
+2025-08-15 10:59:46,929 [INFO] Starting concatenation for CountingStrings
+2025-08-15 10:59:46,929 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-CountingStrings.mp4
+2025-08-15 10:59:47,153 [INFO] Deleted individual Umfeld file: umfeld_CountingStrings.mp4
+2025-08-15 10:59:47,153 [INFO] Deleted individual Processing file: processing_CountingStrings.mp4
+2025-08-15 10:59:47,153 [INFO] Completed concatenation for CountingStrings in 0.22s
+2025-08-15 10:59:47,153 [INFO] Finished processing 'CountingStrings'
+2025-08-15 10:59:47,153 [INFO] Processing project: 'IntListLottery'
+2025-08-15 10:59:47,153 [INFO] Starting build and run for IntListLottery
+2025-08-15 10:59:52,607 [INFO] Completed build and run for IntListLottery in 5.45s
+2025-08-15 10:59:52,607 [INFO] Starting window detection for IntListLottery
+2025-08-15 10:59:52,607 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:59:55,623 [INFO] Found window for 'IntListLottery' (ID: 79691827): x=1984, y=540, w=640, h=360
+2025-08-15 10:59:55,623 [INFO] Completed window detection for IntListLottery in 3.02s
+2025-08-15 10:59:55,623 [INFO] Starting capture/recording for IntListLottery
+2025-08-15 10:59:55,623 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_IntListLottery.png
+2025-08-15 10:59:55,886 [INFO] Completed capture/recording for IntListLottery in 0.26s
+2025-08-15 10:59:55,886 [INFO] Starting post-processing for IntListLottery
+2025-08-15 10:59:55,886 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 10:59:55,940 [INFO] Completed post-processing for IntListLottery in 0.05s
+2025-08-15 10:59:55,940 [INFO] Total processing time: 8.79s
+2025-08-15 10:59:55,941 [INFO] Starting build and run for IntListLottery
+2025-08-15 10:59:56,171 [INFO] Completed build and run for IntListLottery in 0.23s
+2025-08-15 10:59:56,171 [INFO] Starting window detection for IntListLottery
+2025-08-15 10:59:56,171 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 10:59:59,189 [INFO] Found window for 'IntListLottery' (ID: 81788935): x=1989, y=569, w=640, h=356
+2025-08-15 10:59:59,189 [INFO] Completed window detection for IntListLottery in 3.02s
+2025-08-15 10:59:59,189 [INFO] Starting capture/recording for IntListLottery
+2025-08-15 10:59:59,189 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_IntListLottery.png
+2025-08-15 10:59:59,452 [INFO] Completed capture/recording for IntListLottery in 0.26s
+2025-08-15 10:59:59,452 [INFO] Starting post-processing for IntListLottery
+2025-08-15 10:59:59,452 [INFO] Adding 'Processing' label to output file
+2025-08-15 10:59:59,508 [INFO] Completed post-processing for IntListLottery in 0.06s
+2025-08-15 10:59:59,508 [INFO] Total processing time: 3.57s
+2025-08-15 10:59:59,508 [INFO] Starting concatenation for IntListLottery
+2025-08-15 10:59:59,508 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-IntListLottery.png
+2025-08-15 10:59:59,518 [INFO] Deleted individual Umfeld file: umfeld_IntListLottery.png
+2025-08-15 10:59:59,518 [INFO] Deleted individual Processing file: processing_IntListLottery.png
+2025-08-15 10:59:59,518 [INFO] Completed concatenation for IntListLottery in 0.01s
+2025-08-15 10:59:59,518 [INFO] Finished processing 'IntListLottery'
+2025-08-15 10:59:59,518 [INFO] Processing project: 'Threads'
+2025-08-15 10:59:59,518 [INFO] Starting build and run for Threads
+2025-08-15 11:00:04,768 [INFO] Completed build and run for Threads in 5.25s
+2025-08-15 11:00:04,768 [INFO] Starting window detection for Threads
+2025-08-15 11:00:04,768 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:00:07,786 [INFO] Found window for 'Threads' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 11:00:07,786 [INFO] Completed window detection for Threads in 3.02s
+2025-08-15 11:00:07,786 [INFO] Starting capture/recording for Threads
+2025-08-15 11:00:07,786 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_Threads.png
+2025-08-15 11:00:08,048 [INFO] Completed capture/recording for Threads in 0.26s
+2025-08-15 11:00:08,048 [INFO] Starting post-processing for Threads
+2025-08-15 11:00:08,048 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 11:00:08,106 [INFO] Completed post-processing for Threads in 0.06s
+2025-08-15 11:00:08,106 [INFO] Total processing time: 8.59s
+2025-08-15 11:00:08,106 [INFO] Starting build and run for Threads
+2025-08-15 11:00:08,328 [INFO] Completed build and run for Threads in 0.22s
+2025-08-15 11:00:08,328 [INFO] Starting window detection for Threads
+2025-08-15 11:00:08,328 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:00:11,340 [INFO] Found window for 'Threads' (ID: 81788935): x=1989, y=569, w=640, h=356
+2025-08-15 11:00:11,340 [INFO] Completed window detection for Threads in 3.01s
+2025-08-15 11:00:11,340 [INFO] Starting capture/recording for Threads
+2025-08-15 11:00:11,340 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_Threads.png
+2025-08-15 11:00:11,602 [INFO] Completed capture/recording for Threads in 0.26s
+2025-08-15 11:00:11,602 [INFO] Starting post-processing for Threads
+2025-08-15 11:00:11,602 [INFO] Adding 'Processing' label to output file
+2025-08-15 11:00:11,657 [INFO] Completed post-processing for Threads in 0.06s
+2025-08-15 11:00:11,657 [INFO] Total processing time: 3.55s
+2025-08-15 11:00:11,658 [INFO] Starting concatenation for Threads
+2025-08-15 11:00:11,658 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-Threads.png
+2025-08-15 11:00:11,667 [INFO] Deleted individual Umfeld file: umfeld_Threads.png
+2025-08-15 11:00:11,667 [INFO] Deleted individual Processing file: processing_Threads.png
+2025-08-15 11:00:11,667 [INFO] Completed concatenation for Threads in 0.01s
+2025-08-15 11:00:11,667 [INFO] Finished processing 'Threads'
+2025-08-15 11:00:11,667 [INFO] Processing project: 'TileImages'
+2025-08-15 11:00:11,667 [INFO] Starting build and run for TileImages
+2025-08-15 11:00:16,769 [INFO] Completed build and run for TileImages in 5.10s
+2025-08-15 11:00:16,769 [INFO] Starting window detection for TileImages
+2025-08-15 11:00:16,769 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:00:19,787 [INFO] Found window for 'TileImages' (ID: 77594675): x=2004, y=420, w=600, h=600
+2025-08-15 11:00:19,787 [INFO] Completed window detection for TileImages in 3.02s
+2025-08-15 11:00:19,787 [INFO] Starting capture/recording for TileImages
+2025-08-15 11:00:19,787 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_TileImages.png
+2025-08-15 11:00:19,989 [INFO] Completed capture/recording for TileImages in 0.20s
+2025-08-15 11:00:19,989 [INFO] Starting post-processing for TileImages
+2025-08-15 11:00:19,989 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 11:00:20,044 [INFO] Completed post-processing for TileImages in 0.06s
+2025-08-15 11:00:20,044 [INFO] Total processing time: 8.38s
+2025-08-15 11:00:20,045 [INFO] Starting build and run for TileImages
+2025-08-15 11:00:20,273 [INFO] Completed build and run for TileImages in 0.23s
+2025-08-15 11:00:20,273 [INFO] Starting window detection for TileImages
+2025-08-15 11:00:20,273 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:00:26,430 [ERROR] WINDOW_NOT_FOUND: Could not find window for 'TileImages' (PID: 437387) - Application may not have started properly or window creation failed
+2025-08-15 11:00:26,430 [INFO] Completed window detection for TileImages in 6.16s
+2025-08-15 11:00:26,430 [WARNING] CONCAT_SKIP: Cannot concatenate 'TileImages' - missing Processing output file(s)
+2025-08-15 11:00:26,430 [INFO] Finished processing 'TileImages'
+2025-08-15 11:00:26,430 [INFO] Processing project: 'LoadFile2'
+2025-08-15 11:00:26,430 [INFO] Starting build and run for LoadFile2
+2025-08-15 11:00:31,736 [INFO] Completed build and run for LoadFile2 in 5.31s
+2025-08-15 11:00:31,736 [INFO] Starting window detection for LoadFile2
+2025-08-15 11:00:31,736 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:00:34,755 [INFO] Found window for 'LoadFile2' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 11:00:34,755 [INFO] Completed window detection for LoadFile2 in 3.02s
+2025-08-15 11:00:34,755 [INFO] Starting capture/recording for LoadFile2
+2025-08-15 11:00:34,755 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_LoadFile2.mp4
+2025-08-15 11:00:34,755 [INFO] Completed capture/recording for LoadFile2 in 0.00s
+2025-08-15 11:00:34,755 [INFO] Starting interaction for LoadFile2
+2025-08-15 11:00:34,755 [INFO] Running 'mouse' simulation
+2025-08-15 11:00:40,218 [INFO] Completed interaction for LoadFile2 in 5.46s
+2025-08-15 11:00:40,219 [INFO] Starting post-processing for LoadFile2
+2025-08-15 11:00:40,219 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 11:00:40,443 [INFO] Completed post-processing for LoadFile2 in 0.22s
+2025-08-15 11:00:40,443 [INFO] Total processing time: 14.01s
+2025-08-15 11:00:40,443 [INFO] Starting build and run for LoadFile2
+2025-08-15 11:00:40,672 [INFO] Completed build and run for LoadFile2 in 0.23s
+2025-08-15 11:00:40,672 [INFO] Starting window detection for LoadFile2
+2025-08-15 11:00:40,672 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:00:43,686 [INFO] Found window for 'LoadFile2' (ID: 79691783): x=1989, y=569, w=640, h=356
+2025-08-15 11:00:43,686 [INFO] Completed window detection for LoadFile2 in 3.01s
+2025-08-15 11:00:43,686 [INFO] Starting capture/recording for LoadFile2
+2025-08-15 11:00:43,686 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_LoadFile2.mp4
+2025-08-15 11:00:43,687 [INFO] Completed capture/recording for LoadFile2 in 0.00s
+2025-08-15 11:00:43,687 [INFO] Starting interaction for LoadFile2
+2025-08-15 11:00:43,687 [INFO] Running 'mouse' simulation
+2025-08-15 11:00:49,168 [INFO] Completed interaction for LoadFile2 in 5.48s
+2025-08-15 11:00:49,168 [INFO] Starting post-processing for LoadFile2
+2025-08-15 11:00:49,168 [INFO] Adding 'Processing' label to output file
+2025-08-15 11:00:49,373 [INFO] Completed post-processing for LoadFile2 in 0.20s
+2025-08-15 11:00:49,373 [INFO] Total processing time: 8.93s
+2025-08-15 11:00:49,373 [INFO] Starting concatenation for LoadFile2
+2025-08-15 11:00:49,373 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-LoadFile2.mp4
+2025-08-15 11:00:49,592 [INFO] Deleted individual Umfeld file: umfeld_LoadFile2.mp4
+2025-08-15 11:00:49,592 [INFO] Deleted individual Processing file: processing_LoadFile2.mp4
+2025-08-15 11:00:49,592 [INFO] Completed concatenation for LoadFile2 in 0.22s
+2025-08-15 11:00:49,592 [INFO] Finished processing 'LoadFile2'
+2025-08-15 11:00:49,592 [INFO] Processing project: 'Sine'
+2025-08-15 11:00:49,593 [INFO] Starting build and run for Sine
+2025-08-15 11:00:55,023 [INFO] Completed build and run for Sine in 5.43s
+2025-08-15 11:00:55,023 [INFO] Starting window detection for Sine
+2025-08-15 11:00:55,023 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:00:58,040 [INFO] Found window for 'Sine' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 11:00:58,041 [INFO] Completed window detection for Sine in 3.02s
+2025-08-15 11:00:58,041 [INFO] Starting capture/recording for Sine
+2025-08-15 11:00:58,041 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_Sine.mp4
+2025-08-15 11:00:58,041 [INFO] Completed capture/recording for Sine in 0.00s
+2025-08-15 11:01:03,130 [INFO] Starting post-processing for Sine
+2025-08-15 11:01:03,130 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 11:01:03,430 [INFO] Completed post-processing for Sine in 0.30s
+2025-08-15 11:01:03,430 [INFO] Total processing time: 13.84s
+2025-08-15 11:01:03,430 [INFO] Starting build and run for Sine
+2025-08-15 11:01:03,653 [INFO] Completed build and run for Sine in 0.22s
+2025-08-15 11:01:03,653 [INFO] Starting window detection for Sine
+2025-08-15 11:01:03,653 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:01:06,665 [INFO] Found window for 'Sine' (ID: 79691783): x=1989, y=569, w=640, h=356
+2025-08-15 11:01:06,665 [INFO] Completed window detection for Sine in 3.01s
+2025-08-15 11:01:06,665 [INFO] Starting capture/recording for Sine
+2025-08-15 11:01:06,665 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_Sine.mp4
+2025-08-15 11:01:06,666 [INFO] Completed capture/recording for Sine in 0.00s
+2025-08-15 11:01:11,732 [INFO] Starting post-processing for Sine
+2025-08-15 11:01:11,732 [INFO] Adding 'Processing' label to output file
+2025-08-15 11:01:12,021 [INFO] Completed post-processing for Sine in 0.29s
+2025-08-15 11:01:12,021 [INFO] Total processing time: 8.59s
+2025-08-15 11:01:12,021 [INFO] Starting concatenation for Sine
+2025-08-15 11:01:12,021 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-Sine.mp4
+2025-08-15 11:01:12,291 [INFO] Deleted individual Umfeld file: umfeld_Sine.mp4
+2025-08-15 11:01:12,291 [INFO] Deleted individual Processing file: processing_Sine.mp4
+2025-08-15 11:01:12,291 [INFO] Completed concatenation for Sine in 0.27s
+2025-08-15 11:01:12,291 [INFO] Finished processing 'Sine'
+2025-08-15 11:01:12,291 [INFO] Processing project: 'AdditiveWave'
+2025-08-15 11:01:12,291 [INFO] Starting build and run for AdditiveWave
+2025-08-15 11:01:17,403 [INFO] Completed build and run for AdditiveWave in 5.11s
+2025-08-15 11:01:17,403 [INFO] Starting window detection for AdditiveWave
+2025-08-15 11:01:17,403 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:01:20,419 [INFO] Found window for 'AdditiveWave' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 11:01:20,419 [INFO] Completed window detection for AdditiveWave in 3.02s
+2025-08-15 11:01:20,419 [INFO] Starting capture/recording for AdditiveWave
+2025-08-15 11:01:20,420 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_AdditiveWave.mp4
+2025-08-15 11:01:20,420 [INFO] Completed capture/recording for AdditiveWave in 0.00s
+2025-08-15 11:01:25,504 [INFO] Starting post-processing for AdditiveWave
+2025-08-15 11:01:25,504 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 11:01:25,796 [INFO] Completed post-processing for AdditiveWave in 0.29s
+2025-08-15 11:01:25,796 [INFO] Total processing time: 13.50s
+2025-08-15 11:01:25,796 [INFO] Starting build and run for AdditiveWave
+2025-08-15 11:01:26,029 [INFO] Completed build and run for AdditiveWave in 0.23s
+2025-08-15 11:01:26,029 [INFO] Starting window detection for AdditiveWave
+2025-08-15 11:01:26,029 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:01:29,046 [INFO] Found window for 'AdditiveWave' (ID: 79691783): x=1989, y=569, w=640, h=356
+2025-08-15 11:01:29,046 [INFO] Completed window detection for AdditiveWave in 3.02s
+2025-08-15 11:01:29,046 [INFO] Starting capture/recording for AdditiveWave
+2025-08-15 11:01:29,046 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_AdditiveWave.mp4
+2025-08-15 11:01:29,047 [INFO] Completed capture/recording for AdditiveWave in 0.00s
+2025-08-15 11:01:34,128 [INFO] Starting post-processing for AdditiveWave
+2025-08-15 11:01:34,131 [INFO] Adding 'Processing' label to output file
+2025-08-15 11:01:34,384 [INFO] Completed post-processing for AdditiveWave in 0.26s
+2025-08-15 11:01:34,384 [INFO] Total processing time: 8.59s
+2025-08-15 11:01:34,384 [INFO] Starting concatenation for AdditiveWave
+2025-08-15 11:01:34,384 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-AdditiveWave.mp4
+2025-08-15 11:01:34,624 [INFO] Deleted individual Umfeld file: umfeld_AdditiveWave.mp4
+2025-08-15 11:01:34,624 [INFO] Deleted individual Processing file: processing_AdditiveWave.mp4
+2025-08-15 11:01:34,624 [INFO] Completed concatenation for AdditiveWave in 0.24s
+2025-08-15 11:01:34,624 [INFO] Finished processing 'AdditiveWave'
+2025-08-15 11:01:34,624 [INFO] Processing project: 'SineCosine'
+2025-08-15 11:01:34,624 [INFO] Starting build and run for SineCosine
+2025-08-15 11:01:39,920 [INFO] Completed build and run for SineCosine in 5.30s
+2025-08-15 11:01:39,920 [INFO] Starting window detection for SineCosine
+2025-08-15 11:01:39,920 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:01:42,947 [INFO] Found window for 'SineCosine' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 11:01:42,947 [INFO] Completed window detection for SineCosine in 3.03s
+2025-08-15 11:01:42,947 [INFO] Starting capture/recording for SineCosine
+2025-08-15 11:01:42,947 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_SineCosine.mp4
+2025-08-15 11:01:42,947 [INFO] Completed capture/recording for SineCosine in 0.00s
+2025-08-15 11:01:48,031 [INFO] Starting post-processing for SineCosine
+2025-08-15 11:01:48,033 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 11:01:48,341 [INFO] Completed post-processing for SineCosine in 0.31s
+2025-08-15 11:01:48,341 [INFO] Total processing time: 13.72s
+2025-08-15 11:01:48,341 [INFO] Starting build and run for SineCosine
+2025-08-15 11:01:48,563 [INFO] Completed build and run for SineCosine in 0.22s
+2025-08-15 11:01:48,563 [INFO] Starting window detection for SineCosine
+2025-08-15 11:01:48,563 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:01:51,578 [INFO] Found window for 'SineCosine' (ID: 79691783): x=1989, y=569, w=640, h=356
+2025-08-15 11:01:51,578 [INFO] Completed window detection for SineCosine in 3.02s
+2025-08-15 11:01:51,579 [INFO] Starting capture/recording for SineCosine
+2025-08-15 11:01:51,579 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_SineCosine.mp4
+2025-08-15 11:01:51,579 [INFO] Completed capture/recording for SineCosine in 0.00s
+2025-08-15 11:01:56,662 [INFO] Starting post-processing for SineCosine
+2025-08-15 11:01:56,662 [INFO] Adding 'Processing' label to output file
+2025-08-15 11:01:56,944 [INFO] Completed post-processing for SineCosine in 0.28s
+2025-08-15 11:01:56,944 [INFO] Total processing time: 8.60s
+2025-08-15 11:01:56,944 [INFO] Starting concatenation for SineCosine
+2025-08-15 11:01:56,944 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-SineCosine.mp4
+2025-08-15 11:01:57,260 [INFO] Deleted individual Umfeld file: umfeld_SineCosine.mp4
+2025-08-15 11:01:57,260 [INFO] Deleted individual Processing file: processing_SineCosine.mp4
+2025-08-15 11:01:57,260 [INFO] Completed concatenation for SineCosine in 0.32s
+2025-08-15 11:01:57,260 [INFO] Finished processing 'SineCosine'
+2025-08-15 11:01:57,260 [INFO] Processing project: 'Redraw'
+2025-08-15 11:01:57,261 [INFO] Starting build and run for Redraw
+2025-08-15 11:02:02,572 [INFO] Completed build and run for Redraw in 5.31s
+2025-08-15 11:02:02,572 [INFO] Starting window detection for Redraw
+2025-08-15 11:02:02,572 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:02:05,592 [INFO] Found window for 'Redraw' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 11:02:05,592 [INFO] Completed window detection for Redraw in 3.02s
+2025-08-15 11:02:05,592 [INFO] Starting capture/recording for Redraw
+2025-08-15 11:02:05,592 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_Redraw.mp4
+2025-08-15 11:02:05,592 [INFO] Completed capture/recording for Redraw in 0.00s
+2025-08-15 11:02:05,593 [INFO] Starting interaction for Redraw
+2025-08-15 11:02:05,593 [INFO] Running 'mouse' simulation
+2025-08-15 11:02:11,483 [INFO] Completed interaction for Redraw in 5.89s
+2025-08-15 11:02:11,483 [INFO] Starting post-processing for Redraw
+2025-08-15 11:02:11,483 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 11:02:11,732 [INFO] Completed post-processing for Redraw in 0.25s
+2025-08-15 11:02:11,732 [INFO] Total processing time: 14.47s
+2025-08-15 11:02:11,732 [INFO] Starting build and run for Redraw
+2025-08-15 11:02:11,961 [INFO] Completed build and run for Redraw in 0.23s
+2025-08-15 11:02:11,961 [INFO] Starting window detection for Redraw
+2025-08-15 11:02:11,961 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:02:14,977 [INFO] Found window for 'Redraw' (ID: 79691783): x=1989, y=569, w=640, h=356
+2025-08-15 11:02:14,977 [INFO] Completed window detection for Redraw in 3.02s
+2025-08-15 11:02:14,977 [INFO] Starting capture/recording for Redraw
+2025-08-15 11:02:14,977 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_Redraw.mp4
+2025-08-15 11:02:14,978 [INFO] Completed capture/recording for Redraw in 0.00s
+2025-08-15 11:02:14,978 [INFO] Starting interaction for Redraw
+2025-08-15 11:02:14,978 [INFO] Running 'mouse' simulation
+2025-08-15 11:02:20,886 [INFO] Completed interaction for Redraw in 5.91s
+2025-08-15 11:02:20,886 [INFO] Starting post-processing for Redraw
+2025-08-15 11:02:20,895 [INFO] Adding 'Processing' label to output file
+2025-08-15 11:02:21,098 [INFO] Completed post-processing for Redraw in 0.21s
+2025-08-15 11:02:21,098 [INFO] Total processing time: 9.37s
+2025-08-15 11:02:21,098 [INFO] Starting concatenation for Redraw
+2025-08-15 11:02:21,098 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-Redraw.mp4
+2025-08-15 11:02:21,425 [INFO] Deleted individual Umfeld file: umfeld_Redraw.mp4
+2025-08-15 11:02:21,426 [INFO] Deleted individual Processing file: processing_Redraw.mp4
+2025-08-15 11:02:21,426 [INFO] Completed concatenation for Redraw in 0.33s
+2025-08-15 11:02:21,426 [INFO] Finished processing 'Redraw'
+2025-08-15 11:02:21,426 [INFO] Processing project: 'Array2D'
+2025-08-15 11:02:21,426 [INFO] Starting build and run for Array2D
+2025-08-15 11:02:26,546 [INFO] Completed build and run for Array2D in 5.12s
+2025-08-15 11:02:26,546 [INFO] Starting window detection for Array2D
+2025-08-15 11:02:26,546 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:02:29,563 [INFO] Found window for 'Array2D' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 11:02:29,563 [INFO] Completed window detection for Array2D in 3.02s
+2025-08-15 11:02:29,563 [INFO] Starting capture/recording for Array2D
+2025-08-15 11:02:29,563 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_Array2D.png
+2025-08-15 11:02:29,825 [INFO] Completed capture/recording for Array2D in 0.26s
+2025-08-15 11:02:29,825 [INFO] Starting post-processing for Array2D
+2025-08-15 11:02:29,825 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 11:02:29,884 [INFO] Completed post-processing for Array2D in 0.06s
+2025-08-15 11:02:29,884 [INFO] Total processing time: 8.46s
+2025-08-15 11:02:29,884 [INFO] Starting build and run for Array2D
+2025-08-15 11:02:30,108 [INFO] Completed build and run for Array2D in 0.22s
+2025-08-15 11:02:30,108 [INFO] Starting window detection for Array2D
+2025-08-15 11:02:30,108 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:02:33,124 [INFO] Found window for 'Array2D' (ID: 81788935): x=1989, y=569, w=640, h=356
+2025-08-15 11:02:33,124 [INFO] Completed window detection for Array2D in 3.02s
+2025-08-15 11:02:33,124 [INFO] Starting capture/recording for Array2D
+2025-08-15 11:02:33,124 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_Array2D.png
+2025-08-15 11:02:33,391 [INFO] Completed capture/recording for Array2D in 0.27s
+2025-08-15 11:02:33,392 [INFO] Starting post-processing for Array2D
+2025-08-15 11:02:33,392 [INFO] Adding 'Processing' label to output file
+2025-08-15 11:02:33,451 [INFO] Completed post-processing for Array2D in 0.06s
+2025-08-15 11:02:33,451 [INFO] Total processing time: 3.57s
+2025-08-15 11:02:33,451 [INFO] Starting concatenation for Array2D
+2025-08-15 11:02:33,451 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-Array2D.png
+2025-08-15 11:02:33,463 [INFO] Deleted individual Umfeld file: umfeld_Array2D.png
+2025-08-15 11:02:33,463 [INFO] Deleted individual Processing file: processing_Array2D.png
+2025-08-15 11:02:33,463 [INFO] Completed concatenation for Array2D in 0.01s
+2025-08-15 11:02:33,463 [INFO] Finished processing 'Array2D'
+2025-08-15 11:02:33,463 [INFO] Processing project: 'Alphamask'
+2025-08-15 11:02:33,463 [INFO] Starting build and run for Alphamask
+2025-08-15 11:02:38,776 [INFO] Completed build and run for Alphamask in 5.31s
+2025-08-15 11:02:38,776 [INFO] Starting window detection for Alphamask
+2025-08-15 11:02:38,776 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:02:41,792 [INFO] Found window for 'Alphamask' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 11:02:41,792 [INFO] Completed window detection for Alphamask in 3.02s
+2025-08-15 11:02:41,792 [INFO] Starting capture/recording for Alphamask
+2025-08-15 11:02:41,792 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_Alphamask.mp4
+2025-08-15 11:02:41,793 [INFO] Completed capture/recording for Alphamask in 0.00s
+2025-08-15 11:02:41,793 [INFO] Starting interaction for Alphamask
+2025-08-15 11:02:41,793 [INFO] Running 'mouse' simulation
+2025-08-15 11:02:47,047 [INFO] Completed interaction for Alphamask in 5.25s
+2025-08-15 11:02:47,047 [INFO] Starting post-processing for Alphamask
+2025-08-15 11:02:47,047 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 11:02:47,437 [INFO] Completed post-processing for Alphamask in 0.39s
+2025-08-15 11:02:47,437 [INFO] Total processing time: 13.97s
+2025-08-15 11:02:47,437 [INFO] Starting build and run for Alphamask
+2025-08-15 11:02:47,667 [INFO] Completed build and run for Alphamask in 0.23s
+2025-08-15 11:02:47,667 [INFO] Starting window detection for Alphamask
+2025-08-15 11:02:47,668 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:02:50,684 [INFO] Found window for 'Alphamask' (ID: 79691783): x=1989, y=569, w=640, h=360
+2025-08-15 11:02:50,685 [INFO] Completed window detection for Alphamask in 3.02s
+2025-08-15 11:02:50,685 [INFO] Starting capture/recording for Alphamask
+2025-08-15 11:02:50,685 [INFO] Starting video recording to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_Alphamask.mp4
+2025-08-15 11:02:50,685 [INFO] Completed capture/recording for Alphamask in 0.00s
+2025-08-15 11:02:50,685 [INFO] Starting interaction for Alphamask
+2025-08-15 11:02:50,685 [INFO] Running 'mouse' simulation
+2025-08-15 11:02:55,943 [INFO] Completed interaction for Alphamask in 5.26s
+2025-08-15 11:02:55,943 [INFO] Starting post-processing for Alphamask
+2025-08-15 11:02:55,943 [INFO] Adding 'Processing' label to output file
+2025-08-15 11:02:56,332 [INFO] Completed post-processing for Alphamask in 0.39s
+2025-08-15 11:02:56,332 [INFO] Total processing time: 8.90s
+2025-08-15 11:02:56,333 [INFO] Starting concatenation for Alphamask
+2025-08-15 11:02:56,333 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-Alphamask.mp4
+2025-08-15 11:02:56,606 [INFO] Deleted individual Umfeld file: umfeld_Alphamask.mp4
+2025-08-15 11:02:56,606 [INFO] Deleted individual Processing file: processing_Alphamask.mp4
+2025-08-15 11:02:56,606 [INFO] Completed concatenation for Alphamask in 0.27s
+2025-08-15 11:02:56,606 [INFO] Finished processing 'Alphamask'
+2025-08-15 11:02:56,606 [INFO] Processing project: 'GetChild'
+2025-08-15 11:02:56,606 [INFO] Starting build and run for GetChild
+2025-08-15 11:03:02,206 [INFO] Completed build and run for GetChild in 5.60s
+2025-08-15 11:03:02,206 [INFO] Starting window detection for GetChild
+2025-08-15 11:03:02,206 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:03:05,227 [INFO] Found window for 'GetChild' (ID: 77594675): x=1984, y=540, w=640, h=360
+2025-08-15 11:03:05,227 [INFO] Completed window detection for GetChild in 3.02s
+2025-08-15 11:03:05,227 [INFO] Starting capture/recording for GetChild
+2025-08-15 11:03:05,227 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/umfeld_GetChild.png
+2025-08-15 11:03:05,494 [INFO] Completed capture/recording for GetChild in 0.27s
+2025-08-15 11:03:05,495 [INFO] Starting post-processing for GetChild
+2025-08-15 11:03:05,495 [INFO] Adding 'Umfeld' label to output file
+2025-08-15 11:03:05,548 [INFO] Completed post-processing for GetChild in 0.05s
+2025-08-15 11:03:05,548 [INFO] Total processing time: 8.94s
+2025-08-15 11:03:05,548 [INFO] Starting build and run for GetChild
+2025-08-15 11:03:05,771 [INFO] Completed build and run for GetChild in 0.22s
+2025-08-15 11:03:05,772 [INFO] Starting window detection for GetChild
+2025-08-15 11:03:05,772 [INFO] Waiting 3.0s for application window to initialize...
+2025-08-15 11:03:08,792 [INFO] Found window for 'GetChild' (ID: 81788935): x=1989, y=569, w=640, h=356
+2025-08-15 11:03:08,793 [INFO] Completed window detection for GetChild in 3.02s
+2025-08-15 11:03:08,793 [INFO] Starting capture/recording for GetChild
+2025-08-15 11:03:08,793 [INFO] Capturing screenshot to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/processing_GetChild.png
+2025-08-15 11:03:09,057 [INFO] Completed capture/recording for GetChild in 0.26s
+2025-08-15 11:03:09,057 [INFO] Starting post-processing for GetChild
+2025-08-15 11:03:09,057 [INFO] Adding 'Processing' label to output file
+2025-08-15 11:03:09,113 [INFO] Completed post-processing for GetChild in 0.06s
+2025-08-15 11:03:09,113 [INFO] Total processing time: 3.56s
+2025-08-15 11:03:09,113 [INFO] Starting concatenation for GetChild
+2025-08-15 11:03:09,113 [INFO] Concatenating results to: /home/choiharam/works/umfeld/umfeld-examples-fork/vrtest/comparison/comparison-GetChild.png
+2025-08-15 11:03:09,127 [INFO] Deleted individual Umfeld file: umfeld_GetChild.png
+2025-08-15 11:03:09,127 [INFO] Deleted individual Processing file: processing_GetChild.png
+2025-08-15 11:03:09,127 [INFO] Completed concatenation for GetChild in 0.01s
+2025-08-15 11:03:09,127 [INFO] Finished processing 'GetChild'
+2025-08-15 11:03:09,127 [INFO] Total script execution time: 582.96s
+2025-08-15 11:03:09,127 [INFO] --- Test Run Finished ---

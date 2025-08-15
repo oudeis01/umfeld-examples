@@ -23,7 +23,7 @@ void setup() {
 
 void draw() {
     background(0.f); //@diff(color_range)
-    lights(); //note: lights() turns the shapes color into grey
+    lights(); //FIXME: lights() turns the shapes color into grey
     translate(width / 2, height / 2);
     rotateY(map(mouseX, 0, width, 0, PI));
     rotateZ(map(mouseY, 0, height, 0, -PI));

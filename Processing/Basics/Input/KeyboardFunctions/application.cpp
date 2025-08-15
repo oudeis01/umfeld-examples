@@ -69,6 +69,7 @@ void draw() {
 
 void keyPressed() {
     // If the key is between 'A'(65) to 'Z' and 'a' to 'z'(122)
+    console(to_string(key)); //FIXME: key is case INsensitive
     if((key >= 'A' && key <= 'Z') || (key >= 'a' && key <= 'z')) {
         int keyIndex;
         if(key <= 'Z') {

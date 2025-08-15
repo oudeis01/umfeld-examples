@@ -27,7 +27,7 @@ void setup() {
 
 void draw() {
     background(0.f); //@diff(color_range)
-    lights(); // note: the light disables the color of the shapes
+    lights(); // FIXME: the light disables the color of the shapes
     translate(width / 2, height / 2);
 
     pushMatrix();
